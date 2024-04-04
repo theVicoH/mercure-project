@@ -1,5 +1,8 @@
 import fastify from 'fastify';
-import 'dotenv/config';
+import { config } from "dotenv"
+import { initializeDbConnection } from './infrastructure/db';
+
+config()
 
 const server = fastify({ logger: true });
 
@@ -8,6 +11,7 @@ server.get('/', async (request, reply) => {
 });
 
 const start = async () => {
+  await initializeDbConnection();
   try {
     await server.listen({ port: 3000 });
     const address = server.server.address();
