@@ -7,14 +7,13 @@ config();
 const server = fastify({ logger: true });
 server.register(authRoutes);
 
-server.get('/', async (request, reply) => {
-  return { hello: 'world' };
-});
-
 const start = async (db: () => void) => {
   try {
     db();
-    await server.listen({ port: Number(process.env.FASTIFY_PORT), host: '0.0.0.0' });
+    await server.listen({
+      port: Number(process.env.FASTIFY_PORT),
+      host: '0.0.0.0',
+    });
     const address = server.server.address();
     const port = typeof address === 'string' ? address : address?.port;
     if (port) {

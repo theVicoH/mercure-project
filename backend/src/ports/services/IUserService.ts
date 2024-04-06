@@ -1,5 +1,5 @@
-import { User } from "../../entities/UserEntities";
+import { User } from '../../entities/UserEntities';
 
 export default interface IUserService {
-  createUser: (username: string, password: string) => Promise<User>
+  createUser: (username: string, password: string) => Promise<User>;
 }

@@ -6,7 +6,10 @@ export class Password implements IPassword {
     return bcrypt.hash(password, 10);
   }
 
-  async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
+  async comparePassword(
+    password: string,
+    hashedPassword: string
+  ): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
 }
