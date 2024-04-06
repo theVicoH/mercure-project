@@ -25,7 +25,7 @@ export default class UserService implements IUserService {
       );
     } catch (error) {
       if (error instanceof UniqueConstraintError) {
-        throw new Error('username is not unique');
+        throw new Error('Username already exist');
       } else {
         throw error;
       }
