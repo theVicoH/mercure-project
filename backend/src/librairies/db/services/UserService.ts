@@ -13,12 +13,10 @@ interface UserModelInstance extends Model {
 export default class UserService implements IUserService {
   async createUser(username: string, password: string): Promise<User> {
     try {
-      console.log(username, password)
       const modelUser = await UserModel.create({ 
         username: username, 
         password: password
       }) as UserModelInstance;
-      console.log(modelUser,"model----------------")
       return new User(modelUser.id, modelUser.username, modelUser.password, modelUser.createdAt);
     } catch (error) {
       if (error instanceof UniqueConstraintError) {

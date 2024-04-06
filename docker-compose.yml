@@ -1,12 +1,12 @@
 version: '3'
 services:
   backend:
-    build: ./api
+    build: ./backend
     container_name: backend
     ports:
       - "3000:3000"
     volumes: 
-      - ./api:/app
+      - ./backend:/app
       - /app/node_modules
     tty: true
     networks:

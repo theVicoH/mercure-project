@@ -7,7 +7,6 @@ export class UserController implements IUserController {
   
   async register(username: string, password: string) {
     try {
-      console.log(username, password, "=========")
       const newUser = await this.userRepository.createUser(username, password);
       return { code: 201, body: { message: 'User successfully registered', user: newUser }};
     } catch (error) {

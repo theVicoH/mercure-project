@@ -8,7 +8,6 @@ export class UserRepository implements IUserRepository {
 
   async createUser(username: string, password: string) : Promise<User> {
     const hashedPassword = await this.Password.hashPassword(password);
-    console.log(username, hashedPassword, "=========")
     try {
       const createdUser = await this.UserService.createUser(username, hashedPassword);
       return createdUser;
