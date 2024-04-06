@@ -2,11 +2,13 @@ import { User } from '../../entities/UserEntities';
 import IPassword from '../../ports/librairies/password/IPassword';
 import IUserRepository from '../../ports/adapters/repositories/IUserRepository';
 import IUserService from '../../ports/librairies/services/IUserService';
+import IJsonWebToken from '../../ports/librairies/jsonWebToken/IJsonWebToken';
 
 export class UserRepository implements IUserRepository {
   constructor(
+    private UserService: IUserService,
     private Password: IPassword,
-    private UserService: IUserService
+    private JsonWebToken: IJsonWebToken
   ) {}
 
   async createUser(username: string, password: string): Promise<User> {
@@ -18,7 +20,7 @@ export class UserRepository implements IUserRepository {
     return createdUser;
   }
 
-  async findUser(username: string, password: string): Promise<User> {
+  async findUser(username: string, password: string): Promise<string> {
     const userFound = await this.UserService.findUser(
       username
     );
@@ -26,7 +28,9 @@ export class UserRepository implements IUserRepository {
     if (!isMatch) {
       throw new Error('Invalid password');
     }
-  
-    return userFound;
+
+    const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000
+    const jwt = this.JsonWebToken.signToken(userFound.id, expiration)
+    return jwt;
   }
 }

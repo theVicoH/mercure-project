@@ -4,6 +4,7 @@ import { UserRepository } from '../../../adapters/repository/UserRepository';
 import UserService from '../../db/services/UserService';
 import { Password } from '../../bcrypt/Password';
 import { AuthRoute } from '../../../routes/routes';
+import { JsonWebToken } from '../../jsonWebToken/JsonWebToken';
 
 interface AuthRequestBody {
   username: string;
@@ -12,8 +13,9 @@ interface AuthRequestBody {
 
 export async function authRoutes(fastify: FastifyInstance) {
   const password = new Password();
+  const jsonWebToken = new JsonWebToken();
   const userService = new UserService();
-  const userRepository = new UserRepository(password, userService);
+  const userRepository = new UserRepository(userService, password, jsonWebToken);
   const userController = new UserController(userRepository);
 
   fastify.post<{ Body: AuthRequestBody }>(

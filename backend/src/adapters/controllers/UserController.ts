@@ -22,10 +22,10 @@ export class UserController implements IUserController {
 
   async login(username: string, password: string){
     try {
-      const newUser = await this.userRepository.findUser(username, password);
+      const jwt = await this.userRepository.findUser(username, password);
       return {
         code: 201,
-        body: { message: 'User logged', jwt: newUser },
+        body: { message: 'User logged', jwt: jwt },
       };
     } catch (error) {
       if (error instanceof Error) {

@@ -1,11 +1,11 @@
 export class User {
-  public id: number | null;
+  public id: number;
   public username: string;
   public password: string;
   public createdAt: Date;
 
   constructor(
-    id: number | null,
+    id: number,
     username: string,
     password: string,
     createdAt: Date
