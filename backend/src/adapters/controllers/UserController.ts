@@ -20,7 +20,7 @@ export class UserController implements IUserController {
     }
   }
 
-  async login(username: string, password: string){
+  async login(username: string, password: string) {
     try {
       const jwt = await this.userRepository.findUser(username, password);
       return {

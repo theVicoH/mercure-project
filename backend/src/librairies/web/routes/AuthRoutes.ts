@@ -15,7 +15,11 @@ export async function authRoutes(fastify: FastifyInstance) {
   const password = new Password();
   const jsonWebToken = new JsonWebToken();
   const userService = new UserService();
-  const userRepository = new UserRepository(userService, password, jsonWebToken);
+  const userRepository = new UserRepository(
+    userService,
+    password,
+    jsonWebToken
+  );
   const userController = new UserController(userRepository);
 
   fastify.post<{ Body: AuthRequestBody }>(

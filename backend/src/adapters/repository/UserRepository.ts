@@ -21,16 +21,17 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUser(username: string, password: string): Promise<string> {
-    const userFound = await this.UserService.findUser(
-      username
+    const userFound = await this.UserService.findUser(username);
+    const isMatch = await this.Password.comparePassword(
+      password,
+      userFound.password
     );
-    const isMatch = await this.Password.comparePassword(password, userFound.password);
     if (!isMatch) {
       throw new Error('Invalid password');
     }
 
-    const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000
-    const jwt = this.JsonWebToken.signToken(userFound.id, expiration)
+    const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000;
+    const jwt = this.JsonWebToken.signToken(userFound.id, expiration);
     return jwt;
   }
 }

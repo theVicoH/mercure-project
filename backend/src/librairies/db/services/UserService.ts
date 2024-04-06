@@ -33,16 +33,14 @@ export default class UserService implements IUserService {
   }
 
   async findUser(username: string): Promise<User> {
-    try {
-      const modelUser = await UserModel.findOne({ where: { username } }) as UserModelInstance;;
-      return new User(
-        modelUser.id,
-        modelUser.username,
-        modelUser.password,
-        modelUser.createdAt
-      );
-    } catch (error) {
-      throw error;
-    }
+    const modelUser = (await UserModel.findOne({
+      where: { username },
+    })) as UserModelInstance;
+    return new User(
+      modelUser.id,
+      modelUser.username,
+      modelUser.password,
+      modelUser.createdAt
+    );
   }
 }
