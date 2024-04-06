@@ -1,6 +1,6 @@
 import { Model, UniqueConstraintError } from 'sequelize';
 import { User } from '../../../entities/UserEntities';
-import IUserService from '../../../ports/services/IUserService';
+import IUserService from '../../../ports/librairies/services/IUserService';
 import UserModel from '../models/UserModel';
 
 interface UserModelInstance extends Model {
@@ -29,6 +29,20 @@ export default class UserService implements IUserService {
       } else {
         throw error;
       }
+    }
+  }
+
+  async findUser(username: string): Promise<User> {
+    try {
+      const modelUser = await UserModel.findOne({ where: { username } }) as UserModelInstance;;
+      return new User(
+        modelUser.id,
+        modelUser.username,
+        modelUser.password,
+        modelUser.createdAt
+      );
+    } catch (error) {
+      throw error;
     }
   }
 }
