@@ -1,19 +1,15 @@
 import { User } from '../entities/UserEntities';
-import IPassword from '../ports/librairies/password/IPassword';
 import IUserUseCase from '../ports/useCases/IUserUseCase';
-import IUserService from '../ports/librairies/services/IUserService';
-import IJsonWebToken from '../ports/librairies/jsonWebToken/IJsonWebToken';
+import IUseCasesConstructor from '../ports/librairies/utils/IUseCasesConstructor';
 
 export class UserUseCase implements IUserUseCase {
   constructor(
-    private UserService: IUserService,
-    private Password: IPassword,
-    private JsonWebToken: IJsonWebToken
+    private services: IUseCasesConstructor
   ) {}
 
   async createUser(username: string, password: string): Promise<User> {
-    const hashedPassword = await this.Password.hashPassword(password);
-    const createdUser = await this.UserService.createUser(
+    const hashedPassword = await this.services.password.hashPassword(password);
+    const createdUser = await this.services.userService.createUser(
       username,
       hashedPassword
     );
@@ -21,8 +17,8 @@ export class UserUseCase implements IUserUseCase {
   }
 
   async findUser(username: string, password: string): Promise<string> {
-    const userFound = await this.UserService.findUser(username);
-    const isMatch = await this.Password.comparePassword(
+    const userFound = await this.services.userService.findUser(username);
+    const isMatch = await this.services.password.comparePassword(
       password,
       userFound.password
     );
@@ -31,7 +27,7 @@ export class UserUseCase implements IUserUseCase {
     }
 
     const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000;
-    const jwt = this.JsonWebToken.signToken(userFound.id, expiration);
+    const jwt = this.services.jsonWebToken.signToken(userFound.id, expiration);
     return jwt;
   }
 }
