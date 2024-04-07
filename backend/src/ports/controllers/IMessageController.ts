@@ -1,2 +1,1 @@
-export default interface IMessageController {
-}
+export default interface IMessageController {}

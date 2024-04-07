@@ -1,2 +1,1 @@
-export default interface IConversationUserUseCase {
-}
+export default interface IConversationUserUseCase {}

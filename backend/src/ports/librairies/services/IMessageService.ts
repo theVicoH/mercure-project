@@ -1,3 +1,1 @@
-
-export default interface IMessageService {
-}
+export default interface IMessageService {}

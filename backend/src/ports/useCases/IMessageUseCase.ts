@@ -1,2 +1,1 @@
-export default interface IMessageUseCase {
-}
+export default interface IMessageUseCase {}

@@ -9,11 +9,12 @@ interface ConversationModelInstance extends Model {
 }
 
 export default class ConversationService implements IConversationService {
-  async createConversation(transaction: Transaction) : Promise<Conversation>{
-    const modelConversation = (await ConversationModel.create({}, { transaction })) as ConversationModelInstance;
-    return new Conversation(
-      modelConversation.id,
-      modelConversation.createdAt
-    );
+  async createConversation(transaction?: Transaction): Promise<Conversation> {
+    const options = transaction ? { transaction } : undefined;
+    const modelConversation = (await ConversationModel.create(
+      {},
+      options
+    )) as ConversationModelInstance;
+    return new Conversation(modelConversation.id, modelConversation.createdAt);
   }
 }

@@ -3,9 +3,7 @@ import IUserUseCase from '../ports/useCases/IUserUseCase';
 import IUseCasesConstructor from '../ports/librairies/utils/IUseCasesConstructor';
 
 export class UserUseCase implements IUserUseCase {
-  constructor(
-    private services: IUseCasesConstructor
-  ) {}
+  constructor(private services: IUseCasesConstructor) {}
 
   async createUser(username: string, password: string): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);

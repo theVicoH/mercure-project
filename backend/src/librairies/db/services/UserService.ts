@@ -1,4 +1,4 @@
-import { Model, UniqueConstraintError } from 'sequelize';
+import { Model, Transaction, UniqueConstraintError } from 'sequelize';
 import { User } from '../../../entities/UserEntities';
 import IUserService from '../../../ports/librairies/services/IUserService';
 import UserModel from '../models/UserModel';
@@ -11,12 +11,21 @@ interface UserModelInstance extends Model {
 }
 
 export default class UserService implements IUserService {
-  async createUser(username: string, password: string): Promise<User> {
+  async createUser(
+    username: string,
+    password: string,
+    transaction?: Transaction
+  ): Promise<User> {
     try {
-      const modelUser = (await UserModel.create({
-        username: username,
-        password: password,
-      })) as UserModelInstance;
+      const options = transaction ? { transaction } : undefined;
+      const modelUser = (await UserModel.create(
+        {
+          username,
+          password,
+        },
+        options
+      )) as UserModelInstance;
+
       return new User(
         modelUser.id,
         modelUser.username,
@@ -32,10 +41,22 @@ export default class UserService implements IUserService {
     }
   }
 
-  async findUser(username: string): Promise<User> {
-    const modelUser = (await UserModel.findOne({
-      where: { username },
-    })) as UserModelInstance;
+  async findUser(username: string, transaction?: Transaction): Promise<User> {
+    const options: { where: { username: string }; transaction?: Transaction } =
+      {
+        where: { username },
+      };
+
+    if (transaction) {
+      options.transaction = transaction;
+    }
+
+    const modelUser = (await UserModel.findOne(options)) as UserModelInstance;
+
+    if (!modelUser) {
+      throw new Error('User not found');
+    }
+
     return new User(
       modelUser.id,
       modelUser.username,

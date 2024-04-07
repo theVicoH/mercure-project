@@ -6,7 +6,6 @@ class ConversationUser {
     this.conversationId = conversationId;
     this.userId = userId;
   }
-
 }
 
 export default ConversationUser;

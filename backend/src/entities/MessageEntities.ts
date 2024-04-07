@@ -5,7 +5,13 @@ export class Message {
   public message: string;
   public createdAt: Date;
 
-  constructor(id: number, conversationId: number, senderId: number, message: string, createdAt: Date) {
+  constructor(
+    id: number,
+    conversationId: number,
+    senderId: number,
+    message: string,
+    createdAt: Date
+  ) {
     this.id = id;
     this.conversationId = conversationId;
     this.senderId = senderId;

@@ -1,2 +1,1 @@
-export default interface IConversationController {
-}
+export default interface IConversationController {}

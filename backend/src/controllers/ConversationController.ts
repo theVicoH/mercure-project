@@ -2,5 +2,4 @@ import IConversationController from '../ports/controllers/IConversationControlle
 
 export class ConversationController implements IConversationController {
   constructor() {}
-
 }

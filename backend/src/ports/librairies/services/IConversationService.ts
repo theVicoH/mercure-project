@@ -1,6 +1,6 @@
-import { Transaction } from "sequelize";
-import { Conversation } from "../../../entities/ConversationEntities";
+import { Transaction } from 'sequelize';
+import { Conversation } from '../../../entities/ConversationEntities';
 
 export default interface IConversationService {
-  createConversation: (transaction: Transaction) => Promise<Conversation>;
+  createConversation: (transaction?: Transaction) => Promise<Conversation>;
 }

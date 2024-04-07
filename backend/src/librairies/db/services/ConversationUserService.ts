@@ -8,12 +8,22 @@ interface ConversationUserModelInstance extends Model {
   userId: number;
 }
 
-export default class ConversationUserService implements IConversationUserService {
-  async createConversationUser(conversationId: number, userId: number, transaction: Transaction) : Promise<ConversationUser> {
-    const modelConversationUser = (await ConversationUserModel.create({ conversationId: conversationId, userId: userId }, { transaction })) as ConversationUserModelInstance;
+export default class ConversationUserService
+  implements IConversationUserService
+{
+  async createConversationUser(
+    conversationId: number,
+    userId: number,
+    transaction?: Transaction
+  ): Promise<ConversationUser> {
+    const options = transaction ? { transaction } : undefined;
+    const modelConversationUser = (await ConversationUserModel.create(
+      { conversationId: conversationId, userId: userId },
+      options
+    )) as ConversationUserModelInstance;
     return new ConversationUser(
       modelConversationUser.conversationId,
-      modelConversationUser.userId,
+      modelConversationUser.userId
     );
   }
 }
