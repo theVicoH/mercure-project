@@ -1,3 +1,3 @@
-import IMessageService from '../../../ports/librairies/db/services/IMessageService';
+import { IMessageService } from "../../../types/IServices";
 
 export default class MessageService implements IMessageService {}

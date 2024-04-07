@@ -1,3 +1,4 @@
+import { IServicesPack } from '../../../types/IServices';
 import ConversationService from '../services/ConversationService';
 import ConversationUserService from '../services/ConversationUserService';
 import FriendService from '../services/FriendService';
@@ -5,7 +6,7 @@ import MessageService from '../services/MessageService';
 import UserService from '../services/UserService';
 
 
-async function servicesPack() : Promise<> {
+async function servicesPack() : Promise<IServicesPack> {
   return {
     userService: new UserService(),
     friendService: new FriendService(),

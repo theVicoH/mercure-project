@@ -1,7 +1,7 @@
 import { Model, Transaction } from 'sequelize';
 import { Friend } from '../../../entities/FriendEntities';
-import IFriendService from '../../../ports/librairies/db/services/IFriendService';
 import FriendModel from '../models/FriendModel';
+import { IFriendService } from '../../../types/IServices';
 
 interface FriendModelInstance extends Model {
   userId: number;

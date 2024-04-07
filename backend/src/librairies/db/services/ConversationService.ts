@@ -1,7 +1,7 @@
 import { Model, Transaction } from 'sequelize';
 import { Conversation } from '../../../entities/ConversationEntities';
-import IConversationService from '../../../ports/librairies/db/services/IConversationService';
 import ConversationModel from '../models/ConversationModel';
+import { IConversationService } from '../../../types/IServices';
 
 interface ConversationModelInstance extends Model {
   id: number;
