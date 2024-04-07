@@ -1,6 +1,5 @@
-import IUseCasesConstructor from '../../ports/librairies/utils/IUseCasesConstructor';
+import { IUseCasesConstructor } from '../../types/IUseCases';
 import { Password } from '../bcrypt/Password';
-import sequelize from '../db/Sequalize';
 import ConversationService from '../db/services/ConversationService';
 import ConversationUserService from '../db/services/ConversationUserService';
 import FriendService from '../db/services/FriendService';

@@ -1,5 +1,4 @@
-import IUseCasesConstructor from '../ports/librairies/utils/IUseCasesConstructor';
-import { IFriendUseCase } from '../types/IUseCases';
+import { IFriendUseCase, IUseCasesConstructor } from '../types/IUseCases';
 
 export class FriendUseCase implements IFriendUseCase {
   constructor(private services: IUseCasesConstructor) {}
