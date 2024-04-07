@@ -1,0 +1,21 @@
+meta {
+  name: addFriend
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{url}}/add-friend
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "friendUsername": "Doe"
+  }
+}
