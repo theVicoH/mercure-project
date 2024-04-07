@@ -1,4 +1,7 @@
 import { User } from "../entities/UserEntities";
+import { IJsonWebToken } from "./IJsonWebToken";
+import { IPassword } from "./IPassword";
+import { IServicesPack } from "./IServices";
 
 export interface IUserUseCase {
   createUser: (username: string, password: string) => Promise<User>;
@@ -14,3 +17,8 @@ export interface IFriendUseCase {
 export interface IConversationUserUseCase {}
 
 export interface IConversationUseCase {}
+
+export interface IUseCasesConstructor extends IServicesPack {
+  password: IPassword;
+  jsonWebToken: IJsonWebToken;
+}
