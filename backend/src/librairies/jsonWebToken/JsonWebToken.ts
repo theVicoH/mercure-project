@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
-import IJsonWebToken from '../../ports/librairies/jsonWebToken/IJsonWebToken';
+import IJsonWebToken from '../../types/IJsonWebToken';
 
 config();
 
