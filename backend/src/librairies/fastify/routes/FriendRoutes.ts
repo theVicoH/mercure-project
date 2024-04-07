@@ -3,13 +3,14 @@ import { PrivateRoutes } from '../../../routes/routes';
 import auth from '../middlewares/Auth';
 import { FriendUseCase } from '../../../userCases/FriendUseCase';
 import { FriendController } from '../../../controllers/FriendController';
-import useCasesConstructor from '../../utils/UseCasesConstructor';
+import useCasesPack from '../../utils/UseCasesConstructor';
 
 interface FriendRequestBody {
   friendUsername: string;
 }
 
 export async function friendRoutes(fastify: FastifyInstance) {
+  const useCasesConstructor = await useCasesPack();
   const friendUseCase = new FriendUseCase(useCasesConstructor);
   const friendController = new FriendController(friendUseCase);
   fastify.post<{ Body: FriendRequestBody }>(

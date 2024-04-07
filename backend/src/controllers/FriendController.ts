@@ -1,5 +1,5 @@
 import IFriendController from '../ports/controllers/IFriendController';
-import IFriendUseCase from '../ports/useCases/IFriendUseCase';
+import { IFriendUseCase } from '../types/IUseCases';
 
 export class FriendController implements IFriendController {
   constructor(private friendUseCase: IFriendUseCase) {}

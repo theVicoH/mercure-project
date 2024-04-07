@@ -1,6 +1,6 @@
 import { User } from '../entities/UserEntities';
-import IUserUseCase from '../ports/useCases/IUserUseCase';
 import IUseCasesConstructor from '../ports/librairies/utils/IUseCasesConstructor';
+import { IUserUseCase } from '../types/IUseCases';
 
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}

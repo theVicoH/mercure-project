@@ -1,10 +1,8 @@
-import IUseCasesConstructor from '../ports/librairies/utils/IUseCasesConstructor';
-import { IFriendUseCase } from '../types/IUseCases';
+import { Friend } from '../../../entities/FriendEntities';
+import ITransactions from '../../../ports/librairies/db/transactions/ITransactions';
 
-export class FriendUseCase implements IFriendUseCase {
-  constructor(private services: IUseCasesConstructor) {}
-
-  async addFriend(userId: number, friendUsername: string) {
+export default class Transactions implements ITransactions {
+  async addFriend(userId: number, friendUsername: string) : Promise<Friend> {
     const friendFound =
       await this.services.userService.findUser(friendUsername);
     if (!friendFound) {
@@ -20,5 +18,6 @@ export class FriendUseCase implements IFriendUseCase {
       throw new Error(`You are already friend with ${friendUsername}`);
     }
     await this.services.friendService.createFriendConnection(userId, friendId);
+
   }
 }

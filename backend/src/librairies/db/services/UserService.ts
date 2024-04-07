@@ -1,6 +1,6 @@
 import { Model, Transaction, UniqueConstraintError } from 'sequelize';
 import { User } from '../../../entities/UserEntities';
-import IUserService from '../../../ports/librairies/services/IUserService';
+import IUserService from '../../../ports/librairies/db/services/IUserService';
 import UserModel from '../models/UserModel';
 
 interface UserModelInstance extends Model {
