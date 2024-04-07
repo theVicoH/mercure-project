@@ -1,5 +1,4 @@
 export class Friend {
-
   public userId: number;
   public friendId: number;
   public createdAt: Date;

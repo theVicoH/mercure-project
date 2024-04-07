@@ -4,7 +4,7 @@ import sequelize from '../Sequalize';
 const FriendModel = sequelize.define(
   'Friend',
   {
-    userId: { 
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -13,9 +13,9 @@ const FriendModel = sequelize.define(
       },
       onDelete: 'CASCADE',
       field: 'user_id',
-      primaryKey: true, 
+      primaryKey: true,
     },
-    friendId: { 
+    friendId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -26,10 +26,10 @@ const FriendModel = sequelize.define(
       field: 'friend_id',
       primaryKey: true,
     },
-    createdAt: { 
-      type: DataTypes.DATE, 
+    createdAt: {
+      type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-      field: 'created_at'
+      field: 'created_at',
     },
   },
   {

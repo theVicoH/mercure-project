@@ -7,7 +7,7 @@ export class FriendController implements IFriendController {
   async addFriend(userId: number, friendUsername: string) {
     try {
       await this.friendUseCase.addFriend(userId, friendUsername);
-      
+
       return {
         code: 201,
         body: { message: `You are now friend with ${friendUsername}` },
@@ -20,5 +20,4 @@ export class FriendController implements IFriendController {
       }
     }
   }
-
 }

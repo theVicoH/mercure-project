@@ -1,4 +1,3 @@
-
 import { Model } from 'sequelize';
 import { Friend } from '../../../entities/FriendEntities';
 import IFriendService from '../../../ports/librairies/services/IFriendService';
@@ -16,8 +15,14 @@ export default class FriendService implements IFriendService {
     return !!exists;
   }
 
-  async createFriendConnection(userId: number, friendId: number): Promise<Friend> {
-    const friendModel = await FriendModel.create({ userId, friendId }) as FriendModelInstance;
+  async createFriendConnection(
+    userId: number,
+    friendId: number
+  ): Promise<Friend> {
+    const friendModel = (await FriendModel.create({
+      userId,
+      friendId,
+    })) as FriendModelInstance;
     return new Friend(
       friendModel.userId,
       friendModel.friendId,
