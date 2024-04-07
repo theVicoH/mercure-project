@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { UserController } from '../../../adapters/controllers/UserController';
-import { UserRepository } from '../../../adapters/repository/UserRepository';
+import { UserController } from '../../../controllers/UserController';
+import { UserUseCase } from '../../../userCases/UserUseCase';
 import UserService from '../../db/services/UserService';
 import { Password } from '../../bcrypt/Password';
-import { AuthRoute } from '../../../routes/routes';
+import { UserRoutes } from '../../../routes/routes';
 import { JsonWebToken } from '../../jsonWebToken/JsonWebToken';
 
 interface AuthRequestBody {
@@ -11,19 +11,15 @@ interface AuthRequestBody {
   password: string;
 }
 
-export async function authRoutes(fastify: FastifyInstance) {
+export async function userRoutes(fastify: FastifyInstance) {
   const password = new Password();
   const jsonWebToken = new JsonWebToken();
   const userService = new UserService();
-  const userRepository = new UserRepository(
-    userService,
-    password,
-    jsonWebToken
-  );
-  const userController = new UserController(userRepository);
+  const userUseCase = new UserUseCase(userService, password, jsonWebToken);
+  const userController = new UserController(userUseCase);
 
   fastify.post<{ Body: AuthRequestBody }>(
-    AuthRoute.Register,
+    UserRoutes.Register,
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.register(username, password);
@@ -32,7 +28,7 @@ export async function authRoutes(fastify: FastifyInstance) {
   );
 
   fastify.post<{ Body: AuthRequestBody }>(
-    AuthRoute.Login,
+    UserRoutes.Login,
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.login(username, password);

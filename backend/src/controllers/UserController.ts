@@ -1,15 +1,15 @@
-import IUserController from '../../ports/adapters/controllers/IUserController';
-import IUserRepository from '../../ports/adapters/repositories/IUserRepository';
+import IUserController from '../ports/controllers/IUserController';
+import IUserUseCase from '../ports/repositories/IUserUseCase';
 
 export class UserController implements IUserController {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(private userUseCase: IUserUseCase) {}
 
   async register(username: string, password: string) {
     try {
-      const newUser = await this.userRepository.createUser(username, password);
+      const newUser = await this.userUseCase.createUser(username, password);
       return {
         code: 201,
-        body: { message: 'User successfully registered', user: newUser },
+        body: { message: 'User successfully registered', data: newUser },
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -22,10 +22,10 @@ export class UserController implements IUserController {
 
   async login(username: string, password: string) {
     try {
-      const jwt = await this.userRepository.findUser(username, password);
+      const jwt = await this.userUseCase.findUser(username, password);
       return {
-        code: 201,
-        body: { message: 'User logged', jwt: jwt },
+        code: 200,
+        body: { message: 'User logged', data: jwt },
       };
     } catch (error) {
       if (error instanceof Error) {

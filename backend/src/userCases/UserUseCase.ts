@@ -1,10 +1,10 @@
-import { User } from '../../entities/UserEntities';
-import IPassword from '../../ports/librairies/password/IPassword';
-import IUserRepository from '../../ports/adapters/repositories/IUserRepository';
-import IUserService from '../../ports/librairies/services/IUserService';
-import IJsonWebToken from '../../ports/librairies/jsonWebToken/IJsonWebToken';
+import { User } from '../entities/UserEntities';
+import IPassword from '../ports/librairies/password/IPassword';
+import IUserUseCase from '../ports/repositories/IUserUseCase';
+import IUserService from '../ports/librairies/services/IUserService';
+import IJsonWebToken from '../ports/librairies/jsonWebToken/IJsonWebToken';
 
-export class UserRepository implements IUserRepository {
+export class UserUseCase implements IUserUseCase {
   constructor(
     private UserService: IUserService,
     private Password: IPassword,
