@@ -28,7 +28,7 @@ export enum HttpResponseCode {
 
 export interface SuccessResponse {
   code: HttpResponseCode;
-  body: {
+  body?: {
     message: string;
     data: unknown;
   };
