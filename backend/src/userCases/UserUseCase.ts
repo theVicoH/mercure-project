@@ -1,6 +1,6 @@
 import { User } from '../entities/UserEntities';
 import IPassword from '../ports/librairies/password/IPassword';
-import IUserUseCase from '../ports/repositories/IUserUseCase';
+import IUserUseCase from '../ports/useCases/IUserUseCase';
 import IUserService from '../ports/librairies/services/IUserService';
 import IJsonWebToken from '../ports/librairies/jsonWebToken/IJsonWebToken';
 
