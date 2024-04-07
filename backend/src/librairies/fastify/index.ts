@@ -1,11 +1,13 @@
 import fastify from 'fastify';
 import { config } from 'dotenv';
 import { userRoutes } from './routes/UserRoutes';
+import { friendRoutes } from './routes/FriendRoutes';
 
 config();
 
 const server = fastify({ logger: true });
 server.register(userRoutes);
+server.register(friendRoutes);
 
 const start = async (db: () => void) => {
   try {
