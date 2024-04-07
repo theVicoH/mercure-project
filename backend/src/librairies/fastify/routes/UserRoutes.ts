@@ -3,7 +3,7 @@ import { UserController } from '../../../controllers/UserController';
 import { UserUseCase } from '../../../userCases/UserUseCase';
 import UserService from '../../db/services/UserService';
 import { Password } from '../../bcrypt/Password';
-import { UserRoutes } from '../../../routes/routes';
+import { PublicRoutes } from '../../../routes/routes';
 import { JsonWebToken } from '../../jsonWebToken/JsonWebToken';
 
 interface AuthRequestBody {
@@ -19,7 +19,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   const userController = new UserController(userUseCase);
 
   fastify.post<{ Body: AuthRequestBody }>(
-    UserRoutes.Register,
+    PublicRoutes.Register,
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.register(username, password);
@@ -28,7 +28,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   );
 
   fastify.post<{ Body: AuthRequestBody }>(
-    UserRoutes.Login,
+    PublicRoutes.Login,
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.login(username, password);

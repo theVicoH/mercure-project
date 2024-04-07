@@ -1,5 +1,8 @@
-export enum UserRoutes {
+export enum PublicRoutes {
   Login = '/login',
   Register = '/register',
-  Info = '/info',
+}
+
+export enum PrivateRoutes {
+  AddFriend = "/add-friend",
 }
