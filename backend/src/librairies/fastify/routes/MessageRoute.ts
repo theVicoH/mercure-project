@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { PrivateRoutes } from '../../../routes/routes';
+import { PrivateRoutes } from '../../../types/Routes';
 import auth from '../middlewares/Auth';
 
 interface MessageRequestBody {

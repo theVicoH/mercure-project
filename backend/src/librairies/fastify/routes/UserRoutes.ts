@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { UserController } from '../../../controllers/UserController';
 import { UserUseCase } from '../../../userCases/UserUseCase';
-import { PublicRoutes } from '../../../routes/routes';
 import useCasesPack from '../../utils/UseCasesConstructor';
+import { PublicRoutes } from '../../../types/Routes';
 
 interface AuthRequestBody {
   username: string;
