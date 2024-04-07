@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-import { config } from "dotenv";
-import { FastifyReply, FastifyRequest } from "fastify";
+import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 config();
 
@@ -10,7 +10,11 @@ declare module 'fastify' {
   }
 }
 
-const auth = async (request: FastifyRequest, reply: FastifyReply, done: () => void) => {
+const auth = async (
+  request: FastifyRequest,
+  reply: FastifyReply,
+  done: () => void
+) => {
   try {
     const authHeader = request.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -19,9 +23,11 @@ const auth = async (request: FastifyRequest, reply: FastifyReply, done: () => vo
     if (!process.env.JWT_SECRET) {
       throw new Error('JWT_SECRET not found');
     }
-  
+
     const token = authHeader.substring(7);
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: number }; // Assurez-vous que le cast correspond à la structure de votre payload JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+      userId: number;
+    }; // Assurez-vous que le cast correspond à la structure de votre payload JWT
     request.user = decoded;
     done();
   } catch (err) {

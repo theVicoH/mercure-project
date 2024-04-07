@@ -21,11 +21,15 @@ export async function friendRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { friendUsername } = request.body;
       if (!request.user) {
-        return reply.code(401).send({ error: 'Unauthorized: User ID is missing from the request' });
+        return reply
+          .code(401)
+          .send({ error: 'Unauthorized: User ID is missing from the request' });
       }
-      const result = await friendController.addFriend(request.user.userId, friendUsername);
+      const result = await friendController.addFriend(
+        request.user.userId,
+        friendUsername
+      );
       reply.code(result.code).send(result.body);
     }
   );
-
 }

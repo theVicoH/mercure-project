@@ -4,5 +4,5 @@ export enum PublicRoutes {
 }
 
 export enum PrivateRoutes {
-  AddFriend = "/add-friend",
+  AddFriend = '/add-friend',
 }
