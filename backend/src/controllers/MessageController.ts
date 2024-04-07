@@ -1,4 +1,4 @@
-import IMessageController from '../ports/controllers/IMessageController';
+import { IMessageController } from "../types/IControllers";
 
 export class MessageController implements IMessageController {
   constructor() {}

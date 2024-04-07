@@ -1,4 +1,4 @@
-import IFriendController from '../ports/controllers/IFriendController';
+import { IFriendController } from '../types/IControllers';
 import { IFriendUseCase } from '../types/IUseCases';
 
 export class FriendController implements IFriendController {
