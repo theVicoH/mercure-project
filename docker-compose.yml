@@ -3,6 +3,8 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    env_file:
+      - ./.env
     ports:
       - "3000:3000"
     volumes: 
@@ -18,8 +20,8 @@ services:
     restart: unless-stopped
     environment:
       SERVER_NAME: ':80'
-      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
-      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY}
     command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
     ports:
       - '8080:80'
@@ -39,7 +41,7 @@ services:
       - ./backend/data:/var/lib/postgresql/data
       - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment: 
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports: 
       - "5432:5432"
     networks: 
@@ -49,8 +51,8 @@ services:
     image: dpage/pgadmin4
     container_name: pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: "vico@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "1234"
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "15432:80"
     depends_on:
