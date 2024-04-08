@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { UserController } from '../../../controllers/UserController';
 import { UserUseCase } from '../../../userCases/UserUseCase';
-import useCasesPack from '../../utils/UseCasesConstructor';
+import useCasesPack from '../../utils/UseCasesPack';
 import { PublicRoutes } from '../../../types/Routes';
 
 interface AuthRequestBody {
@@ -10,8 +10,7 @@ interface AuthRequestBody {
 }
 
 export async function userRoutes(fastify: FastifyInstance) {
-  const useCasesConstructor = await useCasesPack();
-  const userUseCase = new UserUseCase(useCasesConstructor);
+  const userUseCase = new UserUseCase(useCasesPack);
   const userController = new UserController(userUseCase);
 
   fastify.post<{ Body: AuthRequestBody }>(

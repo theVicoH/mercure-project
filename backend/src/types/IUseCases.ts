@@ -1,7 +1,8 @@
 import { User } from "../entities/UserEntities";
 import { IJsonWebToken } from "./IJsonWebToken";
 import { IPassword } from "./IPassword";
-import { IServicesPack } from "./IServices";
+import { IConversationService, IConversationUserService, IFriendService, IMessageService, IUserService } from "./IServices";
+import { Sequelize, Transaction } from "sequelize";
 
 export interface IUserUseCase {
   createUser: (username: string, password: string) => Promise<User>;
@@ -18,7 +19,13 @@ export interface IConversationUserUseCase {}
 
 export interface IConversationUseCase {}
 
-export interface IUseCasesConstructor extends IServicesPack {
+export interface IUseCasesConstructor {
+  userService: IUserService;
+  friendService: IFriendService;
+  conversationService: IConversationService;
+  conversationUserService: IConversationUserService;
+  messageService: IMessageService;
   password: IPassword;
   jsonWebToken: IJsonWebToken;
+  orm: Sequelize;
 }
