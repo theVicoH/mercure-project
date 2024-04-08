@@ -9,15 +9,6 @@ export interface ITransactions {
   addFriend: (userId: number, friendUsername: string)=> void
 }
 
-export interface IServicesPack {
-  userService: IUserService;
-  friendService: IFriendService;
-  conversationService: IConversationService;
-  conversationUserService: IConversationUserService;
-  messageService: IMessageService;
-}
-
-
 export interface IUserService {
   createUser: (
     username: string,
