@@ -15,27 +15,36 @@ export default class FriendService implements IFriendService {
     friendId: number,
     transaction?: Transaction
   ): Promise<Friend> {
-    const options: {
-      where: { userId: number; friendId: number };
-      transaction?: Transaction;
-    } = {
-      where: { userId, friendId },
-    };
+    
+    try {
+      const options: {
+        where: { userId: number; friendId: number };
+        transaction?: Transaction;
+      } = {
+        where: { userId, friendId },
+      };
 
-    if (transaction) {
-      options.transaction = transaction;
+      if (transaction) {
+        options.transaction = transaction;
+      }
+      const friendModel = (await FriendModel.findOne(
+        options
+      )) as FriendModelInstance;
+
+      if (!friendModel) {
+        throw new Error('Already Friend');
+      }
+
+      return new Friend(
+        friendModel.userId,
+        friendModel.friendId,
+        friendModel.createdAt
+      );
+  
+    } catch(error){
+      throw error;
     }
-    const friendModel = (await FriendModel.findOne(
-      options
-    )) as FriendModelInstance;
-    if (!friendModel) {
-      throw new Error('Friend not found');
-    }
-    return new Friend(
-      friendModel.userId,
-      friendModel.friendId,
-      friendModel.createdAt
-    );
+   
   }
 
   async createFriendConnection(
