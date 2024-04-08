@@ -1,24 +1,61 @@
-import IUserService from '../ports/librairies/services/IUserService';
-import IFriendUseCase from '../ports/useCases/IFriendUseCase';
-import IFriendService from '../ports/librairies/services/IFriendService';
+import { IFriendUseCase, IUseCasesConstructor } from '../types/IUseCases';
 
 export class FriendUseCase implements IFriendUseCase {
-  constructor(
-    private FriendService: IFriendService,
-    private UserService: IUserService
-  ) {}
+  constructor(private services: IUseCasesConstructor) {}
 
   async addFriend(userId: number, friendUsername: string) {
-    const friendFound = await this.UserService.findUser(friendUsername);
-    if (!friendFound) {
-      throw new Error("This user don' exist");
-    }
-    const friendId = friendFound.id;
+    const transaction = await this.services.orm.transaction();
+    try {
+      const friendFound =
+        await this.services.userService.findUser(friendUsername);
+      if (!friendFound) {
+        throw new Error("This user don't exist");
+      }
+      const friendId = friendFound.id;
 
-    const exists = await this.FriendService.checkFriendship(userId, friendId);
-    if (exists) {
-      throw new Error(`You are already friend with ${friendUsername}`);
+      const exists = await this.services.friendService.checkFriendship(
+        userId,
+        friendId,
+        transaction
+      );
+      if (exists) {
+        throw new Error(`You are already friend with ${friendUsername}`);
+      }
+      const friend = await this.services.friendService.createFriendConnection(
+        userId,
+        friendId,
+        transaction
+      );
+
+      const conversation =
+        await this.services.conversationService.createConversation(transaction);
+      if (!conversation) {
+        throw new Error("Can't create conversation");
+      }
+      const conversationUser =
+        await this.services.conversationUserService.createConversationUser(
+          conversation.id,
+          userId,
+          transaction
+        );
+      if (!conversationUser) {
+        throw new Error("Can't add user to the conversation");
+      }
+      const conversationFriend =
+        await this.services.conversationUserService.createConversationUser(
+          conversation.id,
+          friendId,
+          transaction
+        );
+      if (!conversationFriend) {
+        throw new Error("Can't add friend to the conversation");
+      }
+      await transaction.commit();
+
+      return friend;
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
     }
-    await this.FriendService.createFriendConnection(userId, friendId);
   }
 }

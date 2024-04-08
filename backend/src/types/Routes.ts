@@ -5,4 +5,5 @@ export enum PublicRoutes {
 
 export enum PrivateRoutes {
   AddFriend = '/add-friend',
+  SendMessage = '/send-message',
 }

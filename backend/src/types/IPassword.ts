@@ -1,4 +1,4 @@
-export default interface IPassword {
+export interface IPassword {
   hashPassword: (password: string) => Promise<string>;
   comparePassword: (
     password: string,

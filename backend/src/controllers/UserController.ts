@@ -1,5 +1,5 @@
-import IUserController from '../ports/controllers/IUserController';
-import IUserUseCase from '../ports/useCases/IUserUseCase';
+import { IUserController } from '../types/IControllers';
+import { IUserUseCase } from '../types/IUseCases';
 
 export class UserController implements IUserController {
   constructor(private userUseCase: IUserUseCase) {}

@@ -1,10 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { UserController } from '../../../controllers/UserController';
 import { UserUseCase } from '../../../userCases/UserUseCase';
-import UserService from '../../db/services/UserService';
-import { Password } from '../../bcrypt/Password';
-import { PublicRoutes } from '../../../routes/routes';
-import { JsonWebToken } from '../../jsonWebToken/JsonWebToken';
+import useCasesPack from '../../utils/UseCasesPack';
+import { PublicRoutes } from '../../../types/Routes';
 
 interface AuthRequestBody {
   username: string;
@@ -12,10 +10,7 @@ interface AuthRequestBody {
 }
 
 export async function userRoutes(fastify: FastifyInstance) {
-  const password = new Password();
-  const jsonWebToken = new JsonWebToken();
-  const userService = new UserService();
-  const userUseCase = new UserUseCase(userService, password, jsonWebToken);
+  const userUseCase = new UserUseCase(useCasesPack);
   const userController = new UserController(userUseCase);
 
   fastify.post<{ Body: AuthRequestBody }>(

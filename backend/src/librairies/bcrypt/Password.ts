@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import IPassword from '../../ports/librairies/password/IPassword';
+import { IPassword } from '../../types/IPassword';
 
 export class Password implements IPassword {
   async hashPassword(password: string): Promise<string> {
