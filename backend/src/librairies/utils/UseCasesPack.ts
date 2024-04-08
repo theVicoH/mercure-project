@@ -8,8 +8,7 @@ import MessageService from '../db/services/MessageService';
 import UserService from '../db/services/UserService';
 import { JsonWebToken } from '../jsonWebToken/JsonWebToken';
 
-
-const useCasesPack : IUseCasesConstructor = {
+const useCasesPack: IUseCasesConstructor = {
   userService: new UserService(),
   friendService: new FriendService(),
   conversationService: new ConversationService(),

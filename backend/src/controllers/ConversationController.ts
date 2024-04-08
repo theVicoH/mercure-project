@@ -1,4 +1,4 @@
-import { IConversationController } from "../types/IControllers";
+import { IConversationController } from '../types/IControllers';
 
 export class ConversationController implements IConversationController {
   constructor() {}

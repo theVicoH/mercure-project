@@ -15,24 +15,40 @@ export class FriendUseCase implements IFriendUseCase {
 
       const exists = await this.services.friendService.checkFriendship(
         userId,
-        friendId, transaction
+        friendId,
+        transaction
       );
       if (exists) {
         throw new Error(`You are already friend with ${friendUsername}`);
       }
-      const friend = await this.services.friendService.createFriendConnection(userId, friendId, transaction);
+      const friend = await this.services.friendService.createFriendConnection(
+        userId,
+        friendId,
+        transaction
+      );
 
-      const conversation = await this.services.conversationService.createConversation(transaction);
+      const conversation =
+        await this.services.conversationService.createConversation(transaction);
       if (!conversation) {
-        throw new Error("Can\'t create conversation");
+        throw new Error("Can't create conversation");
       }
-      const conversationUser = await this.services.conversationUserService.createConversationUser(conversation.id, userId, transaction);
+      const conversationUser =
+        await this.services.conversationUserService.createConversationUser(
+          conversation.id,
+          userId,
+          transaction
+        );
       if (!conversationUser) {
-        throw new Error("Can\'t add user to the conversation");
+        throw new Error("Can't add user to the conversation");
       }
-      const conversationFriend = await this.services.conversationUserService.createConversationUser(conversation.id, friendId, transaction);
+      const conversationFriend =
+        await this.services.conversationUserService.createConversationUser(
+          conversation.id,
+          friendId,
+          transaction
+        );
       if (!conversationFriend) {
-        throw new Error("Can\'t add friend to the conversation");
+        throw new Error("Can't add friend to the conversation");
       }
       await transaction.commit();
 
@@ -41,6 +57,5 @@ export class FriendUseCase implements IFriendUseCase {
       await transaction.rollback();
       throw error;
     }
-
   }
 }

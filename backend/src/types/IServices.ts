@@ -1,12 +1,11 @@
-
-import { Transaction } from "sequelize";
-import { Friend } from "../entities/FriendEntities";
-import { Conversation } from "../entities/ConversationEntities";
-import ConversationUser from "../entities/ConversationUserEntities";
-import { User } from "../entities/UserEntities";
+import { Transaction } from 'sequelize';
+import { Friend } from '../entities/FriendEntities';
+import { Conversation } from '../entities/ConversationEntities';
+import ConversationUser from '../entities/ConversationUserEntities';
+import { User } from '../entities/UserEntities';
 
 export interface ITransactions {
-  addFriend: (userId: number, friendUsername: string)=> void
+  addFriend: (userId: number, friendUsername: string) => void;
 }
 
 export interface IUserService {
@@ -19,7 +18,6 @@ export interface IUserService {
 }
 
 export interface IMessageService {}
-
 
 export interface IFriendService {
   checkFriendship: (
@@ -34,7 +32,6 @@ export interface IFriendService {
   ) => Promise<Friend>;
 }
 
-
 export interface IConversationUserService {
   createConversationUser: (
     conversationId: number,
@@ -42,8 +39,6 @@ export interface IConversationUserService {
     transaction?: Transaction
   ) => Promise<ConversationUser>;
 }
-
-
 
 export interface IConversationService {
   createConversation: (transaction?: Transaction) => Promise<Conversation>;

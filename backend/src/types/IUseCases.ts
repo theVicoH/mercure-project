@@ -1,8 +1,14 @@
-import { User } from "../entities/UserEntities";
-import { IJsonWebToken } from "./IJsonWebToken";
-import { IPassword } from "./IPassword";
-import { IConversationService, IConversationUserService, IFriendService, IMessageService, IUserService } from "./IServices";
-import { Sequelize, Transaction } from "sequelize";
+import { User } from '../entities/UserEntities';
+import { IJsonWebToken } from './IJsonWebToken';
+import { IPassword } from './IPassword';
+import {
+  IConversationService,
+  IConversationUserService,
+  IFriendService,
+  IMessageService,
+  IUserService,
+} from './IServices';
+import { Sequelize } from 'sequelize';
 
 export interface IUserUseCase {
   createUser: (username: string, password: string) => Promise<User>;
