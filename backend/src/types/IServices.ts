@@ -45,4 +45,5 @@ export interface IConversationUserService {
 
 export interface IConversationService {
   createConversation: (transaction?: Transaction) => Promise<Conversation>;
+  findConversation: (conversationId: number) => Promise<Conversation>;
 }
