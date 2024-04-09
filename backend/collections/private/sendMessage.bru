@@ -5,7 +5,18 @@ meta {
 }
 
 post {
-  url: 
-  body: none
-  auth: none
+  url: {{url}}/send-message
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{toke}}
+}
+
+body:json {
+  {
+    "conversationId": 9,
+    "message": "Hello"
+  }
 }
