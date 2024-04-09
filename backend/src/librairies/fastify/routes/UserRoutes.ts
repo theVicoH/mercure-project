@@ -2,7 +2,8 @@ import { FastifyInstance } from 'fastify';
 import { UserController } from '../../../controllers/UserController';
 import { UserUseCase } from '../../../userCases/UserUseCase';
 import useCasesPack from '../../utils/UseCasesPack';
-import { PublicRoutes } from '../../../types/Routes';
+import { PrivateRoutes, PublicRoutes } from '../../../types/Routes';
+import auth from '../middlewares/Auth';
 
 interface AuthRequestBody {
   username: string;
@@ -27,6 +28,20 @@ export async function userRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.login(username, password);
+      reply.code(result.code).send(result.body);
+    }
+  );
+
+  fastify.get(
+    PrivateRoutes.UserInfo, { preHandler: auth },
+    async (request, reply) => {
+      if (!request.user) {
+        return reply
+          .code(401)
+          .send({ error: 'Unauthorized: User ID is missing from the request' });
+      }
+      const userId = request.user.userId;
+      const result = await userController.getUserInfo(userId);
       reply.code(result.code).send(result.body);
     }
   );

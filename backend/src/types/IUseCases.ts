@@ -15,6 +15,7 @@ import { Sequelize } from 'sequelize';
 export interface IUserUseCase {
   createUser: (username: string, password: string) => Promise<User>;
   findUser: (username: string, password: string) => Promise<string>;
+  findUserById: (userId: number) => Promise<IUserInfo>;
 }
 
 export interface IMessageUseCase {
@@ -43,4 +44,9 @@ export interface IUseCasesConstructor {
   jsonWebToken: IJsonWebToken;
   orm: Sequelize;
   sse: IMercure;
+}
+
+export interface IUserInfo {
+  username: string;
+  createdAt: Date;
 }

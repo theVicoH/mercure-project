@@ -1,9 +1,10 @@
 import { FastifyInstance } from 'fastify';
-import { PrivateRoutes } from '../../../types/Routes';
 import auth from '../middlewares/Auth';
+import { PrivateRoutes } from '../../../types/Routes';
 import { MessageUseCase } from '../../../userCases/MessageUseCase';
 import { MessageController } from '../../../controllers/MessageController';
 import useCasesPack from '../../utils/UseCasesPack';
+
 
 interface MessageRequestBody {
   conversationId: number;

@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import { User } from '../entities/UserEntities';
-import { IUseCasesConstructor, IUserUseCase } from '../types/IUseCases';
+import { IUseCasesConstructor, IUserInfo, IUserUseCase } from '../types/IUseCases';
 
 config();
 export class UserUseCase implements IUserUseCase {
@@ -42,4 +42,16 @@ export class UserUseCase implements IUserUseCase {
     );
     return jwt;
   }
+
+  async findUserById(userId: number): Promise<IUserInfo> {
+    const userFound = await this.services.userService.findUserById(userId);  
+
+    const userInfo: IUserInfo = {
+      username: userFound.username,
+      createdAt: userFound.createdAt,
+    };
+
+    return userInfo;
+  }
+
 }

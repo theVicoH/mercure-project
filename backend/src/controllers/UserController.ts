@@ -35,4 +35,19 @@ export class UserController implements IUserController {
       }
     }
   }
+
+  async getUserInfo(userId: number) {
+    try {    
+        const userInfo = await this.userUseCase.findUserById(userId);
+
+        if (userInfo) {
+            return { code: 200, body: { message: 'User information retrieved successfully', data: userInfo } };
+        } else {
+            return { code: 404, body: { message: 'User not found' } };
+        }
+    } catch (error) {
+
+      return { code: 500, body: { message: 'Internal server error' } };
+    }
+  }
 }

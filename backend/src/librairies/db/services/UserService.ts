@@ -64,4 +64,27 @@ export default class UserService implements IUserService {
       modelUser.createdAt
     );
   }
+
+  async findUserById(userId: number, transaction?: Transaction): Promise<User> {
+    const options: { where: { id: number }; transaction?: Transaction } = {
+      where: { id: userId },
+    };
+  
+    if (transaction) {
+      options.transaction = transaction;
+    }
+  
+    const modelUser = (await UserModel.findOne(options)) as UserModelInstance;
+  
+    if (!modelUser) {
+      throw new Error('User not found');
+    }
+
+    return new User(
+      modelUser.id,
+      modelUser.username,
+      modelUser.password,
+      modelUser.createdAt
+    );
+  }
 }

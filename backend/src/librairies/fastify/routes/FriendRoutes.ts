@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import { PrivateRoutes } from '../../../types/Routes';
 import auth from '../middlewares/Auth';
 import { FriendUseCase } from '../../../userCases/FriendUseCase';
 import { FriendController } from '../../../controllers/FriendController';
 import useCasesPack from '../../utils/UseCasesPack';
+import { PrivateRoutes } from '../../../types/Routes';
 
 interface FriendRequestBody {
   friendUsername: string;
