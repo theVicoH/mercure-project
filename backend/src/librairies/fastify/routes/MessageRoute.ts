@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { PrivateRoutes } from '../../../types/Routes';
 import auth from '../middlewares/Auth';
+import { PrivateRoutes } from '../../../types/Routes';
 
 interface MessageRequestBody {
   conversationId: number;

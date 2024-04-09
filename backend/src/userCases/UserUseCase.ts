@@ -1,5 +1,5 @@
 import { User } from '../entities/UserEntities';
-import { IUseCasesConstructor, IUserUseCase } from '../types/IUseCases';
+import { IUseCasesConstructor, IUserInfo, IUserUseCase } from '../types/IUseCases';
 
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}
@@ -27,4 +27,16 @@ export class UserUseCase implements IUserUseCase {
     const jwt = this.services.jsonWebToken.signToken(userFound.id, expiration);
     return jwt;
   }
+
+  async findUserById(userId: number): Promise<IUserInfo> {
+    const userFound = await this.services.userService.findUserById(userId);  
+
+    const userInfo: IUserInfo = {
+      username: userFound.username,
+      createdAt: userFound.createdAt,
+    };
+
+    return userInfo;
+  }
+
 }

@@ -15,6 +15,7 @@ export interface IUserService {
     transaction?: Transaction
   ) => Promise<User>;
   findUser: (username: string, transaction?: Transaction) => Promise<User>;
+  findUserById: (userId: number, transaction?: Transaction) => Promise<User>;
 }
 
 export interface IMessageService {}
