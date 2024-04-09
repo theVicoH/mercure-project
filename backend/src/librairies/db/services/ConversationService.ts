@@ -17,4 +17,12 @@ export default class ConversationService implements IConversationService {
     )) as ConversationModelInstance;
     return new Conversation(modelConversation.id, modelConversation.createdAt);
   }
+
+  async findConversation(conversationId: number): Promise<Conversation> {
+    const modelConversation = (await ConversationModel.findByPk(conversationId)) as ConversationModelInstance;
+    if(!modelConversation){
+      throw new Error("Conversation not found");
+    }
+    return new Conversation(modelConversation.id, modelConversation.createdAt);
+  }
 }
