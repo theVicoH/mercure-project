@@ -3,6 +3,7 @@ import { Friend } from '../entities/FriendEntities';
 import { Conversation } from '../entities/ConversationEntities';
 import ConversationUser from '../entities/ConversationUserEntities';
 import { User } from '../entities/UserEntities';
+import { Message } from '../entities/MessageEntities';
 
 export interface ITransactions {
   addFriend: (userId: number, friendUsername: string) => void;
