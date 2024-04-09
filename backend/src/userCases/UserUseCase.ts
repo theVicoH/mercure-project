@@ -15,6 +15,10 @@ export class UserUseCase implements IUserUseCase {
 
   async findUser(username: string, password: string): Promise<string> {
     const userFound = await this.services.userService.findUser(username);
+    if (!userFound) {
+      throw new Error('User not found');
+    }
+
     const isMatch = await this.services.password.comparePassword(
       password,
       userFound.password
