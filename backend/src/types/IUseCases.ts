@@ -1,4 +1,3 @@
-import { Conversation } from '../entities/ConversationEntities';
 import { Message } from '../entities/MessageEntities';
 import { User } from '../entities/UserEntities';
 import { IJsonWebToken } from './IJsonWebToken';
@@ -19,7 +18,11 @@ export interface IUserUseCase {
 }
 
 export interface IMessageUseCase {
-  createMessage: (conversationId: number, senderId: number, message: string) => Promise<Message>;
+  createMessage: (
+    conversationId: number,
+    senderId: number,
+    message: string
+  ) => Promise<Message>;
 }
 
 export interface IFriendUseCase {
@@ -28,8 +31,7 @@ export interface IFriendUseCase {
 
 export interface IConversationUserUseCase {}
 
-export interface IConversationUseCase {
-}
+export interface IConversationUseCase {}
 
 export interface IUseCasesConstructor {
   userService: IUserService;

@@ -6,7 +6,11 @@ export class MessageController implements IMessageController {
 
   async sendMessage(conversationId: number, senderId: number, message: string) {
     try {
-      const messageData = await this.messageUseCase.createMessage(conversationId, senderId, message);
+      const messageData = await this.messageUseCase.createMessage(
+        conversationId,
+        senderId,
+        message
+      );
       return {
         code: 201,
         body: { message: 'Message successfully send', data: messageData },
@@ -18,5 +22,5 @@ export class MessageController implements IMessageController {
         return { code: 500, body: { message: 'An unknown error occurred' } };
       }
     }
-  };
+  }
 }

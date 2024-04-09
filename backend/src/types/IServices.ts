@@ -19,7 +19,11 @@ export interface IUserService {
 }
 
 export interface IMessageService {
-  createMessage: (conversationId: number, senderId: number, message: string) => Promise<Message>
+  createMessage: (
+    conversationId: number,
+    senderId: number,
+    message: string
+  ) => Promise<Message>;
 }
 
 export interface IFriendService {

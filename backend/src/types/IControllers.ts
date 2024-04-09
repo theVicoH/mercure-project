@@ -5,7 +5,11 @@ export interface IUserController {
 }
 
 export interface IMessageController {
-  sendMessage: (conversationId: number, senderId: number, message: string) => Promise<ResponseController>;
+  sendMessage: (
+    conversationId: number,
+    senderId: number,
+    message: string
+  ) => Promise<ResponseController>;
 }
 export interface IFriendController {
   addFriend: (

@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import { User } from '../entities/UserEntities';
 import { IUseCasesConstructor, IUserUseCase } from '../types/IUseCases';
 
-config()
+config();
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
@@ -35,7 +35,11 @@ export class UserUseCase implements IUserUseCase {
     }
 
     const expiration = Date.now() + 3 * 30 * 24 * 60 * 60 * 1000;
-    const jwt = this.services.jsonWebToken.signToken({ userId: userFound.id }, process.env.JWT_SECRET, expiration);
+    const jwt = this.services.jsonWebToken.signToken(
+      { userId: userFound.id },
+      process.env.JWT_SECRET,
+      expiration
+    );
     return jwt;
   }
 }
