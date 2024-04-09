@@ -6,6 +6,10 @@ export class FriendUseCase implements IFriendUseCase {
   async addFriend(userId: number, friendUsername: string) {
     const transaction = await this.services.orm.transaction();
     try {
+      const user = await this.services.userService.findUserById(userId)
+      if(user.username===friendUsername){
+        throw new Error("You can't be friend with yourself");
+      }
       const friendFound =
         await this.services.userService.findUser(friendUsername);
       if (!friendFound) {
