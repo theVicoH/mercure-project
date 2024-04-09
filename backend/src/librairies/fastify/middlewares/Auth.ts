@@ -10,11 +10,7 @@ declare module 'fastify' {
   }
 }
 
-const auth = async (
-  request: FastifyRequest,
-  reply: FastifyReply,
-  done: () => void
-) => {
+const auth = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const authHeader = request.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -29,7 +25,6 @@ const auth = async (
       userId: number;
     }; // Assurez-vous que le cast correspond à la structure de votre payload JWT
     request.user = decoded;
-    done();
   } catch (err) {
     reply.code(401).send({ error: 'Authentication failed' });
   }

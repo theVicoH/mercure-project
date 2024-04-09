@@ -32,6 +32,7 @@ const MessageModel = sequelize.define(
     message: {
       type: DataTypes.TEXT,
       allowNull: false,
+      field: 'message',
     },
     createdAt: {
       type: DataTypes.DATE,
