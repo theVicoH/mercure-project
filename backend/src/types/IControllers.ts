@@ -4,7 +4,9 @@ export interface IUserController {
   register: (username: string, password: string) => Promise<ResponseController>;
 }
 
-export interface IMessageController {}
+export interface IMessageController {
+  sendMessage: (conversationId: number, senderId: number, message: string) => Promise<ResponseController>;
+}
 export interface IFriendController {
   addFriend: (
     userId: number,
