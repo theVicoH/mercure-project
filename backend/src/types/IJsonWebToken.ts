@@ -1,3 +1,3 @@
 export interface IJsonWebToken {
-  signToken: (id: number, expirationDate: number) => string;
+  signToken: (payload: object, expirationDate: string, expiresIn: number) => string;
 }
