@@ -1,5 +1,8 @@
+import { Conversation } from '../entities/ConversationEntities';
+import { Message } from '../entities/MessageEntities';
 import { User } from '../entities/UserEntities';
 import { IJsonWebToken } from './IJsonWebToken';
+import { IMercure } from './IMercure';
 import { IPassword } from './IPassword';
 import {
   IConversationService,
@@ -25,7 +28,8 @@ export interface IFriendUseCase {
 
 export interface IConversationUserUseCase {}
 
-export interface IConversationUseCase {}
+export interface IConversationUseCase {
+}
 
 export interface IUseCasesConstructor {
   userService: IUserService;
@@ -36,4 +40,5 @@ export interface IUseCasesConstructor {
   password: IPassword;
   jsonWebToken: IJsonWebToken;
   orm: Sequelize;
+  sse: IMercure;
 }
