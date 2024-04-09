@@ -15,7 +15,9 @@ export interface IUserUseCase {
   findUser: (username: string, password: string) => Promise<string>;
 }
 
-export interface IMessageUseCase {}
+export interface IMessageUseCase {
+  createMessage: (conversationId: number, senderId: number, message: string) => Promise<Message>;
+}
 
 export interface IFriendUseCase {
   addFriend: (userId: number, friendUsername: string) => void;
