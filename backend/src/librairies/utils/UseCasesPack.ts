@@ -7,6 +7,7 @@ import FriendService from '../db/services/FriendService';
 import MessageService from '../db/services/MessageService';
 import UserService from '../db/services/UserService';
 import { JsonWebToken } from '../jsonWebToken/JsonWebToken';
+import { Mercure } from '../mercure/Mercure';
 
 const useCasesPack: IUseCasesConstructor = {
   userService: new UserService(),
@@ -17,6 +18,7 @@ const useCasesPack: IUseCasesConstructor = {
   password: new Password(),
   jsonWebToken: new JsonWebToken(),
   orm: sequelize,
+  sse: new Mercure(),
 };
 
 export default useCasesPack;

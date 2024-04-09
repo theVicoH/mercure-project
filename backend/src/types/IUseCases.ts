@@ -1,5 +1,7 @@
+import { Message } from '../entities/MessageEntities';
 import { User } from '../entities/UserEntities';
 import { IJsonWebToken } from './IJsonWebToken';
+import { IMercure } from './IMercure';
 import { IPassword } from './IPassword';
 import {
   IConversationService,
@@ -16,7 +18,13 @@ export interface IUserUseCase {
   findUserById: (userId: number) => Promise<IUserInfo>;
 }
 
-export interface IMessageUseCase {}
+export interface IMessageUseCase {
+  createMessage: (
+    conversationId: number,
+    senderId: number,
+    message: string
+  ) => Promise<Message>;
+}
 
 export interface IFriendUseCase {
   addFriend: (userId: number, friendUsername: string) => void;
@@ -35,6 +43,7 @@ export interface IUseCasesConstructor {
   password: IPassword;
   jsonWebToken: IJsonWebToken;
   orm: Sequelize;
+  sse: IMercure;
 }
 
 export interface IUserInfo {
