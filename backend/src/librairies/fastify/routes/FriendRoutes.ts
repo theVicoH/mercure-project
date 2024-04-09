@@ -20,7 +20,7 @@ export async function friendRoutes(fastify: FastifyInstance) {
       if (!request.user) {
         return reply
           .code(401)
-          .send({ error: 'Unauthorized: User ID is missing from the request' });
+          .send({ error: 'Unauthorized: User is missing from the request' });
       }
       const result = await friendController.addFriend(
         request.user.userId,
