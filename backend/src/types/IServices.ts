@@ -17,7 +17,9 @@ export interface IUserService {
   findUser: (username: string, transaction?: Transaction) => Promise<User>;
 }
 
-export interface IMessageService {}
+export interface IMessageService {
+  createMessage: (conversationId: number, senderId: number, message: string) => Promise<Message>
+}
 
 export interface IFriendService {
   checkFriendship: (
