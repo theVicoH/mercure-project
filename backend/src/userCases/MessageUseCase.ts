@@ -2,7 +2,7 @@ import { IMessageUseCase, IMessageWithUsername, IUseCasesConstructor } from '../
 
 export class MessageUseCase implements IMessageUseCase {
   constructor(private services: IUseCasesConstructor) {}
-  async createMessage(
+  public async createMessage(
     conversationId: number,
     senderId: number,
     message: string
@@ -46,7 +46,7 @@ export class MessageUseCase implements IMessageUseCase {
     return messageWithUsername;
   }
 
-  async messageFeed(conversationId: number) {
+  public async messageFeed(conversationId: number) {
     const messages = await this.services.messageService.findAllMessage(conversationId);
     return messages;
   }

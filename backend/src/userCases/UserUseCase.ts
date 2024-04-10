@@ -6,7 +6,7 @@ config();
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
-  async createUser(username: string, password: string): Promise<User> {
+  public async createUser(username: string, password: string): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);
     const createdUser = await this.services.userService.createUser(
       username,
@@ -15,7 +15,7 @@ export class UserUseCase implements IUserUseCase {
     return createdUser;
   }
 
-  async findUser(username: string, password: string): Promise<string> {
+  public async findUser(username: string, password: string): Promise<string> {
     const userFound = await this.services.userService.findUser(username);
     if (!userFound) {
       throw new Error('User not found');
@@ -43,7 +43,7 @@ export class UserUseCase implements IUserUseCase {
     return jwt;
   }
 
-  async findUserById(userId: number): Promise<IUserInfo> {
+  public async findUserById(userId: number): Promise<IUserInfo> {
     const userFound = await this.services.userService.findUserById(userId);  
 
     const userInfo: IUserInfo = {
