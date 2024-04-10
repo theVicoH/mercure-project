@@ -13,7 +13,7 @@ import {
 import { Sequelize } from 'sequelize';
 
 export interface IUserUseCase {
-  createUser: (username: string, password: string) => Promise<User>;
+  createUser: (username: string, password: string, photo: Buffer) => Promise<User>;
   findUser: (username: string, password: string) => Promise<string>;
   findUserById: (userId: number) => Promise<IUserInfo>;
 }
@@ -51,6 +51,7 @@ export interface IUseCasesConstructor {
 
 export interface IUserInfo {
   username: string;
+  photo: Buffer;
   createdAt: Date;
 }
 

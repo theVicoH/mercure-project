@@ -7,6 +7,7 @@ interface UserModelInstance extends Model {
   id: number;
   username: string;
   password: string;
+  photo: Buffer;
   createdAt: Date;
 }
 
@@ -14,6 +15,7 @@ export default class UserService implements IUserService {
   public async createUser(
     username: string,
     password: string,
+    photo: Buffer,
     transaction?: Transaction
   ): Promise<User> {
     try {
@@ -22,6 +24,7 @@ export default class UserService implements IUserService {
         {
           username,
           password,
+          photo
         },
         options
       )) as UserModelInstance;
@@ -30,6 +33,7 @@ export default class UserService implements IUserService {
         modelUser.id,
         modelUser.username,
         modelUser.password,
+        modelUser.photo,
         modelUser.createdAt
       );
     } catch (error) {
@@ -61,6 +65,7 @@ export default class UserService implements IUserService {
       modelUser.id,
       modelUser.username,
       modelUser.password,
+      modelUser.photo,
       modelUser.createdAt
     );
   }
@@ -84,6 +89,7 @@ export default class UserService implements IUserService {
       modelUser.id,
       modelUser.username,
       modelUser.password,
+      modelUser.photo,
       modelUser.createdAt
     );
   }
