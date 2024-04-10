@@ -11,7 +11,7 @@ interface UserModelInstance extends Model {
 }
 
 export default class UserService implements IUserService {
-  async createUser(
+  public async createUser(
     username: string,
     password: string,
     transaction?: Transaction
@@ -41,7 +41,7 @@ export default class UserService implements IUserService {
     }
   }
 
-  async findUser(username: string, transaction?: Transaction): Promise<User> {
+  public async findUser(username: string, transaction?: Transaction): Promise<User> {
     const options: FindOptions =
       {
         where: { username },

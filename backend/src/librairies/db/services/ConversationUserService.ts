@@ -11,7 +11,7 @@ interface ConversationUserModelInstance extends Model {
 export default class ConversationUserService
   implements IConversationUserService
 {
-  async createConversationUser(
+  public async createConversationUser(
     conversationId: number,
     userId: number,
     transaction?: Transaction
