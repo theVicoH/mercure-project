@@ -18,6 +18,10 @@ const UserModel = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    photo: {
+      type: DataTypes.BLOB,
+      allowNull: false,
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',
