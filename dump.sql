@@ -28,6 +28,7 @@ CREATE TABLE messages (
     conversation_id INT REFERENCES conversations(id) ON DELETE CASCADE,
     sender_id INT REFERENCES users(id) ON DELETE CASCADE,
     message TEXT NOT NULL,
+    read BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
