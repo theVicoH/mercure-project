@@ -3,7 +3,7 @@ import { IMercure } from '../../types/IMercure';
 
 config();
 export class Mercure implements IMercure {
-  async publish<T>(topic: string, data: T, jwt: string) {
+  async publish<T>(topic: string, data: T, jwt: string) : Promise<void> {
     const mercureUrl = 'http://mercure:80/.well-known/mercure';
 
     await fetch(mercureUrl, {

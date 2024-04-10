@@ -34,6 +34,11 @@ const MessageModel = sequelize.define(
       allowNull: false,
       field: 'message',
     },
+    read: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: 'read',
+    },
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,

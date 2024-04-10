@@ -1,3 +1,4 @@
+import { Message } from '../entities/MessageEntities';
 import { IMessageUseCase, IMessageWithUsername, IUseCasesConstructor } from '../types/IUseCases';
 
 export class MessageUseCase implements IMessageUseCase {
@@ -6,7 +7,7 @@ export class MessageUseCase implements IMessageUseCase {
     conversationId: number,
     senderId: number,
     message: string
-  ) {
+  ) : Promise<IMessageWithUsername>{
     await this.services.conversationService.findConversation(conversationId);
     const createdMessage = await this.services.messageService.createMessage(
       conversationId,
@@ -33,6 +34,7 @@ export class MessageUseCase implements IMessageUseCase {
         senderId: createdMessage.senderId,
         username: senderPseudo.username,
         message: createdMessage.message,
+        read: createdMessage.read,
         createdAt: createdMessage.createdAt,
       },
       process.env.MERCURE_JWT
@@ -46,7 +48,11 @@ export class MessageUseCase implements IMessageUseCase {
     return messageWithUsername;
   }
 
-  public async messageFeed(conversationId: number) {
+  public async messageFeed(conversationId: number) : Promise<Message[]>{
+    const conversation = await this.services.conversationService.findConversation(conversationId)
+    if(!conversation){
+      throw new Error("Conversation not found")
+    }
     const messages = await this.services.messageService.findAllMessage(conversationId);
     return messages;
   }

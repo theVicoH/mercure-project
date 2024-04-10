@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{url}}/messages-feed/9
+  url: {{url}}/messages-feed/1
   body: none
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
