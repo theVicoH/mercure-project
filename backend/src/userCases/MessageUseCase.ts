@@ -24,7 +24,7 @@ export class MessageUseCase implements IMessageUseCase {
         'MERCURE_JWT is not defined in the environment variables'
       );
     }
-    console.log(senderPseudo.username)
+
     await this.services.sse.publish<IMessageWithUsername>(
       `/conversations/${conversationId}`,
       {
