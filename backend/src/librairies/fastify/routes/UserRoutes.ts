@@ -5,25 +5,31 @@ import useCasesPack from '../../utils/UseCasesPack';
 import { PrivateRoutes, PublicRoutes } from '../../../types/Routes';
 import auth from '../middlewares/Auth';
 
-interface AuthRequestBody {
+interface AuthRegisterRequestBody {
+  username: string;
+  password: string;
+  photo: string;
+}
+interface AuthLoginRequestBody {
   username: string;
   password: string;
 }
-
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase(useCasesPack);
   const userController = new UserController(userUseCase);
 
-  fastify.post<{ Body: AuthRequestBody }>(
+  fastify.post<{ Body: AuthRegisterRequestBody }>(
     PublicRoutes.Register,
     async (request, reply) => {
-      const { username, password } = request.body;
-      const result = await userController.register(username, password);
+      const { username, password, photo } = request.body;
+      const base64Data = photo.split(';base64,').pop() || '';
+      const photoBuffer = Buffer.from(base64Data, 'base64');
+      const result = await userController.register(username, password, photoBuffer);
       reply.code(result.code).send(result.body);
     }
   );
 
-  fastify.post<{ Body: AuthRequestBody }>(
+  fastify.post<{ Body: AuthLoginRequestBody }>(
     PublicRoutes.Login,
     async (request, reply) => {
       const { username, password } = request.body;
