@@ -14,7 +14,7 @@ export default class FriendService implements IFriendService {
     userId: number,
     friendId: number,
     transaction?: Transaction
-  ): Promise<Friend> {
+  ): Promise<Friend | null> {
     const options: FindOptions = {
       where: { userId, friendId },
     };
@@ -27,7 +27,7 @@ export default class FriendService implements IFriendService {
     )) as FriendModelInstance;
 
     if (!friendModel) {
-      throw new Error('Already Friend');
+      return null;
     }
 
     return new Friend(

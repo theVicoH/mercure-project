@@ -49,6 +49,10 @@ export class MessageUseCase implements IMessageUseCase {
   }
 
   public async messageFeed(conversationId: number) : Promise<Message[]>{
+    const conversation = await this.services.conversationService.findConversation(conversationId)
+    if(!conversation){
+      throw new Error("Conversation not found")
+    }
     const messages = await this.services.messageService.findAllMessage(conversationId);
     return messages;
   }

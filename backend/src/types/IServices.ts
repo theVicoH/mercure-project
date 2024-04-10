@@ -35,7 +35,7 @@ export interface IFriendService {
     userId: number,
     friendId: number,
     transaction?: Transaction
-  ) => Promise<Friend>;
+  ) => Promise<Friend | null>;
   createFriendConnection: (
     userId: number,
     friendId: number,
