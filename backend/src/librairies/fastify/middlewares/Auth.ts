@@ -23,7 +23,7 @@ const auth = async (request: FastifyRequest, reply: FastifyReply) => {
     const token = authHeader.substring(7);
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       userId: number;
-    }; // Assurez-vous que le cast correspond à la structure de votre payload JWT
+    };
     request.user = decoded;
   } catch (err) {
     reply.code(401).send({ error: 'Authentication failed' });

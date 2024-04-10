@@ -14,6 +14,7 @@ interface MessageRequestBody {
 export async function messageRoutes(fastify: FastifyInstance) {
   const messageUseCase = new MessageUseCase(useCasesPack);
   const messageController = new MessageController(messageUseCase);
+  
   fastify.post<{ Body: MessageRequestBody }>(
     PrivateRoutes.SendMessage,
     { preHandler: auth },
