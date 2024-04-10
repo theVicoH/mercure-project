@@ -2,11 +2,11 @@ import bcrypt from 'bcryptjs';
 import { IPassword } from '../../types/IPassword';
 
 export class Password implements IPassword {
-  async hashPassword(password: string): Promise<string> {
+  public async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 10);
   }
 
-  async comparePassword(
+  public async comparePassword(
     password: string,
     hashedPassword: string
   ): Promise<boolean> {
