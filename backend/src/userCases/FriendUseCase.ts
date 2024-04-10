@@ -3,7 +3,7 @@ import { IFriendUseCase, IUseCasesConstructor } from '../types/IUseCases';
 export class FriendUseCase implements IFriendUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
-  async addFriend(userId: number, friendUsername: string) {
+  public async addFriend(userId: number, friendUsername: string) {
     const transaction = await this.services.orm.transaction();
     try {
       const user = await this.services.userService.findUserById(userId)

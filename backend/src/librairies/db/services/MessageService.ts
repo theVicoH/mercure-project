@@ -12,7 +12,7 @@ interface MessageModelInstance extends Model {
 }
 
 export default class MessageService implements IMessageService {
-  async createMessage(
+  public async createMessage(
     conversationId: number,
     senderId: number,
     message: string,
@@ -37,7 +37,7 @@ export default class MessageService implements IMessageService {
     );
   }
 
-  async findAllMessage(conversationId: number, transaction?: Transaction): Promise<Message[]> {
+  public async findAllMessage(conversationId: number, transaction?: Transaction): Promise<Message[]> {
     const options: FindOptions = {
       where: { conversationId },
       order: [['createdAt', 'ASC']] as OrderItem[],

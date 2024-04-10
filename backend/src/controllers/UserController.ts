@@ -1,10 +1,12 @@
+import { User } from '../entities/UserEntities';
 import { IUserController } from '../types/IControllers';
-import { IUserUseCase } from '../types/IUseCases';
+import { IUserInfo, IUserUseCase } from '../types/IUseCases';
+import { ResponseController } from '../types/Response';
 
 export class UserController implements IUserController {
   constructor(private userUseCase: IUserUseCase) {}
 
-  async register(username: string, password: string) {
+  public async register(username: string, password: string) : Promise<ResponseController<User>> {
     try {
       const newUser = await this.userUseCase.createUser(username, password);
       return {
@@ -20,7 +22,7 @@ export class UserController implements IUserController {
     }
   }
 
-  async login(username: string, password: string) {
+  public async login(username: string, password: string) : Promise<ResponseController<string>> {
     try {
       const jwt = await this.userUseCase.findUser(username, password);
       return {
@@ -36,7 +38,7 @@ export class UserController implements IUserController {
     }
   }
 
-  async getUserInfo(userId: number) {
+  public async getUserInfo(userId: number) : Promise<ResponseController<IUserInfo>> {
     try {    
         const userInfo = await this.userUseCase.findUserById(userId);
 

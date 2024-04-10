@@ -10,7 +10,7 @@ interface FriendModelInstance extends Model {
 }
 
 export default class FriendService implements IFriendService {
-  async checkFriendship(
+  public async checkFriendship(
     userId: number,
     friendId: number,
     transaction?: Transaction
@@ -37,7 +37,7 @@ export default class FriendService implements IFriendService {
     );
   }
 
-  async createFriendConnection(
+  public async createFriendConnection(
     userId: number,
     friendId: number,
     transaction?: Transaction

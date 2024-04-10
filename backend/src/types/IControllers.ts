@@ -1,9 +1,12 @@
+import { Message } from '../entities/MessageEntities';
+import { User } from '../entities/UserEntities';
+import { IMessageWithUsername, IUserInfo } from './IUseCases';
 import { ResponseController } from './Response';
 
 export interface IUserController {
-  register: (username: string, password: string) => Promise<ResponseController>;
-  login: (username: string, password: string) => Promise<ResponseController>;
-  getUserInfo: (userId: number) => Promise<ResponseController>;
+  register: (username: string, password: string) => Promise<ResponseController<User>>;
+  login: (username: string, password: string) => Promise<ResponseController<string>>;
+  getUserInfo: (userId: number) => Promise<ResponseController<IUserInfo>>;
 }
 
 export interface IMessageController {
@@ -11,10 +14,10 @@ export interface IMessageController {
     conversationId: number,
     senderId: number,
     message: string
-  ) => Promise<ResponseController>;
+  ) => Promise<ResponseController<IMessageWithUsername>>;
   messageFeed: (
     conversation: number
-  ) => Promise<ResponseController>
+  ) => Promise<ResponseController<Message[]>>
 }
 export interface IFriendController {
   addFriend: (
