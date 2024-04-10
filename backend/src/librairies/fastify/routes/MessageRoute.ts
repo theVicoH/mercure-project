@@ -11,10 +11,14 @@ interface MessageRequestBody {
   message: string;
 }
 
+interface MessageRouteParams {
+  id: number;
+}
+
 export async function messageRoutes(fastify: FastifyInstance) {
   const messageUseCase = new MessageUseCase(useCasesPack);
   const messageController = new MessageController(messageUseCase);
-  
+
   fastify.post<{ Body: MessageRequestBody }>(
     PrivateRoutes.SendMessage,
     { preHandler: auth },
@@ -29,6 +33,23 @@ export async function messageRoutes(fastify: FastifyInstance) {
         conversationId,
         request.user.userId,
         message
+      );
+      reply.code(result.code).send(result.body);
+    }
+  );
+
+  fastify.get<{ Params: MessageRouteParams }>(
+    PrivateRoutes.MessagesFeed,
+    { preHandler: auth },
+    async (request, reply) => {
+      const { id: conversationId } = request.params;
+      if (!request.user) {
+        return reply
+          .code(401)
+          .send({ error: 'Unauthorized: User is missing from the request' });
+      }
+      const result = await messageController.messageFeed(
+        conversationId
       );
       reply.code(result.code).send(result.body);
     }
