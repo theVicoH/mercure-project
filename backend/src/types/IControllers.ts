@@ -12,6 +12,9 @@ export interface IMessageController {
     senderId: number,
     message: string
   ) => Promise<ResponseController>;
+  messageFeed: (
+    conversation: number
+  ) => Promise<ResponseController>
 }
 export interface IFriendController {
   addFriend: (

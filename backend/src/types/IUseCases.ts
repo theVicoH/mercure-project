@@ -23,7 +23,10 @@ export interface IMessageUseCase {
     conversationId: number,
     senderId: number,
     message: string
-  ) => Promise<MessageWithUsername>;
+  ) => Promise<IMessageWithUsername>;
+  messageFeed: (
+    conversationId: number
+  ) => Promise<Message[]>;
 }
 
 export interface IFriendUseCase {
@@ -51,6 +54,6 @@ export interface IUserInfo {
   createdAt: Date;
 }
 
-export interface MessageWithUsername extends Message {
+export interface IMessageWithUsername extends Message {
   username: string
 }

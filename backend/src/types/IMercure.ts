@@ -1,3 +1,3 @@
 export interface IMercure {
-  publish: (topic: string, data: unknown, jwt: string) => void;
+  publish: <T>(topic: string, data: T, jwt: string)=> void;
 }

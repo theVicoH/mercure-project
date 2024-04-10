@@ -1,4 +1,4 @@
-import { IMessageUseCase, IUseCasesConstructor } from '../types/IUseCases';
+import { IMessageUseCase, IMessageWithUsername, IUseCasesConstructor } from '../types/IUseCases';
 
 export class MessageUseCase implements IMessageUseCase {
   constructor(private services: IUseCasesConstructor) {}
@@ -24,14 +24,15 @@ export class MessageUseCase implements IMessageUseCase {
         'MERCURE_JWT is not defined in the environment variables'
       );
     }
-    await this.services.sse.publish(
+
+    await this.services.sse.publish<IMessageWithUsername>(
       `/conversations/${conversationId}`,
       {
         id: createdMessage.id,
         conversationId: createdMessage.conversationId,
         senderId: createdMessage.senderId,
         username: senderPseudo.username,
-        message: createdMessage.senderId,
+        message: createdMessage.message,
         createdAt: createdMessage.createdAt,
       },
       process.env.MERCURE_JWT
@@ -43,5 +44,10 @@ export class MessageUseCase implements IMessageUseCase {
     } 
     
     return messageWithUsername;
+  }
+
+  async messageFeed(conversationId: number) {
+    const messages = await this.services.messageService.findAllMessage(conversationId);
+    return messages;
   }
 }
