@@ -25,6 +25,9 @@ export interface IMessageService {
     senderId: number,
     message: string
   ) => Promise<Message>;
+  findAllMessage: (
+    conversationId: number,
+  ) => Promise<Message[]>;
 }
 
 export interface IFriendService {
