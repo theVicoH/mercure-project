@@ -1,4 +1,4 @@
-import { Model, Transaction } from 'sequelize';
+import { FindOptions, Model, Transaction } from 'sequelize';
 import { Friend } from '../../../entities/FriendEntities';
 import FriendModel from '../models/FriendModel';
 import { IFriendService } from '../../../types/IServices';
@@ -15,10 +15,7 @@ export default class FriendService implements IFriendService {
     friendId: number,
     transaction?: Transaction
   ): Promise<Friend> {
-    const options: {
-      where: { userId: number; friendId: number };
-      transaction?: Transaction;
-    } = {
+    const options: FindOptions = {
       where: { userId, friendId },
     };
 

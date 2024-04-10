@@ -1,4 +1,4 @@
-import { Model, Transaction, UniqueConstraintError } from 'sequelize';
+import { FindOptions, Model, Transaction, UniqueConstraintError } from 'sequelize';
 import { User } from '../../../entities/UserEntities';
 import UserModel from '../models/UserModel';
 import { IUserService } from '../../../types/IServices';
@@ -42,7 +42,7 @@ export default class UserService implements IUserService {
   }
 
   async findUser(username: string, transaction?: Transaction): Promise<User> {
-    const options: { where: { username: string }; transaction?: Transaction } =
+    const options: FindOptions =
       {
         where: { username },
       };
@@ -66,7 +66,7 @@ export default class UserService implements IUserService {
   }
 
   async findUserById(userId: number, transaction?: Transaction): Promise<User> {
-    const options: { where: { id: number }; transaction?: Transaction } = {
+    const options: FindOptions = {
       where: { id: userId },
     };
   
