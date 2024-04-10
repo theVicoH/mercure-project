@@ -45,4 +45,9 @@ export class MessageUseCase implements IMessageUseCase {
     
     return messageWithUsername;
   }
+
+  async messageFeed(conversationId: number) {
+    const messages = await this.services.messageService.findAllMessage(conversationId);
+    return messages;
+  }
 }

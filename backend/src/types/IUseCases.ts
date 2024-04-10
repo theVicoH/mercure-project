@@ -24,6 +24,9 @@ export interface IMessageUseCase {
     senderId: number,
     message: string
   ) => Promise<IMessageWithUsername>;
+  messageFeed: (
+    conversationId: number
+  ) => Promise<Message[]>;
 }
 
 export interface IFriendUseCase {
