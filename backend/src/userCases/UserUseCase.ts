@@ -6,11 +6,12 @@ config();
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
-  public async createUser(username: string, password: string): Promise<User> {
+  public async createUser(username: string, password: string, photo: Buffer): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);
     const createdUser = await this.services.userService.createUser(
       username,
-      hashedPassword
+      hashedPassword,
+      photo
     );
     return createdUser;
   }
@@ -48,6 +49,7 @@ export class UserUseCase implements IUserUseCase {
 
     const userInfo: IUserInfo = {
       username: userFound.username,
+      photo: userFound.photo,
       createdAt: userFound.createdAt,
     };
 
