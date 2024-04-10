@@ -8,6 +8,7 @@ interface MessageModelInstance extends Model {
   conversationId: number;
   senderId: number;
   message: string;
+  read: boolean;
   createdAt: Date;
 }
 
@@ -33,6 +34,7 @@ export default class MessageService implements IMessageService {
       messageModel.conversationId,
       messageModel.senderId,
       messageModel.message,
+      messageModel.read,
       messageModel.createdAt
     );
   }
@@ -54,6 +56,7 @@ export default class MessageService implements IMessageService {
       model.conversationId,
       model.senderId,
       model.message,
+      model.read,
       model.createdAt
     ));
   }

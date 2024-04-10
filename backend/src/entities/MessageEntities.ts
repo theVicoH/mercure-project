@@ -3,6 +3,7 @@ export class Message {
   public conversationId: number;
   public senderId: number;
   public message: string;
+  public read: boolean;
   public createdAt: Date;
 
   constructor(
@@ -10,12 +11,14 @@ export class Message {
     conversationId: number,
     senderId: number,
     message: string,
+    read: boolean,
     createdAt: Date
   ) {
     this.id = id;
     this.conversationId = conversationId;
     this.senderId = senderId;
     this.message = message;
+    this.read = read;
     this.createdAt = createdAt;
   }
 }
