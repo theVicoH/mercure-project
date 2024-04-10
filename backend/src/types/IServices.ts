@@ -13,6 +13,7 @@ export interface IUserService {
   createUser: (
     username: string,
     password: string,
+    photo: Buffer,
     transaction?: Transaction
   ) => Promise<User>;
   findUser: (username: string, transaction?: Transaction) => Promise<User>;
