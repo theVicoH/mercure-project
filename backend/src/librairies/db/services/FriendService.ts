@@ -56,4 +56,28 @@ export default class FriendService implements IFriendService {
       friendModel.createdAt
     );
   }
+
+  async findFriendsByUserId(userId: number, transaction?: Transaction): Promise<Friend[]> {
+    const options: FindOptions = {
+      where: { user_id: userId },
+    };
+  
+    if (transaction) {
+      options.transaction = transaction;
+    }
+  
+    const modelFriends = (await FriendModel.findAll(options)) as FriendModelInstance[];
+  
+    if (!modelFriends || modelFriends.length === 0) {
+      throw new Error('No friends found for the given user ID');
+    }
+
+    return modelFriends.map((friendModel: Friend) => {
+      return new Friend(
+        friendModel.userId,
+        friendModel.friendId,
+        friendModel.createdAt
+      );
+    });
+  }
 }
