@@ -47,6 +47,10 @@ export class UserUseCase implements IUserUseCase {
   public async findUserById(userId: number): Promise<IUserInfo> {
     const userFound = await this.services.userService.findUserById(userId);  
 
+    if (!userFound) {
+      throw new Error('User not found');
+    }
+
     const userInfo: IUserInfo = {
       username: userFound.username,
       photo: userFound.photo,
