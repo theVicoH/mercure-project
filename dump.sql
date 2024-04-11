@@ -34,3 +34,12 @@ CREATE TABLE messages (
 );
 
 CREATE INDEX idx_messages_created_at ON messages (created_at);
+
+CREATE TABLE notifications (
+    id SERIAL PRIMARY KEY,
+    recipient_id INT REFERENCES users(id) ON DELETE CASCADE,
+    message VARCHAR(255) NOT NULL, 
+    type VARCHAR(50) NOT NULL, 
+    read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
