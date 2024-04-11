@@ -5,7 +5,10 @@ import { ResponseController } from '../types/Response';
 export class FriendController implements IFriendController {
   constructor(private friendUseCase: IFriendUseCase) {}
 
-  public async addFriend(userId: number, friendUsername: string) : Promise<ResponseController> {
+  public async addFriend(
+    userId: number,
+    friendUsername: string
+  ): Promise<ResponseController> {
     try {
       await this.friendUseCase.addFriend(userId, friendUsername);
 

@@ -1,12 +1,20 @@
 import { config } from 'dotenv';
 import { User } from '../entities/UserEntities';
-import { IUseCasesConstructor, IUserInfo, IUserUseCase } from '../types/IUseCases';
+import {
+  IUseCasesConstructor,
+  IUserInfo,
+  IUserUseCase,
+} from '../types/IUseCases';
 
 config();
 export class UserUseCase implements IUserUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
-  public async createUser(username: string, password: string, photo: Buffer): Promise<User> {
+  public async createUser(
+    username: string,
+    password: string,
+    photo: Buffer
+  ): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);
     const createdUser = await this.services.userService.createUser(
       username,
@@ -45,7 +53,7 @@ export class UserUseCase implements IUserUseCase {
   }
 
   public async findUserById(userId: number): Promise<IUserInfo> {
-    const userFound = await this.services.userService.findUserById(userId);  
+    const userFound = await this.services.userService.findUserById(userId);
 
     const userInfo: IUserInfo = {
       username: userFound.username,
@@ -55,5 +63,4 @@ export class UserUseCase implements IUserUseCase {
 
     return userInfo;
   }
-
 }

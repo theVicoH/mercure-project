@@ -6,9 +6,17 @@ import { ResponseController } from '../types/Response';
 export class UserController implements IUserController {
   constructor(private userUseCase: IUserUseCase) {}
 
-  public async register(username: string, password: string, photo: Buffer) : Promise<ResponseController<User>> {
+  public async register(
+    username: string,
+    password: string,
+    photo: Buffer
+  ): Promise<ResponseController<User>> {
     try {
-      const newUser = await this.userUseCase.createUser(username, password, photo);
+      const newUser = await this.userUseCase.createUser(
+        username,
+        password,
+        photo
+      );
       return {
         code: 201,
         body: { message: 'User successfully registered', data: newUser },
@@ -22,7 +30,10 @@ export class UserController implements IUserController {
     }
   }
 
-  public async login(username: string, password: string) : Promise<ResponseController<string>> {
+  public async login(
+    username: string,
+    password: string
+  ): Promise<ResponseController<string>> {
     try {
       const jwt = await this.userUseCase.findUser(username, password);
       return {
@@ -38,17 +49,24 @@ export class UserController implements IUserController {
     }
   }
 
-  public async getUserInfo(userId: number) : Promise<ResponseController<IUserInfo>> {
-    try {    
+  public async getUserInfo(
+    userId: number
+  ): Promise<ResponseController<IUserInfo>> {
+    try {
       const userInfo = await this.userUseCase.findUserById(userId);
 
       if (userInfo) {
-          return { code: 200, body: { message: 'User information retrieved successfully', data: userInfo } };
+        return {
+          code: 200,
+          body: {
+            message: 'User information retrieved successfully',
+            data: userInfo,
+          },
+        };
       } else {
-          return { code: 404, body: { message: 'User not found' } };
+        return { code: 404, body: { message: 'User not found' } };
       }
     } catch (error) {
-
       return { code: 500, body: { message: 'Internal server error' } };
     }
   }

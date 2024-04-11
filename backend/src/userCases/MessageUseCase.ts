@@ -1,5 +1,9 @@
 import { Message } from '../entities/MessageEntities';
-import { IMessageUseCase, IMessageWithUsername, IUseCasesConstructor } from '../types/IUseCases';
+import {
+  IMessageUseCase,
+  IMessageWithUsername,
+  IUseCasesConstructor,
+} from '../types/IUseCases';
 
 export class MessageUseCase implements IMessageUseCase {
   constructor(private services: IUseCasesConstructor) {}
@@ -7,18 +11,16 @@ export class MessageUseCase implements IMessageUseCase {
     conversationId: number,
     senderId: number,
     message: string
-  ) : Promise<IMessageWithUsername>{
+  ): Promise<IMessageWithUsername> {
     await this.services.conversationService.findConversation(conversationId);
     const createdMessage = await this.services.messageService.createMessage(
       conversationId,
       senderId,
       message
     );
-    const senderPseudo = await this.services.userService.findUserById(senderId)
+    const senderPseudo = await this.services.userService.findUserById(senderId);
     if (!senderPseudo.username) {
-      throw new Error(
-        'Can\'t find sender username'
-      );
+      throw new Error("Can't find sender username");
     }
     if (!process.env.MERCURE_JWT) {
       throw new Error(
@@ -42,18 +44,20 @@ export class MessageUseCase implements IMessageUseCase {
 
     const messageWithUsername = {
       ...createdMessage,
-      username: senderPseudo.username
-    } 
-    
+      username: senderPseudo.username,
+    };
+
     return messageWithUsername;
   }
 
-  public async messageFeed(conversationId: number) : Promise<Message[]>{
-    const conversation = await this.services.conversationService.findConversation(conversationId)
-    if(!conversation){
-      throw new Error("Conversation not found")
+  public async messageFeed(conversationId: number): Promise<Message[]> {
+    const conversation =
+      await this.services.conversationService.findConversation(conversationId);
+    if (!conversation) {
+      throw new Error('Conversation not found');
     }
-    const messages = await this.services.messageService.findAllMessage(conversationId);
+    const messages =
+      await this.services.messageService.findAllMessage(conversationId);
     return messages;
   }
 }

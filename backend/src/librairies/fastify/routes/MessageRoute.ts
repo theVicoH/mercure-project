@@ -5,7 +5,6 @@ import { MessageUseCase } from '../../../userCases/MessageUseCase';
 import { MessageController } from '../../../controllers/MessageController';
 import useCasesPack from '../../utils/UseCasesPack';
 
-
 interface MessageRequestBody {
   conversationId: number;
   message: string;
@@ -48,9 +47,7 @@ export async function messageRoutes(fastify: FastifyInstance) {
           .code(401)
           .send({ error: 'Unauthorized: User is missing from the request' });
       }
-      const result = await messageController.messageFeed(
-        conversationId
-      );
+      const result = await messageController.messageFeed(conversationId);
       reply.code(result.code).send(result.body);
     }
   );

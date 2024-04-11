@@ -4,11 +4,14 @@ import { IFriendUseCase, IUseCasesConstructor } from '../types/IUseCases';
 export class FriendUseCase implements IFriendUseCase {
   constructor(private services: IUseCasesConstructor) {}
 
-  public async addFriend(userId: number, friendUsername: string) : Promise<Friend>{
+  public async addFriend(
+    userId: number,
+    friendUsername: string
+  ): Promise<Friend> {
     const transaction = await this.services.orm.transaction();
     try {
-      const user = await this.services.userService.findUserById(userId)
-      if(user.username===friendUsername){
+      const user = await this.services.userService.findUserById(userId);
+      if (user.username === friendUsername) {
         throw new Error("You can't be friend with yourself");
       }
       const friendFound =
