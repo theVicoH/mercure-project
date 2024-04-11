@@ -1,5 +1,6 @@
 import { Message } from '../entities/MessageEntities';
 import { User } from '../entities/UserEntities';
+import { Notification } from '../entities/NotificationEntities';
 import { IJsonWebToken } from './IJsonWebToken';
 import { IMercure } from './IMercure';
 import { IPassword } from './IPassword';
@@ -8,6 +9,7 @@ import {
   IConversationUserService,
   IFriendService,
   IMessageService,
+  INotificationService,
   IUserService,
 } from './IServices';
 import { Sequelize } from 'sequelize';
@@ -29,8 +31,14 @@ export interface IMessageUseCase {
   ) => Promise<Message[]>;
 }
 
+export interface INotificationUseCase {
+  createNotification: (userId: number, recipientId: number, type: string) => Promise<Notification>; 
+  findNotificationsByUserId: (userId: number) => Promise<Notification[]>;
+}
+
 export interface IFriendUseCase {
   addFriend: (userId: number, friendUsername: string) => void;
+  findFriendsByUserId: (userId: number) => Promise<IUserInfo[]>;
 }
 
 export interface IConversationUserUseCase {}
@@ -43,6 +51,7 @@ export interface IUseCasesConstructor {
   conversationService: IConversationService;
   conversationUserService: IConversationUserService;
   messageService: IMessageService;
+  notificationService: INotificationService;
   password: IPassword;
   jsonWebToken: IJsonWebToken;
   orm: Sequelize;
