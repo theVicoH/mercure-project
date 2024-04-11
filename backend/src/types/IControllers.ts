@@ -24,6 +24,15 @@ export interface IFriendController {
     userId: number,
     friendUsername: string
   ) => Promise<ResponseController>;
+  getAllFriends: (userId: number) => Promise<ResponseController<IUserInfo[]>>;
+}
+
+export interface INotificationController {
+  generateNotification: (
+    userId: number,
+    recipientId: number,
+    type: string
+  ) => Promise<ResponseController>;
 }
 
 export interface IConversationUserController {}
