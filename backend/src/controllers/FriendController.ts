@@ -1,5 +1,5 @@
 import { IFriendController } from '../types/IControllers';
-import { IFriendUseCase } from '../types/IUseCases';
+import { IFriendUseCase, IUserInfo } from '../types/IUseCases';
 import { ResponseController } from '../types/Response';
 
 export class FriendController implements IFriendController {
@@ -19,6 +19,21 @@ export class FriendController implements IFriendController {
       } else {
         return { code: 500, body: { message: 'An unknown error occurred' } };
       }
+    }
+  }
+
+  public async getAllFriends(userId: number) : Promise<ResponseController<IUserInfo[]>> {
+    try {    
+      const friendsInfo = await this.friendUseCase.findFriendsByUserId(userId);
+
+      if (friendsInfo) {
+          return { code: 200, body: { message: 'Friends informations retrieved successfully', data: friendsInfo } };
+      } else {
+          return { code: 404, body: { message: 'Friends not found' } };
+      }
+    } catch (error) {
+
+      return { code: 500, body: { message: 'Internal server error' } };
     }
   }
 }
