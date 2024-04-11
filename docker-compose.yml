@@ -20,8 +20,8 @@ services:
     restart: unless-stopped
     environment:
       SERVER_NAME: ':80'
-      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_JWT_KEY}
-      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_JWT_KEY}
+      MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_JWT}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_JWT}
     command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
     ports:
       - '8080:80'
