@@ -29,4 +29,18 @@ export async function friendRoutes(fastify: FastifyInstance) {
       reply.code(result.code).send(result.body);
     }
   );
+
+  fastify.get(
+    PrivateRoutes.FriendsInfo, { preHandler: auth },
+    async (request, reply) => {
+      if (!request.user) {
+        return reply
+          .code(401)
+          .send({ error: 'Unauthorized: User ID is missing from the request' });
+      }
+      const userId = request.user.userId;
+      const result = await friendController.getAllFriends(userId);
+      reply.code(result.code).send(result.body);
+    }
+  );
 }
