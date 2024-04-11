@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import { userRoutes } from './routes/UserRoutes';
 import { friendRoutes } from './routes/FriendRoutes';
 import { messageRoutes } from './routes/MessageRoute';
+import { notificationRoutes } from './routes/NotificationRoutes';
 
 config();
 
@@ -10,6 +11,7 @@ const server = fastify({ logger: true });
 server.register(userRoutes);
 server.register(friendRoutes);
 server.register(messageRoutes);
+server.register(notificationRoutes);
 
 const start = async (db: () => void) => {
   try {
