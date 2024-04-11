@@ -1,5 +1,5 @@
 import { Friend } from '../entities/FriendEntities';
-import { IFriendUseCase, IUseCasesConstructor } from '../types/IUseCases';
+import { IFriendUseCase, IUseCasesConstructor, IUserInfo } from '../types/IUseCases';
 
 export class FriendUseCase implements IFriendUseCase {
   constructor(private services: IUseCasesConstructor) {}
@@ -62,5 +62,28 @@ export class FriendUseCase implements IFriendUseCase {
       await transaction.rollback();
       throw error;
     }
+  }
+
+  public async findFriendsByUserId(userId: number): Promise<IUserInfo[]> {
+    const friendsFound = await this.services.friendService.findFriendsByUserId(userId);  
+
+    if (!friendsFound || friendsFound.length === 0) {
+      throw new Error('Friends not found');
+    }
+    
+    const friendsInfoPromises: Promise<IUserInfo>[] = friendsFound.map(async (friend) => {
+    
+      const friendUser = await this.services.userService.findUserById(friend.friendId);
+      
+      return {
+        username: friendUser.username,
+        photo: friendUser.photo,
+        createdAt: friend.createdAt,
+      };
+    });
+
+    const friendsInfo = await Promise.all(friendsInfoPromises);
+
+    return friendsInfo;
   }
 }
