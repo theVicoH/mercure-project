@@ -9,7 +9,9 @@ interface ConversationModelInstance extends Model {
 }
 
 export default class ConversationService implements IConversationService {
-  public async createConversation(transaction?: Transaction): Promise<Conversation> {
+  public async createConversation(
+    transaction?: Transaction
+  ): Promise<Conversation> {
     const options = transaction ? { transaction } : undefined;
     const modelConversation = (await ConversationModel.create(
       {},

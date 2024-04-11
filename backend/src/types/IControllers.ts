@@ -4,8 +4,15 @@ import { IMessageWithUsername, IUserInfo } from './IUseCases';
 import { ResponseController } from './Response';
 
 export interface IUserController {
-  register: (username: string, password: string, photo: Buffer) => Promise<ResponseController<User>>;
-  login: (username: string, password: string) => Promise<ResponseController<string>>;
+  register: (
+    username: string,
+    password: string,
+    photo: Buffer
+  ) => Promise<ResponseController<User>>;
+  login: (
+    username: string,
+    password: string
+  ) => Promise<ResponseController<string>>;
   getUserInfo: (userId: number) => Promise<ResponseController<IUserInfo>>;
 }
 
@@ -15,9 +22,7 @@ export interface IMessageController {
     senderId: number,
     message: string
   ) => Promise<ResponseController<IMessageWithUsername>>;
-  messageFeed: (
-    conversation: number
-  ) => Promise<ResponseController<Message[]>>
+  messageFeed: (conversation: number) => Promise<ResponseController<Message[]>>;
 }
 export interface IFriendController {
   addFriend: (

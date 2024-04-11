@@ -6,7 +6,11 @@ import { ResponseController } from '../types/Response';
 export class MessageController implements IMessageController {
   constructor(private messageUseCase: IMessageUseCase) {}
 
-  public async sendMessage(conversationId: number, senderId: number, message: string) : Promise<ResponseController<IMessageWithUsername>> {
+  public async sendMessage(
+    conversationId: number,
+    senderId: number,
+    message: string
+  ): Promise<ResponseController<IMessageWithUsername>> {
     try {
       const messageData = await this.messageUseCase.createMessage(
         conversationId,
@@ -26,16 +30,22 @@ export class MessageController implements IMessageController {
     }
   }
 
-  public async messageFeed(conversationId: number) : Promise<ResponseController<Message[]>>{
+  public async messageFeed(
+    conversationId: number
+  ): Promise<ResponseController<Message[]>> {
     try {
-      const allMessages = await this.messageUseCase.messageFeed(
-        conversationId
-      );
+      const allMessages = await this.messageUseCase.messageFeed(conversationId);
 
       if (allMessages) {
-        return { code: 200, body: { message: 'All Messages retrieved successfully', data: allMessages } };
+        return {
+          code: 200,
+          body: {
+            message: 'All Messages retrieved successfully',
+            data: allMessages,
+          },
+        };
       } else {
-          return { code: 404, body: { message: 'Message not found' } };
+        return { code: 404, body: { message: 'Message not found' } };
       }
     } catch (error) {
       if (error instanceof Error) {

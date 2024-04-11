@@ -39,7 +39,10 @@ export default class MessageService implements IMessageService {
     );
   }
 
-  public async findAllMessage(conversationId: number, transaction?: Transaction): Promise<Message[]> {
+  public async findAllMessage(
+    conversationId: number,
+    transaction?: Transaction
+  ): Promise<Message[]> {
     const options: FindOptions = {
       where: { conversationId },
       order: [['createdAt', 'ASC']] as OrderItem[],
@@ -49,15 +52,20 @@ export default class MessageService implements IMessageService {
       options.transaction = transaction;
     }
 
-    const messageModels = (await MessageModel.findAll(options)) as MessageModelInstance[];
-    
-    return messageModels.map(model => new Message(
-      model.id,
-      model.conversationId,
-      model.senderId,
-      model.message,
-      model.read,
-      model.createdAt
-    ));
+    const messageModels = (await MessageModel.findAll(
+      options
+    )) as MessageModelInstance[];
+
+    return messageModels.map(
+      model =>
+        new Message(
+          model.id,
+          model.conversationId,
+          model.senderId,
+          model.message,
+          model.read,
+          model.createdAt
+        )
+    );
   }
 }

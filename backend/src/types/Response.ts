@@ -45,4 +45,6 @@ export interface ErrorResponse {
   };
 }
 
-export type ResponseController<T = undefined> = SuccessResponse<T> | ErrorResponse;
+export type ResponseController<T = undefined> =
+  | SuccessResponse<T>
+  | ErrorResponse;

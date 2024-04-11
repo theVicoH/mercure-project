@@ -13,7 +13,11 @@ import {
 import { Sequelize } from 'sequelize';
 
 export interface IUserUseCase {
-  createUser: (username: string, password: string, photo: Buffer) => Promise<User>;
+  createUser: (
+    username: string,
+    password: string,
+    photo: Buffer
+  ) => Promise<User>;
   findUser: (username: string, password: string) => Promise<string>;
   findUserById: (userId: number) => Promise<IUserInfo>;
 }
@@ -24,9 +28,7 @@ export interface IMessageUseCase {
     senderId: number,
     message: string
   ) => Promise<IMessageWithUsername>;
-  messageFeed: (
-    conversationId: number
-  ) => Promise<Message[]>;
+  messageFeed: (conversationId: number) => Promise<Message[]>;
 }
 
 export interface IFriendUseCase {
@@ -56,5 +58,5 @@ export interface IUserInfo {
 }
 
 export interface IMessageWithUsername extends Message {
-  username: string
+  username: string;
 }

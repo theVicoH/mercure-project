@@ -24,7 +24,11 @@ export async function userRoutes(fastify: FastifyInstance) {
       const { username, password, photo } = request.body;
       const base64Data = photo.split(';base64,').pop() || '';
       const photoBuffer = Buffer.from(base64Data, 'base64');
-      const result = await userController.register(username, password, photoBuffer);
+      const result = await userController.register(
+        username,
+        password,
+        photoBuffer
+      );
       reply.code(result.code).send(result.body);
     }
   );
@@ -39,7 +43,8 @@ export async function userRoutes(fastify: FastifyInstance) {
   );
 
   fastify.get(
-    PrivateRoutes.UserInfo, { preHandler: auth },
+    PrivateRoutes.UserInfo,
+    { preHandler: auth },
     async (request, reply) => {
       if (!request.user) {
         return reply
