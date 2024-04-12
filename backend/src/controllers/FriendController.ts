@@ -26,14 +26,14 @@ export class FriendController implements IFriendController {
     try {    
       const friendsInfo = await this.friendUseCase.findFriendsByUserId(userId);
 
-      if (friendsInfo) {
-          return { code: 200, body: { message: 'Friends informations retrieved successfully', data: friendsInfo } };
-      } else {
-          return { code: 404, body: { message: 'Friends not found' } };
-      }
+      return { code: 200, body: { message: 'Friends informations retrieved successfully', data: friendsInfo } };
+      
     } catch (error) {
-
-      return { code: 500, body: { message: 'Internal server error' } };
-    }
+        if (error instanceof Error && error.message === 'Friends not found') {
+          return { code: 404, body: { message: error.message } };
+        } else {
+          return { code: 500, body: { message: 'An unknown error occurred' } };
+        }
+      }
   }
 }
