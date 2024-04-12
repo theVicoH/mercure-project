@@ -9,6 +9,5 @@ export enum PrivateRoutes {
   SendMessage = '/send-message',
   MessagesFeed = '/messages-feed/:id',
   UserInfo = '/user-info',
-  GenerateNotification = '/generate-notification',
-  displayNotifications = '/display-notifications',
+  UsersInConversation = '/users-in-conversation/:id',
 }
