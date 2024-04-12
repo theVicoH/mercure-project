@@ -67,7 +67,7 @@ export class FriendUseCase implements IFriendUseCase {
   public async findFriendsByUserId(userId: number): Promise<IUserInfo[]> {
     const friendsFound = await this.services.friendService.findFriendsByUserId(userId);  
 
-    if (!friendsFound || friendsFound.length === 0) {
+    if (!friendsFound || friendsFound.length === 0 || friendsFound === null) {
       throw new Error('Friends not found');
     }
     
