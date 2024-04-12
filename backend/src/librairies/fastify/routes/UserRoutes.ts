@@ -14,6 +14,10 @@ interface AuthLoginRequestBody {
   username: string;
   password: string;
 }
+
+interface UsersRouteParams {
+  id: number;
+}
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase(useCasesPack);
   const userController = new UserController(userUseCase);
@@ -48,6 +52,20 @@ export async function userRoutes(fastify: FastifyInstance) {
       }
       const userId = request.user.userId;
       const result = await userController.getUserInfo(userId);
+      reply.code(result.code).send(result.body);
+    }
+  );
+
+  fastify.get<{ Params: UsersRouteParams }>(
+    PrivateRoutes.UsersInConversation, { preHandler: auth },
+    async (request, reply) => {
+      const { id: conversationId } = request.params;
+      if (!request.user) {
+        return reply
+          .code(401)
+          .send({ error: 'Unauthorized: User ID is missing from the request' });
+      }
+      const result = await userController.getAllUsersInConversation(conversationId);
       reply.code(result.code).send(result.body);
     }
   );
