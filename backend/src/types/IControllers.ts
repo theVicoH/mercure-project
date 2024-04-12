@@ -2,6 +2,7 @@ import { Message } from '../entities/MessageEntities';
 import { User } from '../entities/UserEntities';
 import { IMessageWithUsername, IUserInfo } from './IUseCases';
 import { ResponseController } from './Response';
+import { ConversationCustomTypes } from './types';
 
 export interface IUserController {
   register: (
@@ -33,4 +34,8 @@ export interface IFriendController {
 
 export interface IConversationUserController {}
 
-export interface IConversationController {}
+export interface IConversationController {
+  userConversationsList: (
+    userId: number
+  ) => Promise<ResponseController<ConversationCustomTypes[]>>;
+}

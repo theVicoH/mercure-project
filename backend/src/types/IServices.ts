@@ -1,9 +1,10 @@
-import { Transaction } from 'sequelize';
+import { Model, Transaction, Optional } from 'sequelize';
 import { Friend } from '../entities/FriendEntities';
 import { Conversation } from '../entities/ConversationEntities';
 import ConversationUser from '../entities/ConversationUserEntities';
 import { User } from '../entities/UserEntities';
 import { Message } from '../entities/MessageEntities';
+import { ConversationCustomTypes } from './types';
 
 export interface ITransactions {
   addFriend: (userId: number, friendUsername: string) => void;
@@ -52,5 +53,52 @@ export interface IConversationUserService {
 
 export interface IConversationService {
   createConversation: (transaction?: Transaction) => Promise<Conversation>;
-  findConversation: (conversationId: number) => Promise<Conversation>;
+  findConversation: (
+    conversationId: number,
+    transaction?: Transaction
+  ) => Promise<Conversation>;
+  findConversationsByUserId: (
+    userId: number,
+    transaction?: Transaction
+  ) => Promise<ConversationCustomTypes[]>;
+}
+
+interface UserAttributes {
+  id: number;
+  username: string;
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+
+interface UserInstance
+  extends Model<UserAttributes, UserCreationAttributes>,
+    UserAttributes {}
+
+interface ConversationAttributes {
+  id: number;
+}
+
+interface ConversationCreationAttributes
+  extends Optional<ConversationAttributes, 'id'> {}
+
+export interface ConversationInstance
+  extends Model<ConversationAttributes, ConversationCreationAttributes>,
+    ConversationAttributes {
+  Participants?: UserInstance[];
+  Messages?: MessageInstance[];
+}
+
+interface MessageAttributes {
+  id: number;
+  message: string;
+  createdAt: Date;
+  read: boolean;
+}
+
+interface MessageCreationAttributes extends Optional<MessageAttributes, 'id'> {}
+
+interface MessageInstance
+  extends Model<MessageAttributes, MessageCreationAttributes>,
+    MessageAttributes {
+  User?: UserInstance; // Single user associated with the message
 }

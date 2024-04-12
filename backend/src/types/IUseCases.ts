@@ -11,6 +11,7 @@ import {
   IUserService,
 } from './IServices';
 import { Sequelize } from 'sequelize';
+import { ConversationCustomTypes } from './types';
 
 export interface IUserUseCase {
   createUser: (
@@ -37,7 +38,9 @@ export interface IFriendUseCase {
 
 export interface IConversationUserUseCase {}
 
-export interface IConversationUseCase {}
+export interface IConversationUseCase {
+  findUserConversations: (userId: number) => Promise<ConversationCustomTypes[]>;
+}
 
 export interface IUseCasesConstructor {
   userService: IUserService;
