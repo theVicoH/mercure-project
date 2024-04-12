@@ -4,7 +4,6 @@ import { Conversation } from '../entities/ConversationEntities';
 import ConversationUser from '../entities/ConversationUserEntities';
 import { User } from '../entities/UserEntities';
 import { Message } from '../entities/MessageEntities';
-import { Notification } from '../entities/NotificationEntities';
 
 export interface ITransactions {
   addFriend: (userId: number, friendUsername: string) => void;
@@ -19,6 +18,7 @@ export interface IUserService {
   ) => Promise<User>;
   findUser: (username: string, transaction?: Transaction) => Promise<User>;
   findUserById: (userId: number, transaction?: Transaction) => Promise<User>;
+  findUsersByConversationId: (conversationId: number, transaction?: Transaction) => Promise<ConversationUser[] | null>;
 }
 
 export interface IMessageService {
@@ -32,11 +32,6 @@ export interface IMessageService {
   ) => Promise<Message[]>;
 }
 
-export interface INotificationService {
-  createNotification: (recipientId: number, type:string, message: string, transaction?: Transaction) => Promise<Notification>;
-  findNotificationsByUserId: (userId: number) => Promise<Notification[]>;
-}
-
 export interface IFriendService {
   checkFriendship: (
     userId: number,
@@ -48,7 +43,7 @@ export interface IFriendService {
     friendId: number,
     transaction?: Transaction
   ) => Promise<Friend>;
-  findFriendsByUserId: (userId: number, transaction?: Transaction) => Promise<Friend[]>;
+  findFriendsByUserId: (userId: number, transaction?: Transaction) => Promise<Friend[] | null>;
 }
 
 export interface IConversationUserService {
