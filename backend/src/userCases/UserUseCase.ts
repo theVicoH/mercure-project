@@ -60,4 +60,28 @@ export class UserUseCase implements IUserUseCase {
     return userInfo;
   }
 
+  public async findUsersByConversationId(conversationId: number): Promise<IUserInfo[]> {
+    const usersFound = await this.services.userService.findUsersByConversationId(conversationId); 
+
+    console.log('usersFound :'+usersFound);
+
+    if (!usersFound || usersFound.length === 0 || usersFound === null) {
+      throw new Error('The users of the conversation not found');
+    }
+    
+    const usersInfoPromises: Promise<IUserInfo>[] = usersFound.map(async (user) => {
+    
+      const User = await this.services.userService.findUserById(user.userId);
+      
+      return {
+        username: User.username,
+        photo: User.photo,
+        createdAt: User.createdAt,
+      };
+    });
+
+    const usersInfo = await Promise.all(usersInfoPromises);
+
+    return usersInfo;
+  }
 }
