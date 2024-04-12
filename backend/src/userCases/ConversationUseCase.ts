@@ -7,16 +7,13 @@ export class ConversationUseCase implements IConversationUseCase {
   public async findUserConversations(
     userId: number
   ): Promise<ConversationCustomTypes[]> {
-    console.log(false);
 
     const conversations =
       await this.services.conversationService.findConversationsByUserId(userId);
-    console.log(conversations);
 
     if (!conversations) {
       throw new Error('No conversations found');
     }
-    console.log(conversations);
     return conversations;
   }
 }

@@ -84,8 +84,6 @@ export default class ConversationService implements IConversationService {
       options
     )) as ConversationInstance[];
 
-    console.log(JSON.stringify(conversations, null, 2));
-
     conversations = conversations.sort((a, b) => {
       const aLastMsgTime = a.Messages && a.Messages[0] ? a.Messages[0].createdAt.getTime() : 0;
       const bLastMsgTime = b.Messages && b.Messages[0] ? b.Messages[0].createdAt.getTime() : 0;
@@ -96,8 +94,6 @@ export default class ConversationService implements IConversationService {
     return conversations.map(conv => {
       const friend = conv.Participants?.find(p => p.id !== userId);
       const lastMessage = conv.Messages?.[0];
-      console.log(friend, 'Friend Data');
-      console.log(lastMessage, 'Last Message Data');
 
       return {
         id: conv.id,

@@ -19,7 +19,6 @@ export async function conversationRoutes(fastify: FastifyInstance) {
           .code(401)
           .send({ error: 'Unauthorized: User is missing from the request' });
       }
-      console.log(true);
       const result = await conversationController.userConversationsList(
         request.user.userId
       );
