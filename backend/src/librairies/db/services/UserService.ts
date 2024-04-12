@@ -2,6 +2,8 @@ import { FindOptions, Model, Transaction, UniqueConstraintError } from 'sequeliz
 import { User } from '../../../entities/UserEntities';
 import UserModel from '../models/UserModel';
 import { IUserService } from '../../../types/IServices';
+import ConversationUserModel from '../models/ConversationUserModel';
+import ConversationUser from '../../../entities/ConversationUserEntities';
 
 interface UserModelInstance extends Model {
   id: number;
@@ -9,6 +11,11 @@ interface UserModelInstance extends Model {
   password: string;
   photo: Buffer;
   createdAt: Date;
+}
+
+interface ConversationUserModelInstance extends Model {
+  userId: number;
+  conversationId: number;
 }
 
 export default class UserService implements IUserService {
@@ -92,5 +99,28 @@ export default class UserService implements IUserService {
       modelUser.photo,
       modelUser.createdAt
     );
+  }
+
+  async findUsersByConversationId(conversationId: number, transaction?: Transaction): Promise<ConversationUser[] | null> {
+    const options: FindOptions = {
+      where: { conversation_id: conversationId },
+    };
+  
+    if (transaction) {
+      options.transaction = transaction;
+    }
+  
+    const modelConversationUsers = (await ConversationUserModel.findAll(options)) as ConversationUserModelInstance[];
+  
+    if (!modelConversationUsers || modelConversationUsers.length === 0) {
+      return null;
+    }
+
+    return modelConversationUsers.map((ConversationUserModel: ConversationUser) => {
+      return new ConversationUser(
+        ConversationUserModel.conversationId,
+        ConversationUserModel.userId,
+      );
+    });
   }
 }
