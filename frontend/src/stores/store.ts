@@ -9,7 +9,7 @@ const store = configureStore({
     showToaster: toasterNotifReducer,
     userProfil: userProfilReducer,
   },
-  middleware: (getDefaultMiddleware) => {
+  middleware: getDefaultMiddleware => {
     return getDefaultMiddleware({
       serializableCheck: false,
     });

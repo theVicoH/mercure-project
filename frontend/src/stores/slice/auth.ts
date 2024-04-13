@@ -18,14 +18,20 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setJwtToken: (state, action: PayloadAction<{ token: string; expiration: number }>) => {
+    setJwtToken: (
+      state,
+      action: PayloadAction<{ token: string; expiration: number }>
+    ) => {
       state.token = action.payload.token;
       state.expiration = action.payload.expiration;
 
       localStorage.setItem('authToken', action.payload.token || '');
-      localStorage.setItem('authTokenExpiration', action.payload.expiration.toString());
+      localStorage.setItem(
+        'authTokenExpiration',
+        action.payload.expiration.toString()
+      );
     },
-    removeJwtToken: (state) => {
+    removeJwtToken: state => {
       state.token = undefined;
       state.expiration = undefined;
 
@@ -33,7 +39,7 @@ export const authSlice = createSlice({
       localStorage.removeItem('authTokenExpiration');
     },
     // Ajoutez une action pour vérifier et supprimer le jeton expiré
-    checkAndRemoveExpiredToken: (state) => {
+    checkAndRemoveExpiredToken: state => {
       if (isTokenExpired(state.expiration)) {
         state.token = undefined;
         state.expiration = undefined;
@@ -45,6 +51,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setJwtToken, removeJwtToken, checkAndRemoveExpiredToken } = authSlice.actions;
+export const { setJwtToken, removeJwtToken, checkAndRemoveExpiredToken } =
+  authSlice.actions;
 
 export default authSlice.reducer;

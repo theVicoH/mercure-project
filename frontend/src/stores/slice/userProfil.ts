@@ -17,9 +17,9 @@ const userProfil = createSlice({
       state.pseudo = action.payload.pseudo;
       state.photo = action.payload.photo;
       localStorage.setItem('pseudo', action.payload.pseudo || '');
-      localStorage.setItem('photo', action.payload.photo || "");
+      localStorage.setItem('photo', action.payload.photo || '');
     },
-    clearUserProfil: (state) => {
+    clearUserProfil: state => {
       state.pseudo = '';
       state.photo = undefined;
       localStorage.removeItem('pseudo');
