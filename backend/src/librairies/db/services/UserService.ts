@@ -1,12 +1,15 @@
 import {
   FindOptions,
   Model,
+  Op,
   Transaction,
   UniqueConstraintError,
 } from 'sequelize';
 import { User } from '../../../entities/UserEntities';
 import UserModel from '../models/UserModel';
 import { IUserService } from '../../../types/IServices';
+import ConversationUserModel from '../models/ConversationUserModel';
+import ConversationModel from '../models/ConversationModel';
 
 interface UserModelInstance extends Model {
   id: number;
@@ -91,6 +94,36 @@ export default class UserService implements IUserService {
     if (!modelUser) {
       throw new Error('User not found');
     }
+
+    return new User(
+      modelUser.id,
+      modelUser.username,
+      modelUser.password,
+      modelUser.photo,
+      modelUser.createdAt
+    );
+  }
+
+  async findFriendInConversation(myUserId: number, conversationId: number, transaction?: Transaction) : Promise<User | null> {
+    const options: FindOptions = {
+      where: { id: conversationId },
+      include: [{
+        model: ConversationUserModel,
+        required: true,
+        include: [{
+          model: UserModel,
+          where: {
+            id: { [Op.ne]: myUserId }
+          },
+        }]
+      }]
+    }
+
+    if (transaction) {
+      options.transaction = transaction;
+    }
+
+    const modelUser = (await ConversationModel.findOne(options)) as UserModelInstance;
 
     return new User(
       modelUser.id,

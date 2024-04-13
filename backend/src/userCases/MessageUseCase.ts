@@ -2,6 +2,7 @@ import { Message } from '../entities/MessageEntities';
 import {
   IMessageUseCase,
   IMessageWithUsername,
+  INotifcation,
   IUseCasesConstructor,
 } from '../types/IUseCases';
 
@@ -18,13 +19,20 @@ export class MessageUseCase implements IMessageUseCase {
       senderId,
       message
     );
-    const senderPseudo = await this.services.userService.findUserById(senderId);
-    if (!senderPseudo.username) {
+    const sender = await this.services.userService.findUserById(senderId);
+    if (!sender.username) {
       throw new Error("Can't find sender username");
     }
     if (!process.env.MERCURE_JWT) {
       throw new Error(
         'MERCURE_JWT is not defined in the environment variables'
+      );
+    }
+
+    const friend = await this.services.userService.findFriendInConversation(senderId, conversationId)
+    if (!friend) {
+      throw new Error(
+        'Friend not found'
       );
     }
 
@@ -34,7 +42,7 @@ export class MessageUseCase implements IMessageUseCase {
         id: createdMessage.id,
         conversationId: createdMessage.conversationId,
         senderId: createdMessage.senderId,
-        username: senderPseudo.username,
+        username: sender.username,
         message: createdMessage.message,
         read: createdMessage.read,
         createdAt: createdMessage.createdAt,
@@ -42,9 +50,21 @@ export class MessageUseCase implements IMessageUseCase {
       process.env.MERCURE_JWT
     );
 
+    await this.services.sse.publish<INotifcation>(
+      `/notification/${friend.id}`,
+      {
+        id: sender.id,
+        conversationId: createdMessage.conversationId,
+        username: sender.username,
+        photo: sender.photo,
+        message: createdMessage.message,
+      },
+      process.env.MERCURE_JWT
+    );
+
     const messageWithUsername = {
       ...createdMessage,
-      username: senderPseudo.username,
+      username: sender.username,
     };
 
     return messageWithUsername;

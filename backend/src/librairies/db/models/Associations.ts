@@ -18,4 +18,10 @@ export default function setupAssociations() {
     through: ConversationUserModel,
     foreignKey: 'conversationId',
   });
+  ConversationModel.hasMany(ConversationUserModel, { foreignKey: 'conversationId' });
+  ConversationUserModel.belongsTo(ConversationModel, { foreignKey: 'conversationId' });
+
+  // In ConversationUserModel
+  ConversationUserModel.belongsTo(UserModel, { foreignKey: 'userId' });
+  UserModel.hasMany(ConversationUserModel, { foreignKey: 'userId' });
 }
