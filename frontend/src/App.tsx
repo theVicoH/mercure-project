@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import ConversationPage from "./pages/conversation";
+import { RoutesPath } from './types/routes';
 
 function App() {
   const queryClient = new QueryClient();
@@ -11,9 +12,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/conversations/:id" element={<ConversationPage />} />
+          <Route path={RoutesPath.Login} element={<LoginPage />} />
+          <Route path={RoutesPath.Register} element={<RegisterPage />} />
+          <Route path={RoutesPath.Conversation} element={<ConversationPage />} />
         </Routes>
       </Router>
     </QueryClientProvider>

@@ -1,5 +1,5 @@
-enum RoutesPath {
-  Login="/login",
-  Regsiter="/register",
-  Conversation="/conversations/:id"
+export enum RoutesPath {
+  Login = '/login',
+  Register = '/register',
+  Conversation = '/conversations/:id',
 }

@@ -1,5 +1,7 @@
+import RegisterForm from "@/features/forms/registerForm";
+
 const RegisterPage = () => {
-  return <div>Register Page</div>;
+  return <><RegisterForm></RegisterForm></>;
 };
 
 export default RegisterPage;
