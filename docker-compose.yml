@@ -61,6 +61,21 @@ services:
     networks: 
       - mercure_network
 
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    tty: true
+    restart: always
+    networks: 
+      - mercure_network
+
 volumes:
   mercure_data:
   mercure_config:
