@@ -64,3 +64,11 @@ export interface IUserInfo {
 export interface IMessageWithUsername extends Message {
   username: string;
 }
+
+export interface INotifcation {
+  id: number,
+  conversationId: number,
+  username: string,
+  photo: Buffer,
+  message: string,
+}
