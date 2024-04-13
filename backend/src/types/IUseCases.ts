@@ -55,6 +55,7 @@ export interface IUseCasesConstructor {
 }
 
 export interface IUserInfo {
+  id: number;
   username: string;
   photo: Buffer;
   createdAt: Date;

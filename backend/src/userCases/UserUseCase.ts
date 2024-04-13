@@ -56,6 +56,7 @@ export class UserUseCase implements IUserUseCase {
     const userFound = await this.services.userService.findUserById(userId);
 
     const userInfo: IUserInfo = {
+      id: userFound.id,
       username: userFound.username,
       photo: userFound.photo,
       createdAt: userFound.createdAt,

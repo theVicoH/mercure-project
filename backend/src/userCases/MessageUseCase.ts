@@ -42,6 +42,20 @@ export class MessageUseCase implements IMessageUseCase {
       process.env.MERCURE_JWT
     );
 
+    await this.services.sse.publish<IMessageWithUsername>(
+      `/notification/${senderId}`,
+      {
+        id: createdMessage.id,
+        conversationId: createdMessage.conversationId,
+        senderId: createdMessage.senderId,
+        username: senderPseudo.username,
+        message: createdMessage.message,
+        read: createdMessage.read,
+        createdAt: createdMessage.createdAt,
+      },
+      process.env.MERCURE_JWT
+    );
+
     const messageWithUsername = {
       ...createdMessage,
       username: senderPseudo.username,
