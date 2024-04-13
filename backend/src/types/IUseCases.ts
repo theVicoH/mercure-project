@@ -17,7 +17,7 @@ export interface IUserUseCase {
   createUser: (
     username: string,
     password: string,
-    photo: Buffer
+    photo: string
   ) => Promise<User>;
   findUser: (username: string, password: string) => Promise<string>;
   findUserById: (userId: number) => Promise<IUserInfo>;

@@ -9,8 +9,11 @@ export class UserController implements IUserController {
   public async register(
     username: string,
     password: string,
-    photo: Buffer
+    photo: string
   ): Promise<ResponseController<User>> {
+    console.log(true)
+    console.log(username)
+    console.log(photo)
     try {
       const newUser = await this.userUseCase.createUser(
         username,

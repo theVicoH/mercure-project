@@ -8,7 +8,7 @@ export interface IUserController {
   register: (
     username: string,
     password: string,
-    photo: Buffer
+    photo: string
   ) => Promise<ResponseController<User>>;
   login: (
     username: string,

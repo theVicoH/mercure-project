@@ -13,7 +13,7 @@ export class UserUseCase implements IUserUseCase {
   public async createUser(
     username: string,
     password: string,
-    photo: Buffer
+    photo: string
   ): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);
     const createdUser = await this.services.userService.createUser(
