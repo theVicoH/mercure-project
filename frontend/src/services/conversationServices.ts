@@ -21,6 +21,6 @@ export const conversationListService = async (
 
     return responseData;
   } catch {
-    throw new Error('Error when trying to retrieve conversation list');
+    throw new Error('Error when trying to retrieve conversations list');
   }
 };
