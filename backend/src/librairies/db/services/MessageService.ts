@@ -56,6 +56,11 @@ export default class MessageService implements IMessageService {
       options
     )) as MessageModelInstance[];
 
+    await Promise.all(messageModels.map(async (model) => {
+      model.read = true;
+      await model.save();
+    }));
+
     return messageModels.map(
       model =>
         new Message(
