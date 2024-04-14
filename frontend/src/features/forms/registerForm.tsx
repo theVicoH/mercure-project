@@ -20,6 +20,14 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
+  });
+}
 
 const RegisterForm : React.FC = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -36,7 +44,15 @@ const RegisterForm : React.FC = () => {
     return response;
   })
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+
     try{
+      console.log(data.photo[0])
+      if (data.photo && data.photo.length > 0) {
+        const file = data.photo[0];
+        const base64 = await fileToBase64(file);
+        data.photo = base64; // Replace FileList with base64 string
+      }
+      console.log(data.photo)
       const response = await mutateAsync(data)
       dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
@@ -94,7 +110,7 @@ const RegisterForm : React.FC = () => {
             <FormItem>
               <FormLabel>Photo</FormLabel>
               <FormControl>
-                <Input type="file" {...field} />
+                <Input type="file" onChange={(e) => field.onChange(e.target.files)}  />
               </FormControl>
               <FormMessage />
             </FormItem>

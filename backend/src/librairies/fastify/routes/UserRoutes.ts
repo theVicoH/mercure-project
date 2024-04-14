@@ -25,13 +25,24 @@ export async function userRoutes(fastify: FastifyInstance) {
   fastify.post<{ Body: AuthRegisterRequestBody }>(
     PublicRoutes.Register,
     async (request, reply) => {
-      const { username, password, photo } = request.body;
-      const result = await userController.register(
-        username,
-        password,
-        photo
-      );
-      reply.code(result.code).send(result);
+      const data = await request.file()
+      console.log(data)
+      
+      if(!data){
+        throw new Error("Data not found")
+      }
+      console.log(data.toBuffer())
+      // try {
+      //   const buffer = await data.toBuffer()
+      // } catch (err) {
+      //   // fileSize limit reached!
+      // }
+      // const result = await userController.register(
+      //   username,
+      //   password,
+      //   photo
+      // );
+      // reply.code(result.code).send(result);
     }
   );
 

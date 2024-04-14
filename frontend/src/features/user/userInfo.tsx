@@ -1,4 +1,4 @@
-import { arrayBuffer } from "@/lib/utils";
+// import { arrayBuffer } from "@/lib/utils";
 import { userInfoService } from "@/services/userServices";
 import { RootState } from "@/stores/store";
 import { useQuery } from "react-query";
@@ -29,7 +29,7 @@ const UserInfo = () => {
       {data && 'data' in data.body && (
         <div>
           <div>{data.body.data.username}</div>
-          <img src={`data:image/png;base64,${arrayBuffer(data.body.data.photo.data)}`} alt="User" />
+          {/* <img src={`data:image/png;base64,${arrayBuffer(data.body.data.photo.data)}`} alt="User" /> */}
           <div>{data.body.data.createdAt}</div>
         </div>
 
