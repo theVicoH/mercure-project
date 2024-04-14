@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import { User } from '../entities/UserEntities';
 import {
+  ILoginUseCase,
   IUseCasesConstructor,
   IUserInfo,
   IUserUseCase,
@@ -24,7 +25,7 @@ export class UserUseCase implements IUserUseCase {
     return createdUser;
   }
 
-  public async findUser(username: string, password: string): Promise<string> {
+  public async findUser(username: string, password: string): Promise<ILoginUseCase> {
     const userFound = await this.services.userService.findUser(username);
     if (!userFound) {
       throw new Error('User not found');
@@ -49,7 +50,7 @@ export class UserUseCase implements IUserUseCase {
       process.env.JWT_SECRET,
       expiration
     );
-    return jwt;
+    return { jwt: jwt, expiration: expiration };
   }
 
   public async findUserById(userId: number): Promise<IUserInfo> {

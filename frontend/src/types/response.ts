@@ -22,11 +22,28 @@ export enum HttpResponseCode {
   GatewayTimeout = 504,
 }
 
-interface ResponseBody {
-  message: string;
-  data?: unknown;
-}
-export interface ApiResponse {
+export interface SuccessResponse<T = undefined> {
   code: HttpResponseCode;
-  body: ResponseBody;
+  body: T extends undefined
+    ? {
+        message: string;
+      }
+    : {
+        message: string;
+        data: T;
+      };
+}
+
+export interface ErrorResponse {
+  code: HttpResponseCode;
+  body: {
+    message: string;
+  };
+}
+
+export type ApiResponse<T = undefined> = SuccessResponse<T> | ErrorResponse;
+
+export interface LoginResponse {
+  jwt: string;
+  expiration: number;
 }

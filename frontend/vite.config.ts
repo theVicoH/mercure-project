@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   server: {
@@ -16,5 +16,5 @@ export default defineConfig({
     host: true,
     strictPort: true,
     port: 5173,
-  }
-})
+  },
+});

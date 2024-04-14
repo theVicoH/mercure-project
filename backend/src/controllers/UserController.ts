@@ -1,6 +1,6 @@
 import { User } from '../entities/UserEntities';
 import { IUserController } from '../types/IControllers';
-import { IUserInfo, IUserUseCase } from '../types/IUseCases';
+import { ILoginUseCase, IUserInfo, IUserUseCase } from '../types/IUseCases';
 import { ResponseController } from '../types/Response';
 
 export class UserController implements IUserController {
@@ -36,12 +36,12 @@ export class UserController implements IUserController {
   public async login(
     username: string,
     password: string
-  ): Promise<ResponseController<string>> {
+  ): Promise<ResponseController<ILoginUseCase>> {
     try {
-      const jwt = await this.userUseCase.findUser(username, password);
+      const response = await this.userUseCase.findUser(username, password);
       return {
         code: 200,
-        body: { message: 'User logged', data: jwt },
+        body: { message: 'User logged', data: response },
       };
     } catch (error) {
       if (error instanceof Error) {
