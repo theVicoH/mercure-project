@@ -27,7 +27,7 @@ export async function userRoutes(fastify: FastifyInstance) {
         password,
         photo
       );
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 
@@ -36,7 +36,7 @@ export async function userRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       const { username, password } = request.body;
       const result = await userController.login(username, password);
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 
@@ -51,7 +51,7 @@ export async function userRoutes(fastify: FastifyInstance) {
       }
       const userId = request.user.userId;
       const result = await userController.getUserInfo(userId);
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }

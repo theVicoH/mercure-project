@@ -26,7 +26,7 @@ export async function friendRoutes(fastify: FastifyInstance) {
         request.user.userId,
         friendUsername
       );
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }
