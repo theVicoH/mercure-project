@@ -1,5 +1,7 @@
+import LoginForm from "@/features/forms/loginForm.";
+
 const LoginPage = () => {
-  return <div>Login Page</div>;
+  return <LoginForm/>;
 };
 
 export default LoginPage;
