@@ -15,11 +15,12 @@ const currentConversationSlice = createSlice({
     setCurrentConversation: (state, action: PayloadAction<number>) => {
       state.conversationId = action.payload;
     },
-    clearCurrentConversation: (state) => {
+    clearCurrentConversation: state => {
       state.conversationId = null;
     },
   },
 });
 
-export const { setCurrentConversation, clearCurrentConversation } = currentConversationSlice.actions;
+export const { setCurrentConversation, clearCurrentConversation } =
+  currentConversationSlice.actions;
 export default currentConversationSlice.reducer;

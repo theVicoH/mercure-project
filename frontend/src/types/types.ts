@@ -4,8 +4,8 @@ export interface AuthState {
 }
 
 export interface UserProfilInfo {
-  id: number | undefined
-  username: string | undefined
-  photo: string | undefined
-  createdAt: string | undefined
+  id: number | undefined;
+  username: string | undefined;
+  photo: string | undefined;
+  createdAt: string | undefined;
 }
