@@ -1,12 +1,12 @@
 // authSlice.ts
+import { AuthState } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState } from '../../types/types';
 
 const storedToken = localStorage.getItem('authToken');
 const storedExpiration = localStorage.getItem('authTokenExpiration');
 
 const initialState: AuthState = {
-  token: storedToken || undefined,
+  jwt: storedToken || undefined,
   expiration: storedExpiration ? parseInt(storedExpiration) : undefined,
 };
 
@@ -20,28 +20,28 @@ export const authSlice = createSlice({
   reducers: {
     setJwtToken: (
       state,
-      action: PayloadAction<{ token: string; expiration: number }>
+      action: PayloadAction<{ jwt: string; expiration: number }>
     ) => {
-      state.token = action.payload.token;
+      state.jwt = action.payload.jwt;
       state.expiration = action.payload.expiration;
 
-      localStorage.setItem('authToken', action.payload.token || '');
+      localStorage.setItem('authToken', action.payload.jwt || '');
       localStorage.setItem(
         'authTokenExpiration',
         action.payload.expiration.toString()
       );
     },
     removeJwtToken: state => {
-      state.token = undefined;
+      state.jwt = undefined;
       state.expiration = undefined;
 
       localStorage.removeItem('authToken');
       localStorage.removeItem('authTokenExpiration');
     },
-    // Ajoutez une action pour vérifier et supprimer le jeton expiré
+
     checkAndRemoveExpiredToken: state => {
       if (isTokenExpired(state.expiration)) {
-        state.token = undefined;
+        state.jwt = undefined;
         state.expiration = undefined;
 
         localStorage.removeItem('authToken');
