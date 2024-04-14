@@ -4,10 +4,17 @@ import { userRoutes } from './routes/UserRoutes';
 import { friendRoutes } from './routes/FriendRoutes';
 import { messageRoutes } from './routes/MessageRoute';
 import { conversationRoutes } from './routes/ConversationRoutes';
+import fastifyCors from '@fastify/cors';
 
 config();
 
 const server = fastify({ logger: true });
+server.register(fastifyCors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+});
 server.register(userRoutes);
 server.register(friendRoutes);
 server.register(messageRoutes);

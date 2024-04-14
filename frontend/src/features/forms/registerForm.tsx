@@ -1,46 +1,108 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { RegisterFormData } from "../types/types";
+// import { RegisterFormData } from "../types/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from 'zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { registerSchema } from "@/types/zod/authForm";
+import { registerService } from "@/services/authServices";
+import { useDispatch } from "react-redux";
+import { setNotification } from "@/stores/slice/toasterNotif";
+import { ApiResponse, HttpResponseCode } from "@/types/response";
+
 
 const RegisterForm : React.FC = () => {
-  const { register, handleSubmit } = useForm<RegisterFormData>();
-  const { mutateAsync } = useMutation(async (data : FormData) => {
-    const url = import.meta.env.VITE_REACT_APP_API_URL;
-    const response = await fetch(`${url}/user/register`, {
-      method: 'POST',
-      body: data,
-    });
-    const responseData = await response.json();
-    if (response.ok) {
-      return responseData;
-    } else {
-      throw new Error(`Échec de la connexion : ${responseData.msg}`);
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      username: '',
+      password: '',
+      photo: ''
     }
   })
-  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
-    const formData = new FormData();
-    formData.append('firstName', data.firstName);
-    formData.append('lastName', data.lastName);
-    formData.append('pseudo', data.pseudo);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('photo', data.photo[0]);
-    await mutateAsync(formData)
+  const dispatch = useDispatch();
+  const { mutateAsync } = useMutation(async (data : z.infer<typeof registerSchema>) => {
+    const response = await registerService(data);
+    return response as ApiResponse;
+  })
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    try{
+      const response = await mutateAsync(data)
+      dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
+    } catch(error) {
+      const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
+      dispatch(setNotification({ message: errorMessage, isError: false }));
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Input {...register("firstName")} placeholder="firstname" type="text"/>
-      <Input {...register("lastName")} placeholder="lastname" type="text"/>
-      <Input {...register("pseudo")} placeholder="pseudo" type="text"/>
-      <Input {...register("email")} placeholder="email" type="email"/>
-      <Input {...register("password")} placeholder="password" type="password"/>
-      <Input {...register("photo")} placeholder="photo" type="file"/>
-      <Button type="submit" />
-    </form>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter your username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Enter your password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Confirm your password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="photo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Photo</FormLabel>
+              <FormControl>
+                <Input type="file" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 }
 

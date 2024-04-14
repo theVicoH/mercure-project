@@ -29,7 +29,7 @@ export default class UserService implements IUserService {
   public async createUser(
     username: string,
     password: string,
-    photo: Buffer,
+    photo: string,
     transaction?: Transaction
   ): Promise<User> {
     try {

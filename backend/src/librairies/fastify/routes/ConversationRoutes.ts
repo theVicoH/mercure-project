@@ -22,7 +22,7 @@ export async function conversationRoutes(fastify: FastifyInstance) {
       const result = await conversationController.userConversationsList(
         request.user.userId
       );
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }
