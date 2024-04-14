@@ -30,6 +30,7 @@ export interface IMessageService {
     message: string
   ) => Promise<Message>;
   findAllMessage: (conversationId: number) => Promise<Message[]>;
+  updateReadMessages: (userId: number) => Promise<void>;
 }
 
 export interface IFriendService {
