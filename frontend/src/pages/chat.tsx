@@ -1,10 +1,18 @@
 import ConversationListSideBar from '@/features/conversation/conversationListSideBar';
 import MessageFeed from '@/features/messages/messageFeed';
-import ChatLayouts from '@/layouts/chatLayouts';
+import SendMessage from '@/features/messages/sendMessage';
 
 const ChatPage = () => {
   return (
-    <ChatLayouts sideBar={<ConversationListSideBar/>} chat={<MessageFeed />} />
+    <div className="flex h-screen bg-gray-100">
+      <div className="w-80 bg-gray-800 text-white">
+        <ConversationListSideBar/>
+      </div>
+      <div className="flex-1 p-4">
+        <MessageFeed />
+        <SendMessage />
+      </div>
+    </div>
   );
 };
 
