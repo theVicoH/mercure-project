@@ -21,6 +21,7 @@ export interface IUserUseCase {
   ) => Promise<User>;
   findUser: (username: string, password: string) => Promise<string>;
   findUserById: (userId: number) => Promise<IUserInfo>;
+  findUsersByConversationId: (conversationId: number) => Promise<IUserInfo[]>;
 }
 
 export interface IMessageUseCase {

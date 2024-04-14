@@ -15,6 +15,7 @@ export interface IUserController {
     password: string
   ) => Promise<ResponseController<string>>;
   getUserInfo: (userId: number) => Promise<ResponseController<IUserInfo>>;
+  getAllUsersInConversation: (conversationId: number) => Promise<ResponseController<IUserInfo[]>>;
 }
 
 export interface IMessageController {

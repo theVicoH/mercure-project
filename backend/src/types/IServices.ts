@@ -20,6 +20,7 @@ export interface IUserService {
   findUser: (username: string, transaction?: Transaction) => Promise<User>;
   findUserById: (userId: number, transaction?: Transaction) => Promise<User>;
   findFriendInConversation: (myUserId: number, conversationId: number, transaction?: Transaction) => Promise<User | null>;
+  findUsersByConversationId: (conversationId: number, transaction?: Transaction) => Promise<ConversationUser[] | null>;
 }
 
 export interface IMessageService {
