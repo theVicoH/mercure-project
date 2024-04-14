@@ -1,10 +1,11 @@
+import ConversationListSideBar from '@/features/conversation/conversationListSideBar';
 import ChatLayouts from '@/layouts/chatLayouts';
 import { useParams } from 'react-router-dom';
 
 const ChatPage = () => {
   const { id } = useParams<'id'>();
   return (
-    <ChatLayouts sideBar={<>Conversation Page, ID: {id}</>} chat={<>Hello</>} />
+    <ChatLayouts sideBar={<ConversationListSideBar/>} chat={<>Hello</>} />
   );
 };
 
