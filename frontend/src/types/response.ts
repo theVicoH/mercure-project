@@ -50,8 +50,17 @@ export interface LoginResponse {
 
 export interface ConversationListResponse {
   id: number;
-  friendUsername: string | null;
-  message: string | null;
-  messageSentAt: string | null;
-  lastMessageRead: boolean | null;
+  friendUsername: string;
+  message: string;
+  messageSentAt: string;
+  lastMessageRead: boolean;
+}
+
+export interface MessageResponse {
+  id: number;
+  conversationId: number;
+  senderId: number;
+  message: string;
+  read: boolean;
+  createdAt: string;
 }
