@@ -42,6 +42,7 @@ export interface IFriendService {
     friendId: number,
     transaction?: Transaction
   ) => Promise<Friend>;
+  findFriendsByUserId: (userId: number, transaction?: Transaction) => Promise<Friend[] | null>;
 }
 
 export interface IConversationUserService {
