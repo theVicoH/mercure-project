@@ -70,12 +70,13 @@ export class MessageUseCase implements IMessageUseCase {
     return messageWithUsername;
   }
 
-  public async messageFeed(conversationId: number): Promise<Message[]> {
+  public async messageFeed(conversationId: number, userId: number): Promise<Message[]> {
     const conversation =
       await this.services.conversationService.findConversation(conversationId);
     if (!conversation) {
       throw new Error('Conversation not found');
     }
+    await this.services.messageService.updateReadMessages(userId);
     const messages =
       await this.services.messageService.findAllMessage(conversationId);
     return messages;
