@@ -9,3 +9,8 @@ export interface UserProfilInfo {
   photo: string | undefined;
   createdAt: string | undefined;
 }
+
+export interface SendMessageRequestBody {
+  conversationId: number
+  message: string
+}
