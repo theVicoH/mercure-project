@@ -34,7 +34,7 @@ const MessageFeed = () => {
         <p>{message.conversationId}</p>
         <p>{message.senderId}</p>
         <p>{message.message}</p>
-        <p>{message.read ? "lu" : "pas lu"}</p>
+        <p>{message.read ? "read" : "not read"}</p>
         <p>{message.createdAt}</p>
       </div>
     ))}
