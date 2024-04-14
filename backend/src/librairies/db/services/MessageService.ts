@@ -1,4 +1,4 @@
-import { FindOptions, Model, OrderItem, Transaction } from 'sequelize';
+import { FindOptions, Model, Op, OrderItem, Transaction, UpdateOptions } from 'sequelize';
 import { Message } from '../../../entities/MessageEntities';
 import { IMessageService } from '../../../types/IServices';
 import MessageModel from '../models/MessageModel';
@@ -67,5 +67,19 @@ export default class MessageService implements IMessageService {
           model.createdAt
         )
     );
+  }
+
+  public async updateReadMessages(userId: number, transaction?: Transaction): Promise<void> {
+    const options: UpdateOptions = {
+        where: {
+            senderId: { [Op.ne]: userId }
+        },
+    };
+
+    if (transaction) {
+      options.transaction = transaction;
+    }
+    
+    await MessageModel.update({ read: true }, options);
   }
 }
