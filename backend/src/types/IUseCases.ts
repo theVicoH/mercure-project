@@ -34,6 +34,7 @@ export interface IMessageUseCase {
 
 export interface IFriendUseCase {
   addFriend: (userId: number, friendUsername: string) => void;
+  findFriendsByUserId: (userId: number) => Promise<IUserInfo[]>;
 }
 
 export interface IConversationUserUseCase {}
