@@ -31,6 +31,7 @@ export interface IFriendController {
     userId: number,
     friendUsername: string
   ) => Promise<ResponseController>;
+  getAllFriends: (userId: number) => Promise<ResponseController<IUserInfo[]>>;
 }
 
 export interface IConversationUserController {}
