@@ -8,5 +8,6 @@ export enum PrivateRoutes {
   SendMessage = '/send-message',
   MessagesFeed = '/messages-feed/:id',
   UserInfo = '/user-info',
+  UsersInConversation = '/users-in-conversation/:id',
   ConversationList = '/conversation-list',
 }
