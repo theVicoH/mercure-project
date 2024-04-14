@@ -70,4 +70,19 @@ export class UserController implements IUserController {
       return { code: 500, body: { message: 'Internal server error' } };
     }
   }
+
+  public async getAllUsersInConversation(conversationId: number) : Promise<ResponseController<IUserInfo[]>> {
+    try {    
+      const usersInfo = await this.userUseCase.findUsersByConversationId(conversationId);
+
+      return { code: 200, body: { message: 'The users of the conversation retrieved successfully', data: usersInfo } };
+      
+    } catch (error) {
+        if (error instanceof Error && error.message === 'The users of the conversation not found') {
+          return { code: 404, body: { message: error.message } };
+        } else {
+          return { code: 500, body: { message: 'An unknown error occurred' } };
+        }
+      }
+  }
 }
