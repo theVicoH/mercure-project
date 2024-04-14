@@ -49,7 +49,7 @@ export async function messageRoutes(fastify: FastifyInstance) {
       }
       const userId = request.user.userId;
       const result = await messageController.messageFeed(conversationId, userId);
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }

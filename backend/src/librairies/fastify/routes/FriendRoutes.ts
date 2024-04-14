@@ -40,7 +40,7 @@ export async function friendRoutes(fastify: FastifyInstance) {
       }
       const userId = request.user.userId;
       const result = await friendController.getAllFriends(userId);
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }

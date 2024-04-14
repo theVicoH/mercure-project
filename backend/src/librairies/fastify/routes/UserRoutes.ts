@@ -69,7 +69,7 @@ export async function userRoutes(fastify: FastifyInstance) {
           .send({ error: 'Unauthorized: User ID is missing from the request' });
       }
       const result = await userController.getAllUsersInConversation(conversationId);
-      reply.code(result.code).send(result.body);
+      reply.code(result.code).send(result);
     }
   );
 }
