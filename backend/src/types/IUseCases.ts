@@ -19,7 +19,7 @@ export interface IUserUseCase {
     password: string,
     photo: string
   ) => Promise<User>;
-  findUser: (username: string, password: string) => Promise<string>;
+  findUser: (username: string, password: string) => Promise<ILoginUseCase>;
   findUserById: (userId: number) => Promise<IUserInfo>;
   findUsersByConversationId: (conversationId: number) => Promise<IUserInfo[]>;
 }
@@ -73,4 +73,9 @@ export interface INotifcation {
   username: string,
   photo: Buffer,
   message: string,
+}
+
+export interface ILoginUseCase {
+  jwt: string;
+  expiration: number;
 }
