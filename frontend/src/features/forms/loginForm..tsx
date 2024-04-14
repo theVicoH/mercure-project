@@ -17,7 +17,7 @@ import { loginSchema } from "@/types/zod/authForm";
 import { loginService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
-import { ApiResponse, HttpResponseCode, LoginResponse } from "@/types/response";
+import { HttpResponseCode } from "@/types/response";
 import { setJwtToken } from "@/stores/slice/auth";
 
 
@@ -32,7 +32,7 @@ const LoginForm : React.FC = () => {
   const dispatch = useDispatch();
   const { mutateAsync } = useMutation(async (data : z.infer<typeof loginSchema>) => {
     const response = await loginService(data);
-    return response as ApiResponse<LoginResponse>;
+    return response;
   })
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try{
