@@ -15,6 +15,9 @@ export const registerService = async (
       },
       body: JSON.stringify(data),
     });
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
     const responseData = await response.json();
     return responseData;
   } catch {
@@ -33,6 +36,9 @@ export const loginService = async (
       },
       body: JSON.stringify(data),
     });
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
     const responseData = await response.json();
     return responseData;
   } catch {
