@@ -18,7 +18,7 @@ import { registerSchema } from "@/types/zod/authForm";
 import { registerService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
-import { ApiResponse, HttpResponseCode } from "@/types/response";
+import { HttpResponseCode } from "@/types/response";
 
 
 const RegisterForm : React.FC = () => {
@@ -33,7 +33,7 @@ const RegisterForm : React.FC = () => {
   const dispatch = useDispatch();
   const { mutateAsync } = useMutation(async (data : z.infer<typeof registerSchema>) => {
     const response = await registerService(data);
-    return response as ApiResponse;
+    return response;
   })
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
     try{
