@@ -47,3 +47,11 @@ export interface LoginResponse {
   jwt: string;
   expiration: number;
 }
+
+export interface ConversationListResponse {
+  id: number;
+  friendUsername: string | null;
+  message: string | null;
+  messageSentAt: string | null;
+  lastMessageRead: boolean | null;
+}

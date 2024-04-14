@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserProfilInfo } from '@/types/types';
 
-const storedPseudo = localStorage.getItem('pseudo');
-const storedPhoto = localStorage.getItem('photo');
 
 const initialState: UserProfilInfo = {
-  pseudo: storedPseudo || undefined,
-  photo: storedPhoto || undefined,
+  id: undefined,
+  username: undefined,
+  photo: undefined,
+  createdAt: undefined,
 };
 
 const userProfil = createSlice({
@@ -14,16 +14,16 @@ const userProfil = createSlice({
   initialState,
   reducers: {
     setUserProfil: (state, action: PayloadAction<UserProfilInfo>) => {
-      state.pseudo = action.payload.pseudo;
+      state.id = action.payload.id;
+      state.username = action.payload.username;
       state.photo = action.payload.photo;
-      localStorage.setItem('pseudo', action.payload.pseudo || '');
-      localStorage.setItem('photo', action.payload.photo || '');
+      state.createdAt = action.payload.photo;
     },
     clearUserProfil: state => {
-      state.pseudo = '';
+      state.id = undefined;
+      state.username = undefined;
       state.photo = undefined;
-      localStorage.removeItem('pseudo');
-      localStorage.removeItem('photo');
+      state.createdAt = undefined;
     },
   },
 });
