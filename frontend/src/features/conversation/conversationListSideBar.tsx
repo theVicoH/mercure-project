@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input"
 import { conversationListService } from "@/services/conversationServices";
 import { setCurrentConversation } from "@/stores/slice/currentConversation";
-import { setNotification } from "@/stores/slice/toasterNotif";
 import { RootState } from "@/stores/store";
 import { useEffect } from "react";
 import { useQuery } from "react-query"

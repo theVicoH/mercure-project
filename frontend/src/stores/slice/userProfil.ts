@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserProfilInfo } from '@/types/types';
 
-
 const initialState: UserProfilInfo = {
   id: undefined,
   username: undefined,
