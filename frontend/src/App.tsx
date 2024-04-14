@@ -1,14 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query'
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import ConversationPage from "./pages/conversation";
 import { RoutesPath } from './types/routes';
+import ToasterProvider from './features/toaster/toasterProviders';
 
 function App() {
-  const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
+    <ToasterProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Navigate replace to="/login" />} />
@@ -17,7 +16,7 @@ function App() {
           <Route path={RoutesPath.Conversation} element={<ConversationPage />} />
         </Routes>
       </Router>
-    </QueryClientProvider>
+    </ToasterProvider>
   )
 }
 
