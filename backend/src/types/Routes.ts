@@ -5,6 +5,7 @@ export enum PublicRoutes {
 
 export enum PrivateRoutes {
   AddFriend = '/add-friend',
+  FriendsInfo = '/friends-info',
   SendMessage = '/send-message',
   MessagesFeed = '/messages-feed/:id',
   UserInfo = '/user-info',
