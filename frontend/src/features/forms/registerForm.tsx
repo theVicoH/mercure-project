@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/form"
 import { registerSchema } from "@/types/zod/authForm";
 import { registerService } from "@/services/authServices";
+import { useDispatch } from "react-redux";
+import { setNotification } from "@/stores/slice/toasterNotif";
+import { ApiResponse } from "@/types/response";
 
 
 const RegisterForm : React.FC = () => {
@@ -27,11 +30,19 @@ const RegisterForm : React.FC = () => {
       photo: ''
     }
   })
+  const dispatch = useDispatch();
   const { mutateAsync } = useMutation(async (data : z.infer<typeof registerSchema>) => {
-    await registerService(data);
+    const response = await registerService(data);
+    return response as ApiResponse;
   })
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    await mutateAsync(data)
+    try{
+      const response = await mutateAsync(data)
+      dispatch(setNotification({ message: response.message, isError: data ? false : true }));
+    } catch(error) {
+      const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
+      dispatch(setNotification({ message: errorMessage, isError: false }));
+    }
   };
 
   return (
