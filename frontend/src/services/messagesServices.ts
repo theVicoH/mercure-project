@@ -1,12 +1,13 @@
-import { ApiResponse, ConversationListResponse } from '@/types/response';
+import { ApiResponse, MessageResponse } from '@/types/response';
 
 const URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export const conversationListService = async (
-  authToken: string
-): Promise<ApiResponse<ConversationListResponse[]>> => {
+export const messageFeedService = async (
+  authToken: string,
+  id: string
+): Promise<ApiResponse<MessageResponse[]>> => {
   try {
-    const response = await fetch(`${URL}/conversation-list`, {
+    const response = await fetch(`${URL}/messages-feed/${id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -21,6 +22,6 @@ export const conversationListService = async (
 
     return responseData;
   } catch {
-    throw new Error('Error when trying to retrieve conversations list');
+    throw new Error('Error when trying to retrieve messages list');
   }
 };

@@ -12,12 +12,10 @@ const ConversationListSideBar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const authToken = useSelector((state: RootState) => state.auth.jwt);
-  if(!authToken){
-    throw new Error("allo")
+  if (!authToken) {
+    throw new Error("Authentication token is missing!");
   }
-  const { data, error, isLoading, isError } = useQuery('conversations', () => conversationListService(authToken), {
-    enabled: !!authToken,
-  });
+  const { data, error, isLoading, isError } = useQuery('conversations-list', () => conversationListService(authToken));
 
   const handleConversationClick = (conversationId: number) => {
     dispatch(setCurrentConversation(conversationId));
@@ -30,10 +28,6 @@ const ConversationListSideBar = () => {
       navigate(`/chat/${firstConversationId}`, { replace: true });
     }
   }, [id, data, isLoading, isError, navigate]);
-
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
 
   if (isLoading) {
     return <div>Loading...</div>;
