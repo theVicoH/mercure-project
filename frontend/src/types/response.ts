@@ -64,3 +64,13 @@ export interface MessageResponse {
   read: boolean;
   createdAt: string;
 }
+
+export interface UserInfoResponse {
+  id: number;
+  username: string;
+  photo: {
+    type: "Buffer",
+    data: ArrayBuffer
+  };
+  createdAt: string;
+}
