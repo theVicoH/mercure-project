@@ -24,7 +24,7 @@ export interface IMessageController {
     senderId: number,
     message: string
   ) => Promise<ResponseController<IMessageWithUsername>>;
-  messageFeed: (conversation: number) => Promise<ResponseController<Message[]>>;
+  messageFeed: (conversation: number, userId: number) => Promise<ResponseController<Message[]>>;
 }
 export interface IFriendController {
   addFriend: (

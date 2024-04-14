@@ -31,10 +31,11 @@ export class MessageController implements IMessageController {
   }
 
   public async messageFeed(
-    conversationId: number
+    conversationId: number,
+    userId: number
   ): Promise<ResponseController<Message[]>> {
     try {
-      const allMessages = await this.messageUseCase.messageFeed(conversationId);
+      const allMessages = await this.messageUseCase.messageFeed(conversationId, userId);
 
       if (allMessages) {
         return {

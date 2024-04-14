@@ -47,8 +47,9 @@ export async function messageRoutes(fastify: FastifyInstance) {
           .code(401)
           .send({ error: 'Unauthorized: User is missing from the request' });
       }
-      const result = await messageController.messageFeed(conversationId);
-      reply.code(result.code).send(result);
+      const userId = request.user.userId;
+      const result = await messageController.messageFeed(conversationId, userId);
+      reply.code(result.code).send(result.body);
     }
   );
 }
