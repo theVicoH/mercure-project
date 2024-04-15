@@ -32,7 +32,7 @@ const UserInfo = () => {
     });
 
     return (
-      <div className="flex flex-row gap-4 items-center px-3 py-5 text-white bg-zinc-700/20 border-b border-zinc-800">
+      <div className="flex flex-row gap-4 items-center py-5 text-white ">
         {data.body.data.photo && (
           <Avatar>
             <AvatarImage src={`data:image/png;base64,${base64String}`} />
