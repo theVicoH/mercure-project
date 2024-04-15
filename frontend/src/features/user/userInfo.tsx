@@ -1,11 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { userInfoService } from "@/services/userServices";
+import { setUserId } from "@/stores/slice/userId";
 import { RootState } from "@/stores/store";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserInfo = () => {
   const authToken = useSelector((state: RootState) => state.auth.jwt);
+  const dispatch = useDispatch();
   const { data, error, isLoading } = useQuery('user-info', () => userInfoService(authToken!));
 
   if (isLoading) {
@@ -17,6 +19,7 @@ const UserInfo = () => {
   }
 
   if (data && 'data' in data.body) {
+    dispatch(setUserId({ id: data.body.data.id }))
     const imageData = data.body.data.photo.data;
     const base64String = btoa(
       new Uint8Array(imageData).reduce(

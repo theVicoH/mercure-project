@@ -9,7 +9,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     showToaster: toasterNotifReducer,
-    userProfil: userIdReducer,
+    userId: userIdReducer,
     currentConversation: currentConversationReducer,
   },
   middleware: getDefaultMiddleware => {
