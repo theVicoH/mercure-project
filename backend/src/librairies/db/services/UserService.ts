@@ -34,9 +34,6 @@ export default class UserService implements IUserService {
   ): Promise<User> {
     try {
       const options = transaction ? { transaction } : undefined;
-      console.log(username)
-      console.log(password)
-      console.log(photo)
       const modelUser = (await UserModel.create(
         {
           username,

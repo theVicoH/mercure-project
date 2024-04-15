@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useMutation } from "react-query"
 import { sendMessageService } from "@/services/messagesServices"
@@ -19,11 +18,9 @@ import { RootState } from "@/stores/store"
 import { setNotification } from "@/stores/slice/toasterNotif"
 
 const SendMessage = () => {
-  const { id } = useParams<'id'>();
   const authToken = useSelector((state: RootState) => state.auth.jwt);
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
+  const id = useSelector((state: RootState) => state.currentConversation.conversationId);
+
   const form = useForm<z.infer<typeof sendMessageSchema>>({
     resolver: zodResolver(sendMessageSchema),
     defaultValues: {
@@ -41,7 +38,7 @@ const SendMessage = () => {
       message: data.message,
     };
     try{
-      await mutateAsync({ token: authToken, data: payload })
+      await mutateAsync({ token: authToken!, data: payload })
       form.reset();
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';

@@ -5,29 +5,27 @@ import { RootState } from "@/stores/store";
 import { useEffect } from "react";
 import { useQuery } from "react-query"
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ConversationListSideBar = () => {
-  const { id } = useParams<'id'>();
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const authToken = useSelector((state: RootState) => state.auth.jwt);
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
-  const { data, error, isLoading, isError } = useQuery('conversations-list', () => conversationListService(authToken));
+
+  const { data, error, isLoading, isError } = useQuery('conversations-list', () => conversationListService(authToken!));
 
   const handleConversationClick = (conversationId: number) => {
     dispatch(setCurrentConversation(conversationId));
-    navigate(`/chat/${conversationId}`);
   };
 
   useEffect(() => {
-    if (!isLoading && !isError && data && 'data' in data.body && data.body.data.length > 0 && !id) {
+    console.log(data)
+    if (!isLoading && !isError && data && 'data' in data.body && data.body.data.length > 0) {
       const firstConversationId = data.body.data[0].id;
-      navigate(`/chat/${firstConversationId}`, { replace: true });
+      dispatch(setCurrentConversation(firstConversationId));
+      navigate("/chat");
     }
-  }, [id, data, isLoading, isError, navigate]);
+  }, [data, isLoading, isError, navigate]);
 
   if (isLoading) {
     return <div>Loading...</div>;

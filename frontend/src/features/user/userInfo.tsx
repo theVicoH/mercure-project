@@ -6,12 +6,7 @@ import { useSelector } from "react-redux";
 
 const UserInfo = () => {
   const authToken = useSelector((state: RootState) => state.auth.jwt);
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
-
-  
-  const { data, error, isLoading } = useQuery('user-info', () => userInfoService(authToken));
+  const { data, error, isLoading } = useQuery('user-info', () => userInfoService(authToken!));
 
   if (isLoading) {
     return <div>Loading...</div>;

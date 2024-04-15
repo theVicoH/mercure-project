@@ -1,4 +1,4 @@
-// import ConversationListSideBar from '@/features/conversation/conversationListSideBar';
+import ConversationListSideBar from '@/features/conversation/conversationListSideBar';
 import AddFriend from '@/features/friend/addFriend';
 import MessageFeed from '@/features/messages/messageFeed';
 import SendMessage from '@/features/messages/sendMessage';
@@ -10,7 +10,7 @@ const ChatPage = () => {
       <div className="w-80 bg-gray-800">
         <UserInfo/>
         <AddFriend/>
-        {/* <ConversationListSideBar/> */}
+        <ConversationListSideBar/>
       </div>
       <div className="flex-1 p-4">
         <MessageFeed />
