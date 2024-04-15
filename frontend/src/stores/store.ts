@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slice/auth';
 import toasterNotifReducer from './slice/toasterNotif';
-import userProfilReducer from './slice/userProfil';
+import userIdReducer from './slice/userId';
 import currentConversationReducer from './slice/currentConversation';
 
 
@@ -9,7 +9,7 @@ const store = configureStore({
   reducer: {
     auth: authReducer,
     showToaster: toasterNotifReducer,
-    userProfil: userProfilReducer,
+    userProfil: userIdReducer,
     currentConversation: currentConversationReducer,
   },
   middleware: getDefaultMiddleware => {

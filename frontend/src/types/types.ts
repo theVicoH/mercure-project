@@ -3,11 +3,8 @@ export interface AuthState {
   expiration: number | undefined;
 }
 
-export interface UserProfilInfo {
+export interface UserId {
   id: number | undefined;
-  username: string | undefined;
-  photo: string | undefined;
-  createdAt: string | undefined;
 }
 
 export interface SendMessageRequestBody {
