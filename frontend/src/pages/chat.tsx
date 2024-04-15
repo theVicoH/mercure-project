@@ -5,6 +5,7 @@ import SendMessage from '@/features/messages/sendMessage';
 import UserInfo from '@/features/user/userInfo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from '@/components/ui/separator';
+import MessageHeader from '@/features/messages/messageHeader';
 
 const ChatPage = () => {
   return (
@@ -26,12 +27,16 @@ const ChatPage = () => {
           </div>
         </Tabs>
       </div>
-      <div className="flex flex-col flex-1">
-        <div className='h-20 w-full bg-red-300'></div>
-        <div className='flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800 py-3 px-5'>
+      <div className="flex-1 relative">
+        <div className='absolute h-fit w-full px-5 py-4 bg-zinc-600/10 backdrop-blur-xl border-t border-zinc-800 border border-b border-zinc-800'>
+          <MessageHeader/>
+        </div>
+        <div className='h-full pt-[113px] pb-[81px] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800 py-3 px-5'>
           <MessageFeed />
         </div>
-        <SendMessage />
+        <div className='absolute bottom-0 w-full'>
+          <SendMessage />
+        </div>
       </div>
     </div>
   );
