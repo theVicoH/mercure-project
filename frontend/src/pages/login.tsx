@@ -1,7 +1,12 @@
 import LoginForm from "@/features/forms/loginForm.";
+import Layout from "./layout";
 
 const LoginPage = () => {
-  return <LoginForm/>;
+  return (
+    <Layout>
+      <LoginForm/>;
+    </Layout>
+  );
 };
 
 export default LoginPage;
