@@ -29,11 +29,14 @@ export default class UserService implements IUserService {
   public async createUser(
     username: string,
     password: string,
-    photo: string,
+    photo: Buffer,
     transaction?: Transaction
   ): Promise<User> {
     try {
       const options = transaction ? { transaction } : undefined;
+      console.log(username)
+      console.log(password)
+      console.log(photo)
       const modelUser = (await UserModel.create(
         {
           username,
@@ -42,7 +45,7 @@ export default class UserService implements IUserService {
         },
         options
       )) as UserModelInstance;
-
+      
       return new User(
         modelUser.id,
         modelUser.username,

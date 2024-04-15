@@ -8,7 +8,7 @@ import auth from '../middlewares/Auth';
 interface AuthRegisterRequestBody {
   username: string;
   password: string;
-  photo: string;
+  photo: Buffer;
 }
 interface AuthLoginRequestBody {
   username: string;
@@ -18,6 +18,11 @@ interface UsersRouteParams {
   id: number;
 }
 
+type BodyFields = {
+  username: string
+  password: string
+}
+
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase(useCasesPack);
   const userController = new UserController(userUseCase);
@@ -25,24 +30,27 @@ export async function userRoutes(fastify: FastifyInstance) {
   fastify.post<{ Body: AuthRegisterRequestBody }>(
     PublicRoutes.Register,
     async (request, reply) => {
-      const data = await request.file()
-      console.log(data)
-      
+      const data = await request.file();
       if(!data){
-        throw new Error("Data not found")
+        throw new Error("oups")
       }
-      console.log(data.toBuffer())
-      // try {
-      //   const buffer = await data.toBuffer()
-      // } catch (err) {
-      //   // fileSize limit reached!
-      // }
-      // const result = await userController.register(
-      //   username,
-      //   password,
-      //   photo
-      // );
-      // reply.code(result.code).send(result);
+      const fields = data.fields as any as {
+        [key in keyof BodyFields]: {
+            value: BodyFields[key];
+        };
+    };
+      const username = fields.username.value;
+      const password = fields.password.value;
+      const photo = await data.toBuffer();
+      console.log(username)
+      console.log(password)
+      console.log(photo)
+      const result = await userController.register(
+        username,
+        password,
+        photo
+      );
+      reply.code(result.code).send(result);
     }
   );
 
