@@ -23,6 +23,7 @@ const ConversationListSideBar = () => {
   };
 
   useEffect(() => {
+    console.log(data)
     if (!isLoading && !isError && data && 'data' in data.body && data.body.data.length > 0 && !id) {
       const firstConversationId = data.body.data[0].id;
       navigate(`/chat/${firstConversationId}`, { replace: true });
