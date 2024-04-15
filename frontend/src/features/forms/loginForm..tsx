@@ -46,7 +46,7 @@ const LoginForm : React.FC = () => {
       }
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: false }));
+      dispatch(setNotification({ message: errorMessage, isError: true }));
     }
   };
 

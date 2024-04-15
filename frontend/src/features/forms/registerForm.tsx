@@ -47,7 +47,7 @@ const RegisterForm : React.FC = () => {
       dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: false }));
+      dispatch(setNotification({ message: errorMessage, isError: true }));
     }
   };
 
