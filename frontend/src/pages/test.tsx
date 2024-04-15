@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { checkAndRemoveExpiredToken, removeJwtToken } from '@/stores/slice/auth';
-// import { clearUserProfil } from '@/stores/slice/userProfil';
+import { removeJwtToken } from '@/stores/slice/auth';
+import { clearCurrentConversation } from '@/stores/slice/currentConversation';
+import { clearUserId } from '@/stores/slice/userId';
 import { RoutesPath } from '@/types/routes';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Test = () => {
   const dispatch = useDispatch();
-  dispatch(checkAndRemoveExpiredToken());
   const navigate = useNavigate()
   return (
     <div>
       <Button onClick={()=>{
         dispatch(removeJwtToken())
-        // dispatch(clearUserProfil())
+        dispatch(clearUserId())
+        dispatch(clearCurrentConversation())
         navigate(RoutesPath.Login)
       }}>Deco</Button>
     </div>

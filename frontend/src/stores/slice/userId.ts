@@ -7,7 +7,7 @@ const initialState: UserId = {
 };
 
 const userId = createSlice({
-  name: 'userProfil',
+  name: 'userId',
   initialState,
   reducers: {
     setUserId: (state, action: PayloadAction<UserId>) => {

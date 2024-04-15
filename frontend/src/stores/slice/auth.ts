@@ -1,16 +1,13 @@
-import { AuthState } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const storedToken = localStorage.getItem('authToken');
-const storedExpiration = localStorage.getItem('authTokenExpiration');
+interface AuthState {
+  jwt?: string;
+  expiration?: number;
+}
 
 const initialState: AuthState = {
-  jwt: storedToken || undefined,
-  expiration: storedExpiration ? parseInt(storedExpiration) : undefined,
-};
-
-const isTokenExpired = (expiration: number | undefined): boolean => {
-  return expiration ? Date.now() > expiration : true;
+  jwt: undefined,
+  expiration: undefined,
 };
 
 export const authSlice = createSlice({
@@ -23,34 +20,13 @@ export const authSlice = createSlice({
     ) => {
       state.jwt = action.payload.jwt;
       state.expiration = action.payload.expiration;
-
-      localStorage.setItem('authToken', action.payload.jwt || '');
-      localStorage.setItem(
-        'authTokenExpiration',
-        action.payload.expiration.toString()
-      );
     },
     removeJwtToken: state => {
       state.jwt = undefined;
       state.expiration = undefined;
-
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('authTokenExpiration');
-    },
-
-    checkAndRemoveExpiredToken: state => {
-      if (isTokenExpired(state.expiration)) {
-        state.jwt = undefined;
-        state.expiration = undefined;
-
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('authTokenExpiration');
-      }
     },
   },
 });
 
-export const { setJwtToken, removeJwtToken, checkAndRemoveExpiredToken } =
-  authSlice.actions;
-
+export const { setJwtToken, removeJwtToken } = authSlice.actions;
 export default authSlice.reducer;
