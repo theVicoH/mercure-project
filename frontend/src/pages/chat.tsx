@@ -7,12 +7,15 @@ import UserInfo from '@/features/user/userInfo';
 const ChatPage = () => {
   return (
     <div className="flex h-screen ">
-      <div className="w-80 bg-gray-800">
+      <div className="w-80 bg-zinc-800/30 border-r border-zinc-800">
         <UserInfo/>
-        <AddFriend/>
-        <ConversationListSideBar/>
+        <div className='p-3'>
+          <AddFriend/>
+          <ConversationListSideBar/>
+        </div>
+
       </div>
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-3">
         <MessageFeed />
         <SendMessage />
       </div>
