@@ -4,7 +4,7 @@ import Layout from "./layout";
 const LoginPage = () => {
   return (
     <Layout>
-      <LoginForm/>;
+      <LoginForm/>
     </Layout>
   );
 };
