@@ -14,3 +14,7 @@ export interface SendMessageRequestBody {
   conversationId: number
   message: string
 }
+
+export interface AddFriendRequestBody {
+  friendUsername: string
+}

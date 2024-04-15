@@ -9,7 +9,7 @@ export class UserController implements IUserController {
   public async register(
     username: string,
     password: string,
-    photo: string
+    photo: Buffer
   ): Promise<ResponseController<User>> {
     console.log(true)
     console.log(username)

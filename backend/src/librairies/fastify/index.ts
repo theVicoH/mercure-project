@@ -5,10 +5,12 @@ import { friendRoutes } from './routes/FriendRoutes';
 import { messageRoutes } from './routes/MessageRoute';
 import { conversationRoutes } from './routes/ConversationRoutes';
 import fastifyCors from '@fastify/cors';
+import fastifyMultipart from '@fastify/multipart';
 
 config();
 
 const server = fastify({ logger: true });
+server.register(fastifyMultipart);
 server.register(fastifyCors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],

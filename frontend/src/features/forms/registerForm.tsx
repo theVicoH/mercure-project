@@ -31,17 +31,23 @@ const RegisterForm : React.FC = () => {
     }
   })
   const dispatch = useDispatch();
-  const { mutateAsync } = useMutation(async (data : z.infer<typeof registerSchema>) => {
+  const { mutateAsync } = useMutation(async (data : FormData) => {
     const response = await registerService(data);
     return response;
   })
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+
     try{
-      const response = await mutateAsync(data)
+      console.log(data.photo[0])
+      const formData = new FormData();
+      formData.append('username', data.username);
+      formData.append('password', data.password);
+      formData.append('photo', data.photo[0]);
+      const response = await mutateAsync(formData)
       dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: false }));
+      dispatch(setNotification({ message: errorMessage, isError: true }));
     }
   };
 
@@ -94,7 +100,7 @@ const RegisterForm : React.FC = () => {
             <FormItem>
               <FormLabel>Photo</FormLabel>
               <FormControl>
-                <Input type="file" {...field} />
+                <Input type="file" onChange={(e) => field.onChange(e.target.files)}  />
               </FormControl>
               <FormMessage />
             </FormItem>
