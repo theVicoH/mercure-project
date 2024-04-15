@@ -28,7 +28,7 @@ const ChatPage = () => {
       </div>
       <div className="flex flex-col flex-1">
         <div className='h-20 w-full bg-red-300'></div>
-        <div className='flex-grow overflow-y-auto py-3 px-5'>
+        <div className='flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800 py-3 px-5'>
           <MessageFeed />
         </div>
         <SendMessage />
