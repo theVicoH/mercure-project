@@ -6,6 +6,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function isSuccessResponse<T>(response: ApiResponse<T>): response is SuccessResponse<T> {
+export function isSuccessResponse<T>(
+  response: ApiResponse<T>
+): response is SuccessResponse<T> {
   return 'body' in response && 'data' in response.body;
 }

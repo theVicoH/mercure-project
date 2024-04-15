@@ -20,7 +20,7 @@ export const registerSchema = z
         message: 'Password must contain at least one special character',
       }),
     confirmPassword: z.string().min(1, { message: 'Required' }),
-    photo: z.any().optional()
+    photo: z.any().optional(),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',

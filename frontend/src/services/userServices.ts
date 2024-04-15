@@ -1,4 +1,4 @@
-import { ApiResponse, UserInfoResponse } from "@/types/response";
+import { ApiResponse, UserInfoResponse } from '@/types/response';
 
 const URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -18,7 +18,7 @@ export const userInfoService = async (
     }
 
     const responseData = await response.json();
-    
+
     return responseData;
   } catch {
     throw new Error('Error when trying to retrieve user info');

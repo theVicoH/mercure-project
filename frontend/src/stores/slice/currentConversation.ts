@@ -16,13 +16,20 @@ const currentConversationSlice = createSlice({
   name: 'currentConversation',
   initialState,
   reducers: {
-    setCurrentConversation: (state, action: PayloadAction<{ conversationId: number; friendUsername: string; friendPhoto: string; }>) => {
-      state.conversationId = action.payload.conversationId,
-      state.friendUsername = action.payload.friendUsername,
-      state.friendPhoto = action.payload.friendPhoto
+    setCurrentConversation: (
+      state,
+      action: PayloadAction<{
+        conversationId: number;
+        friendUsername: string;
+        friendPhoto: string;
+      }>
+    ) => {
+      (state.conversationId = action.payload.conversationId),
+        (state.friendUsername = action.payload.friendUsername),
+        (state.friendPhoto = action.payload.friendPhoto);
     },
     clearCurrentConversation: state => {
-      state.conversationId = null
+      state.conversationId = null;
       state.friendUsername = null;
       state.friendPhoto = null;
     },

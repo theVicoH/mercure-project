@@ -8,10 +8,10 @@ export interface UserId {
 }
 
 export interface SendMessageRequestBody {
-  conversationId: number
-  message: string
+  conversationId: number;
+  message: string;
 }
 
 export interface AddFriendRequestBody {
-  friendUsername: string
+  friendUsername: string;
 }

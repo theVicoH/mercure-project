@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserId } from '@/types/types';
 
-
 const initialState: UserId = {
   id: undefined,
 };
@@ -12,9 +11,8 @@ const userId = createSlice({
   reducers: {
     setUserId: (state, action: PayloadAction<UserId>) => {
       state.id = action.payload.id;
-  
     },
-    clearUserId: (state) => {
+    clearUserId: state => {
       state.id = undefined;
     },
   },

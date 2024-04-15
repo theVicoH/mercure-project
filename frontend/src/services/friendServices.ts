@@ -1,5 +1,5 @@
-import { ApiResponse, UserInfoResponse } from "@/types/response";
-import { AddFriendRequestBody } from "@/types/types";
+import { ApiResponse, UserInfoResponse } from '@/types/response';
+import { AddFriendRequestBody } from '@/types/types';
 
 const URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -21,7 +21,7 @@ export const addFriendService = async (
     }
 
     const responseData = await response.json();
-    
+
     return responseData;
   } catch {
     throw new Error('Error when trying to retrieve user info');
