@@ -1,4 +1,4 @@
-import { FindOptions, Model, Op, Transaction } from 'sequelize';
+import { FindOptions, Model, Op, QueryTypes, Transaction } from 'sequelize';
 import { Conversation } from '../../../entities/ConversationEntities';
 import ConversationModel from '../models/ConversationModel';
 import {
@@ -56,53 +56,26 @@ export default class ConversationService implements IConversationService {
 
   async findConversationsByUserId(
     userId: number,
-    transaction?: Transaction
   ): Promise<ConversationCustomTypes[]> {
-    const options: FindOptions = {
-      include: [{
-          model: UserModel,
-          as: 'Participants',
-          attributes: ['username'],
-          through: {
-              where: { userId: { [Op.ne]: userId } }
-          }
-      }, {
-          model: MessageModel,
-          as: 'Messages',
-          limit: 1,
-          order: [['createdAt', 'DESC']],
-          include: [{
-              model: UserModel,
-              attributes: ['username']
-          }]
-      }],
-      transaction: transaction
-  };
-
-
-    let conversations = (await ConversationModel.findAll(
-      options
-    )) as ConversationInstance[];
-
-    conversations = conversations.sort((a, b) => {
-      const aLastMsgTime = a.Messages && a.Messages[0] ? a.Messages[0].createdAt.getTime() : 0;
-      const bLastMsgTime = b.Messages && b.Messages[0] ? b.Messages[0].createdAt.getTime() : 0;
-  
-      return bLastMsgTime - aLastMsgTime;
-  });
-  
-    return conversations.map(conv => {
-      const friend = conv.Participants?.find(p => p.id !== userId);
-      const lastMessage = conv.Messages?.[0];
-
-      return {
-        id: conv.id,
-        friendUsername: friend ? friend.username : null,
-        message: lastMessage ? lastMessage.message : null,
-        messageSentAt: lastMessage ? lastMessage.createdAt : null,
-        lastMessageRead: lastMessage ? lastMessage.read : null,
-      };
+    const conversations : ConversationCustomTypes[] = await sequelize.query(`
+      SELECT c.id, u.username AS friendUsername, m.message, m.created_at AS messageSentAt, 
+          (SELECT COUNT(*) 
+          FROM messages 
+          WHERE read = false AND sender_id != :userId AND conversation_id = c.id AND sender_id = u.id) AS numberOfUnreadMessages
+      FROM conversations AS c
+      JOIN conversation_users AS cu ON c.id = cu.conversation_id
+      JOIN users AS u ON cu.user_id = u.id AND u.id != :userId
+      LEFT JOIN messages AS m ON m.id = (
+          SELECT MAX(id) FROM messages WHERE conversation_id = c.id
+      )
+      WHERE :userId IN (SELECT user_id FROM conversation_users WHERE conversation_id = c.id)
+      ORDER BY m.created_at DESC
+    `, {
+      replacements: { userId },
+      type: QueryTypes.SELECT,
     });
+
+    return conversations;
   }
   
 }

@@ -3,5 +3,5 @@ export interface ConversationCustomTypes {
   friendUsername: string | null;
   message: string | null;
   messageSentAt: Date | null;
-  lastMessageRead: boolean | null;
+  lastMessageRead: string | null;
 }
