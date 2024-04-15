@@ -15,7 +15,7 @@ const MessageFeed = () => {
   const newMessage = useMercure(`/conversations/${conversationId}`)
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { data, error, isLoading } = useQuery(['message-feed', conversationId], () => messageFeedService(authToken!, conversationId!), {
+  const { error, isLoading } = useQuery(['message-feed', conversationId], () => messageFeedService(authToken!, conversationId!), {
     enabled: !!conversationId,
     onSuccess: (response) => {
       if (isSuccessResponse<MessageResponse[]>(response)) {
@@ -24,12 +24,9 @@ const MessageFeed = () => {
     }
   });
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
-  }, [data]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
   }, [messages]);
   
   useEffect(() => {
