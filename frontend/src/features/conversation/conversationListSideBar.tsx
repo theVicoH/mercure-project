@@ -38,7 +38,7 @@ const ConversationListSideBar = () => {
   return (
     <div className="text-white flex flex-col gap-5">
       <Input placeholder="Search conversation"/>
-      <div className="flex flex-col overflow-scroll">
+      <div className="flex flex-col">
         {data && 'data' in data.body && data.body.data.map((conversation, index) => {
           const imageData = conversation.friendPhoto.data;
           const base64String = btoa(
