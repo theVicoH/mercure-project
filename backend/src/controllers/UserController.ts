@@ -11,9 +11,6 @@ export class UserController implements IUserController {
     password: string,
     photo: Buffer
   ): Promise<ResponseController<User>> {
-    console.log(true)
-    console.log(username)
-    console.log(photo)
     try {
       const newUser = await this.userUseCase.createUser(
         username,

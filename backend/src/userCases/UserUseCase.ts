@@ -17,14 +17,12 @@ export class UserUseCase implements IUserUseCase {
     photo: Buffer
   ): Promise<User> {
     const hashedPassword = await this.services.password.hashPassword(password);
-    console.log(false)
 
     const createdUser = await this.services.userService.createUser(
       username,
       hashedPassword,
       photo
     );
-    console.log(false)
     return createdUser;
   }
 

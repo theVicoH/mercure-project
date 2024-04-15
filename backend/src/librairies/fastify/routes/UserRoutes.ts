@@ -42,9 +42,6 @@ export async function userRoutes(fastify: FastifyInstance) {
       const username = fields.username.value;
       const password = fields.password.value;
       const photo = await data.toBuffer();
-      console.log(username)
-      console.log(password)
-      console.log(photo)
       const result = await userController.register(
         username,
         password,
