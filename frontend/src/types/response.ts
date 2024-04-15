@@ -53,7 +53,7 @@ export interface ConversationListResponse {
   friendUsername: string;
   message: string;
   messageSentAt: string;
-  lastMessageRead: boolean;
+  numberOfUnreadMessages: string;
 }
 
 export interface MessageResponse {
