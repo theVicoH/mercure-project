@@ -20,19 +20,17 @@ const ChatPage = () => {
             </TabsList>
           </div>
   
-          <div className='p-3'>
+          <div className='py-3 px-3'>
             <TabsContent value="conversations"><ConversationListSideBar/></TabsContent>
             <TabsContent value="addFriend"><AddFriend/></TabsContent>
           </div>
         </Tabs>
-
-        
-          
-          
-
       </div>
-      <div className="flex-1 p-3">
-        <MessageFeed />
+      <div className="flex flex-col flex-1">
+        <div className='h-20 w-full bg-red-300'></div>
+        <div className='flex-grow overflow-y-auto py-3 px-5'>
+          <MessageFeed />
+        </div>
         <SendMessage />
       </div>
     </div>
