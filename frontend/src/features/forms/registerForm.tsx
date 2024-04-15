@@ -20,14 +20,6 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
-    reader.readAsDataURL(file);
-  });
-}
 
 const RegisterForm : React.FC = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -39,7 +31,7 @@ const RegisterForm : React.FC = () => {
     }
   })
   const dispatch = useDispatch();
-  const { mutateAsync } = useMutation(async (data : z.infer<typeof registerSchema>) => {
+  const { mutateAsync } = useMutation(async (data : FormData) => {
     const response = await registerService(data);
     return response;
   })
@@ -47,13 +39,11 @@ const RegisterForm : React.FC = () => {
 
     try{
       console.log(data.photo[0])
-      if (data.photo && data.photo.length > 0) {
-        const file = data.photo[0];
-        const base64 = await fileToBase64(file);
-        data.photo = base64; // Replace FileList with base64 string
-      }
-      console.log(data.photo)
-      const response = await mutateAsync(data)
+      const formData = new FormData();
+      formData.append('username', data.username);
+      formData.append('password', data.password);
+      formData.append('photo', data.photo[0]);
+      const response = await mutateAsync(formData)
       dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';

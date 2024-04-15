@@ -21,21 +21,28 @@ const UserInfo = () => {
     return <div>Error loading the user info!</div>;
   }
 
-  if(data){
-    console.log(data)
-  }
-  return (
-    <div>
-      {data && 'data' in data.body && (
-        <div>
-          <div>{data.body.data.username}</div>
-          {/* <img src={`data:image/png;base64,${arrayBuffer(data.body.data.photo.data)}`} alt="User" /> */}
-          <div>{data.body.data.createdAt}</div>
-        </div>
+  if (data && 'data' in data.body) {
+    const imageData = data.body.data.photo.data;
+    const base64String = btoa(
+      new Uint8Array(imageData).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ''
+      )
+    );
 
-      )}
-    </div>
-  )
+    return (
+      <div>
+        <div>{data.body.data.username}</div>
+        {data.body.data.photo && (
+          <img src={`data:image/png;base64,${base64String}`} alt="User" />
+        )}
+        <div>{data.body.data.createdAt}</div>
+      </div>
+    );
+  }
+
+  return null;
+
 }
 
 export default UserInfo
