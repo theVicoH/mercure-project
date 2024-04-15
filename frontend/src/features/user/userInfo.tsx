@@ -1,4 +1,4 @@
-// import { arrayBuffer } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { userInfoService } from "@/services/userServices";
 import { RootState } from "@/stores/store";
 import { useQuery } from "react-query";
@@ -24,14 +24,26 @@ const UserInfo = () => {
         ''
       )
     );
+    const formattedDate = new Date(data.body.data.createdAt).toLocaleDateString("en-US", {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
 
     return (
-      <div>
-        <div>{data.body.data.username}</div>
+      <div className="flex flex-row gap-4 items-center px-3 py-5 text-white bg-zinc-700/20 border-b border-zinc-800">
         {data.body.data.photo && (
-          <img src={`data:image/png;base64,${base64String}`} alt="User" />
+          <Avatar>
+            <AvatarImage src={`data:image/png;base64,${base64String}`} />
+            <AvatarFallback>{data.body.data.username}</AvatarFallback>
+          </Avatar>
         )}
-        <div>{data.body.data.createdAt}</div>
+        <div className="flex flex-col">
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">{data.body.data.username}</h4>
+          <span className="text-zinc-400 text-sm">{formattedDate}</span>
+        </div>
+
       </div>
     );
   }
