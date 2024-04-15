@@ -37,7 +37,7 @@ const ConversationListSideBar = () => {
     return <div>Error loading the conversations!</div>;
   }
   return (
-    <div>
+    <div className="text-white">
       <Input placeholder="Search conversation"/>
       {data && 'data' in data.body && data.body.data.map((conversation, index) => (
         <div key={index} onClick={() => handleConversationClick(conversation.id)}>
