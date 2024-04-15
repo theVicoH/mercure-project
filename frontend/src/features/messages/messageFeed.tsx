@@ -8,7 +8,6 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 
 const MessageFeed = () => {
-  // const { id } = useParams<'id'>();
   const authToken = useSelector((state: RootState) => state.auth.jwt);
   const id = useSelector((state: RootState) => state.currentConversation.conversationId);
   const [messages, setMessages] = useState<MessageResponse[]>([]);

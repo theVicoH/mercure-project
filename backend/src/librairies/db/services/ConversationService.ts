@@ -78,7 +78,7 @@ export default class ConversationService implements IConversationService {
     `, {
       replacements: { userId },
       type: QueryTypes.SELECT,
-    });
+    })
     return conversations;
   }
   

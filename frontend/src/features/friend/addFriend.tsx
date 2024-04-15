@@ -22,9 +22,6 @@ import { HttpResponseCode } from "@/types/response";
 
 const AddFriend = () => {
   const authToken = useSelector((state: RootState) => state.auth.jwt);
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
   const form = useForm<z.infer<typeof addFriendSchema>>({
     resolver: zodResolver(addFriendSchema),
     defaultValues: {
@@ -39,7 +36,7 @@ const AddFriend = () => {
   const onSubmit = async (data: z.infer<typeof addFriendSchema>) => {
 
     try{
-      const response = await mutateAsync({ token: authToken, data: data })
+      const response = await mutateAsync({ token: authToken!, data: data })
       console.log(response)
       dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
       form.reset();
