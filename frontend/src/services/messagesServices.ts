@@ -5,7 +5,7 @@ const URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const messageFeedService = async (
   authToken: string,
-  id: string
+  id: number
 ): Promise<ApiResponse<MessageResponse[]>> => {
   try {
     const response = await fetch(`${URL}/messages-feed/${id}`, {

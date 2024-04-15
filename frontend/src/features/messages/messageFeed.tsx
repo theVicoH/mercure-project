@@ -6,20 +6,16 @@ import { MessageResponse } from '@/types/response';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 const MessageFeed = () => {
-  const { id } = useParams<'id'>();
+  // const { id } = useParams<'id'>();
   const authToken = useSelector((state: RootState) => state.auth.jwt);
+  const id = useSelector((state: RootState) => state.currentConversation.conversationId);
   const [messages, setMessages] = useState<MessageResponse[]>([]);
   const newMessage = useMercure(`/conversations/${id}`)
-  if (!authToken) {
-    throw new Error("Authentication token is missing!");
-  }
-  if (!id) {
-    throw new Error("Id params is missing!");
-  }
-  const { error, isLoading } = useQuery(['message-feed', id], () => messageFeedService(authToken, id), {
+
+  const { error, isLoading } = useQuery(['message-feed', id], () => messageFeedService(authToken!, id!), {
+    enabled: !!id,
     onSuccess: (response) => {
       if (isSuccessResponse<MessageResponse[]>(response)) {
         setMessages(response.body.data);
