@@ -14,19 +14,19 @@ const toasterNotifSlice = createSlice({
   name: 'toaster',
   initialState,
   reducers: {
-    setNotification: (
+    setToasterNotification: (
       state,
       action: PayloadAction<{ message: string; isError: boolean }>
     ) => {
       state.notification = action.payload.message;
       state.isError = action.payload.isError;
     },
-    clearNotification: state => {
+    clearToasterNotification: state => {
       state.notification = null;
       state.isError = false;
     },
   },
 });
 
-export const { setNotification, clearNotification } = toasterNotifSlice.actions;
+export const { setToasterNotification, clearToasterNotification } = toasterNotifSlice.actions;
 export default toasterNotifSlice.reducer;

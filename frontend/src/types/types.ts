@@ -20,6 +20,9 @@ export interface Notifcation {
   id: number,
   conversationId: number,
   username: string,
-  photo: Buffer,
+  photo: {
+    type: "Buffer"
+    data: number[]
+  },
   message: string,
 }
