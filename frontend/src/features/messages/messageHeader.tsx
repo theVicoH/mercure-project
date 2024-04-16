@@ -8,7 +8,6 @@ const MessageHeader = () => {
   const friendPhoto = useSelector((state: RootState) => state.currentConversation.friendPhoto);
 
   if(friendUsername && friendPhoto ){
-    console.log({friendUsername, friendPhoto})
     return (
       <div className="flex gap-3 items-center text-white">
         <Avatar className="h-10 w-10">
