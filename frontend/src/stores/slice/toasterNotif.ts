@@ -28,5 +28,6 @@ const toasterNotifSlice = createSlice({
   },
 });
 
-export const { setToasterNotification, clearToasterNotification } = toasterNotifSlice.actions;
+export const { setToasterNotification, clearToasterNotification } =
+  toasterNotifSlice.actions;
 export default toasterNotifSlice.reducer;

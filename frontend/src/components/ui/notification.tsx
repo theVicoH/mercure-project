@@ -25,7 +25,7 @@ const Notification: React.FC<Props> = ({ message, onClose, username, photo }) =>
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.4 }}
     > 
-      <div className="z-40 absolute flex gap-3 w-80 top-4 text-white p-3 rounded-xl left-1/2 transform -translate-x-1/2 backdrop-blur-md bg-blue-300/50">
+      <div className="z-40 absolute flex gap-3 w-80 top-4 text-white p-3 rounded-xl left-1/2 transform -translate-x-1/2 backdrop-blur-md bg-blue-300/10">
         <Avatar>
           <AvatarImage src={`data:image/png;base64,${photo}`} />
           <AvatarFallback>{username}</AvatarFallback>
