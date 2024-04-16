@@ -22,9 +22,8 @@ const Toaster: React.FC<Props> = ({ message, isError, onClose }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.4 }}
-      style={{ zIndex: 50 }}
     > 
-      <div className={`z-40 relative w-fit top-4 left-1/2 transform -translate-x-1/2 ${isError ? "bg-red-500" : "bg-green-500"} text-white px-4 py-2 rounded-md z-40`}>
+      <div className={`z-40 absolute w-fit top-4 text-white p-3 rounded-lg left-1/2 transform -translate-x-1/2 backdrop-blur-xl border ${isError ? "bg-red-500/40 border-red-800" : "bg-green-500/40 border-green-800"} `}>
         {message}
       </div>
     </motion.div>

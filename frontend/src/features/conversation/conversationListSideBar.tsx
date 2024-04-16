@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input"
 import { useMercure } from "@/hooks/useMercure";
 import { conversationListService } from "@/services/conversationServices";
 import { setCurrentConversation } from "@/stores/slice/currentConversation";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setNotification } from "@/stores/slice/notif";
 import { RootState } from "@/stores/store";
 import { ConversationListResponse } from "@/types/response";
 import { Notifcation } from "@/types/types";
@@ -45,7 +45,7 @@ const ConversationListSideBar = () => {
 
   useEffect(() => {
     if (notifications && notifications.conversationId) {
-      dispatch(setNotification({ message: notifications.message, isError: false }));
+      dispatch(setNotification({ message: notifications.message, username: notifications.username, photo: notifications.photo}));
   
       const updatedConversations = conversations.map(conversation =>
         conversation.id === notifications.conversationId ? {

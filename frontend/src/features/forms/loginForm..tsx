@@ -16,7 +16,7 @@ import {
 import { loginSchema } from "@/types/zod/authForm";
 import { loginService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 import { setJwtToken } from "@/stores/slice/auth";
 import { Link } from "react-router-dom";
@@ -41,13 +41,13 @@ const LoginForm : React.FC = () => {
       if ('data' in response.body && response.code === HttpResponseCode.OK) {
         const { jwt, expiration } = response.body.data;
         dispatch(setJwtToken({jwt, expiration}));
-        dispatch(setNotification({ message: response.body.message, isError: false }));
+        dispatch(setToasterNotification({ message: response.body.message, isError: false }));
       } else {
-        dispatch(setNotification({ message: response.body.message, isError: true }));
+        dispatch(setToasterNotification({ message: response.body.message, isError: true }));
       }
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
 

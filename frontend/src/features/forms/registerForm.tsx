@@ -17,7 +17,7 @@ import {
 import { registerSchema } from "@/types/zod/authForm";
 import { registerService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 import { Link } from "react-router-dom";
 
@@ -45,10 +45,10 @@ const RegisterForm : React.FC = () => {
       formData.append('password', data.password);
       formData.append('photo', data.photo[0]);
       const response = await mutateAsync(formData)
-      dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
+      dispatch(setToasterNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
 
