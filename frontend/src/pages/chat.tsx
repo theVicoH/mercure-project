@@ -29,7 +29,7 @@ const ChatPage = () => {
         </Tabs>
       </div>
       <div className="flex-1 relative">
-        <div className='absolute h-fit w-full px-5 py-4 bg-zinc-600/10 backdrop-blur-xl border-t border border-b border-zinc-800'>
+        <div className='absolute h-fit w-full px-5 py-4 bg-zinc-600/10 backdrop-blur-xl border-b border-zinc-800'>
           <MessageHeader/>
         </div>
         <div className='h-full pt-[113px] pb-[81px] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800 py-3 px-5'>
