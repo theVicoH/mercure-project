@@ -18,7 +18,6 @@ const NotificationProvider: React.FC<Props> = ({ children }) => {
   const dispatch = useDispatch();
   useEffect(()=>{
     if(photo){
-      console.log(photo.data, "mmmmmm")
       const imageData = photo.data;
       const base64String = btoa(
         new Uint8Array(imageData).reduce(

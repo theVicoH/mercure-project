@@ -124,21 +124,32 @@ const ConversationListSideBar = () => {
               ''
             )
           );
+          const formattedDate = new Date(conversation.messageSentAt).toLocaleDateString("en-GB", {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit'
+          });
           return (
-            <div className={`flex items-center gap-3 px-3 py-3 border-b border-neutral-700 last:border-0 ${currentConversation === conversation.id && "bg-blue-600 rounded-lg border-b-0"}`} key={index} onClick={() => handleConversationClick(conversation.id, conversation.friendId, conversation.friendUsername, base64String)}>
-              <Avatar>
-                <AvatarImage src={`data:image/png;base64,${base64String}`} />
-                <AvatarFallback>{conversation.friendUsername}</AvatarFallback>
-              </Avatar>
-              <div className="flex-grow">
-                <h6 className="text-md font-semibold max-w-fit">{conversation.friendUsername}</h6>
-                <p className={`text-sm max-w-[175px] truncate ... ${currentConversation === conversation.id ? "text-blue-100" : "text-zinc-500"}`}>{conversation.message ? conversation.message : 'No messages'}</p>
+            <div className={`flex items-center gap-3 px-3 py-3 border-b border-neutral-700 hover:bg-zinc-800 hover:rounded-lg last:border-0 ${currentConversation === conversation.id && "bg-blue-600 rounded-lg border-b-0 hover:bg-blue-600/80"}`} key={index} onClick={() => handleConversationClick(conversation.id, conversation.friendId, conversation.friendUsername, base64String)}>
+              <div className="relative">
+                <Avatar>
+                  <AvatarImage src={`data:image/png;base64,${base64String}`} />
+                  <AvatarFallback>{conversation.friendUsername}</AvatarFallback>
+                </Avatar>
+                {conversation.numberOfUnreadMessages !== 0 && currentConversation !== conversation.id && (
+                  <div className="absolute top-[-4px] right-[-4px] bg-blue-600 rounded-full h-6 w-6 flex justify-center items-center ">
+                    <p className="text-sm">{conversation.numberOfUnreadMessages}</p>
+                  </div>
+                )}
               </div>
-              {conversation.numberOfUnreadMessages !== 0 && currentConversation !== conversation.id && (
-                <div className="bg-blue-600 rounded-full h-6 w-6 flex justify-center items-center ">
-                  <p className="text-sm">{conversation.numberOfUnreadMessages}</p>
+
+              <div className="flex flex-col w-full">
+                <div className="flex justify-between items-center w-full">
+                  <h6 className="text-md font-semibold max-w-fit">{conversation.friendUsername}</h6>
+                  <div className="text-xs font-medium leading-none text-zinc-400">{formattedDate}</div>
                 </div>
-              )}
+                <p className={`text-sm max-w-[175px] truncate ... ${currentConversation === conversation.id ? "text-blue-100" : "text-zinc-400"}`}>{conversation.message ? conversation.message : 'No messages'}</p>
+              </div>
             </div>
           );
         })}

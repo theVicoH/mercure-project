@@ -17,12 +17,12 @@ export interface AddFriendRequestBody {
 }
 
 export interface Notifcation {
-  id: number,
-  conversationId: number,
-  username: string,
+  id: number;
+  conversationId: number;
+  username: string;
   photo: {
-    type: "Buffer"
-    data: number[]
-  },
-  message: string,
+    type: 'Buffer';
+    data: number[];
+  };
+  message: string;
 }

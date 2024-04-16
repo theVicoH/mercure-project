@@ -4,8 +4,8 @@ interface NotiState {
   username: string | null;
   message: string | null;
   photo: {
-    type: "Buffer"
-    data: number[]
+    type: 'Buffer';
+    data: number[];
   } | null;
 }
 
@@ -21,7 +21,11 @@ const NotifSlice = createSlice({
   reducers: {
     setNotification: (
       state,
-      action: PayloadAction<{ username: string; message: string; photo: { type: "Buffer"; data: number[] } }>
+      action: PayloadAction<{
+        username: string;
+        message: string;
+        photo: { type: 'Buffer'; data: number[] };
+      }>
     ) => {
       state.username = action.payload.username;
       state.message = action.payload.message;
