@@ -17,7 +17,7 @@ const ToasterProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      <div className='fixe h-0'>
+      <div className='fixe h-0 z-20'>
         <AnimatePresence>
           {notification && (
             <Toaster message={notification} onClose={() => dispatch(clearNotification())} isError={isErrorNotif}/>

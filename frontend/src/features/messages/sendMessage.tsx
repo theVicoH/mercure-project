@@ -52,7 +52,7 @@ const SendMessage = () => {
           name="message"
           render={({ field }) => (
             <FormControl>
-              <Input className="rounded-full bg-zinc-700 border-zinc-600 placeholder:text-zinc-500" placeholder="Enter your message" {...field} autoComplete="off" />
+              <Input className="rounded-full" placeholder="Enter your message" {...field} autoComplete="off" />
             </FormControl>
           )}
         />
