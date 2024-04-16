@@ -30,7 +30,7 @@ export interface IMessageService {
     message: string
   ) => Promise<Message>;
   findAllMessage: (conversationId: number) => Promise<Message[]>;
-  updateReadMessages: (userId: number) => Promise<void>;
+  markMessagesAsRead: (userId: number, conversationId: number) => Promise<boolean>;
 }
 
 export interface IFriendService {

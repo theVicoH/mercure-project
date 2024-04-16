@@ -2,6 +2,8 @@ import { FindOptions, Model, Op, OrderItem, Transaction, UpdateOptions } from 's
 import { Message } from '../../../entities/MessageEntities';
 import { IMessageService } from '../../../types/IServices';
 import MessageModel from '../models/MessageModel';
+import ConversationUserModel from '../models/ConversationUserModel';
+import UserModel from '../models/UserModel';
 
 interface MessageModelInstance extends Model {
   id: number;
@@ -10,6 +12,10 @@ interface MessageModelInstance extends Model {
   message: string;
   read: boolean;
   createdAt: Date;
+}
+
+interface CustomConversationUserModelInstance extends Model {
+  userId: number;
 }
 
 export default class MessageService implements IMessageService {
@@ -69,17 +75,37 @@ export default class MessageService implements IMessageService {
     );
   }
 
-  public async updateReadMessages(userId: number, transaction?: Transaction): Promise<void> {
-    const options: UpdateOptions = {
-        where: {
-            senderId: { [Op.ne]: userId }
-        },
-    };
+  public async markMessagesAsRead(
+    userId: number,
+    conversationId: number,
+  ): Promise<boolean> {
 
-    if (transaction) {
-      options.transaction = transaction;
+    const participants = await ConversationUserModel.findAll({
+      where: { conversation_id: conversationId },
+      include: [{
+        model: UserModel,
+        attributes: ['id'],
+      }]
+    }) as CustomConversationUserModelInstance[];
+  
+    const participantIds = participants.map(part => part.userId).filter(id => id !== userId);
+  
+    const updateCount = await MessageModel.update(
+      { read: true },
+      {
+        where: {
+          conversation_id: conversationId,
+          sender_id: participantIds,
+          read: false
+        }
+      }
+    );
+
+    if(updateCount){
+      return true
+    } else {
+      return false
     }
-    
-    await MessageModel.update({ read: true }, options);
   }
+
 }
