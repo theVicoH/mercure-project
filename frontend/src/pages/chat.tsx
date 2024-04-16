@@ -28,7 +28,7 @@ const ChatPage = () => {
           </div>
         </Tabs>
       </div>
-      <div className="flex-1 relative z-0">
+      <div className="flex-1 relative">
         <div className='absolute h-fit w-full px-5 py-4 bg-zinc-600/10 backdrop-blur-xl border-t border border-b border-zinc-800'>
           <MessageHeader/>
         </div>
