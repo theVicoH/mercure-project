@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { addFriendSchema } from "@/types/zod/addFriend";
 import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
+// import { FiSearch } from "react-icons/fi";
 
 const AddFriend = () => {
   const authToken = useSelector((state: RootState) => state.auth.jwt);
@@ -54,7 +55,7 @@ const AddFriend = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Add friend" {...field} autoComplete="off" />
+                <Input placeholder="Add friend" {...field} autoComplete="off"/>
               </FormControl>
               <FormMessage />
             </FormItem>
