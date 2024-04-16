@@ -6,7 +6,6 @@ import {
   Form,
   FormControl,
   FormField,
-  FormItem,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -47,19 +46,17 @@ const SendMessage = () => {
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-4 px-5 py-4 bg-zinc-600/10 backdrop-blur-xl border-t border-zinc-800">
         <FormField
           control={form.control}
           name="message"
           render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input placeholder="Enter your message" {...field} autoComplete="off" />
-              </FormControl>
-            </FormItem>
+            <FormControl>
+              <Input className="rounded-full bg-zinc-700 border-zinc-600 placeholder:text-zinc-500" placeholder="Enter your message" {...field} autoComplete="off" />
+            </FormControl>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button className="m-0" type="submit">Send</Button>
       </form>
     </Form>
   )

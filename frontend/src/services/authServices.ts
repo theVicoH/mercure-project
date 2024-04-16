@@ -4,9 +4,7 @@ import { z } from 'zod';
 
 const URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-export const registerService = async (
-  data: FormData
-): Promise<ApiResponse> => {
+export const registerService = async (data: FormData): Promise<ApiResponse> => {
   try {
     const response = await fetch(`${URL}/register`, {
       method: 'POST',

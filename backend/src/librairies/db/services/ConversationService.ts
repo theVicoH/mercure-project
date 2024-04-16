@@ -61,6 +61,7 @@ export default class ConversationService implements IConversationService {
       SELECT 
         c.id, 
         u.username AS "friendUsername", 
+        u.photo AS "friendPhoto",
         m.message, 
         m.created_at AS "messageSentAt", 
         (SELECT COUNT(*) 
