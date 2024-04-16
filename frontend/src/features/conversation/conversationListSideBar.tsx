@@ -20,8 +20,10 @@ const ConversationListSideBar = () => {
   const currentConversation = useSelector((state: RootState) => state.currentConversation.conversationId);
 
   const { data, error, isLoading, isError } = useQuery('conversations-list', () => conversationListService(authToken!));
+  const [searchInput, setSearchInput] = useState("");
   const [conversations, setConversations] = useState<ConversationListResponse[]>([]);
   const notifications = useMercure<Notifcation>(`/notification/${id}`)
+  const newMessage = useMercure<Notifcation>(`/conversations/${currentConversation}`)
 
 
   const handleConversationClick = (conversationId: number, friendId: number, firendUsername: string, friendPhoto: string) => {
@@ -37,11 +39,44 @@ const ConversationListSideBar = () => {
     setConversations(updatedConversations);
   };
 
-  useEffect(()=>{
-    if(notifications){
+  const filteredConversations = conversations.filter(conversation =>
+    conversation.friendUsername.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (notifications && notifications.conversationId) {
       dispatch(setNotification({ message: notifications.message, isError: false }));
+  
+      const updatedConversations = conversations.map(conversation =>
+        conversation.id === notifications.conversationId ? {
+          ...conversation,
+          numberOfUnreadMessages: conversation.numberOfUnreadMessages + 1
+        } : conversation
+      );
+  
+      setConversations(updatedConversations);
     }
-  }, [notifications])
+  }, [notifications]);
+
+  useEffect(() => {
+    if (newMessage && newMessage.conversationId) {
+      const updatedConversations = conversations.map(conversation =>
+        conversation.id === newMessage.conversationId ? {
+          ...conversation,
+          numberOfUnreadMessages: conversation.numberOfUnreadMessages + 1,
+          lastMessage: newMessage.message
+        } : conversation
+      );
+  
+      const conversationIndex = updatedConversations.findIndex(conversation => conversation.id === newMessage.conversationId);
+      if (conversationIndex > -1) {
+        const updatedConversation = updatedConversations.splice(conversationIndex, 1)[0];
+        updatedConversations.unshift(updatedConversation);
+      }
+  
+      setConversations(updatedConversations);
+    }
+  }, [newMessage]);
 
   useEffect(() => {
     if (!isLoading && !isError && data && 'data' in data.body && data.body.data.length > 0) {
@@ -75,9 +110,13 @@ const ConversationListSideBar = () => {
 
   return (
     <div className="text-white flex flex-col gap-5">
-      <Input placeholder="Search conversation"/>
+      <Input
+        placeholder="Search conversation"
+        value={searchInput}
+        onChange={(e) => setSearchInput(e.target.value)}
+      />
       <div className="flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-600 scrollbar-track-zinc-800">
-        {conversations.map((conversation, index) => {
+        {filteredConversations.map((conversation, index) => {
           const imageData = conversation.friendPhoto.data;
           const base64String = btoa(
             new Uint8Array(imageData).reduce(
