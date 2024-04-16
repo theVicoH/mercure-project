@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 import { setJwtToken } from "@/stores/slice/auth";
+import { Link } from "react-router-dom";
 
 
 const LoginForm : React.FC = () => {
@@ -52,7 +53,7 @@ const LoginForm : React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col">
         <FormField
           control={form.control}
           name="username"
@@ -79,11 +80,10 @@ const LoginForm : React.FC = () => {
             </FormItem>
           )}
         />
-        <div className="flex justify-between">
-          <Button variant="link" className="text-white px-0 underline hover:text-blue-200">Create an account</Button>
+        <div className="flex justify-between pt-6">
+          <Link to="/register"><Button variant="link" className="text-white px-0 underline hover:text-blue-200">Create an account</Button></Link>
           <Button type="submit">Submit</Button>
         </div>
-
       </form>
     </Form>
   );

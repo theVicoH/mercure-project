@@ -19,6 +19,7 @@ import { registerService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { setNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
+import { Link } from "react-router-dom";
 
 
 const RegisterForm : React.FC = () => {
@@ -53,7 +54,7 @@ const RegisterForm : React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col">
         <FormField
           control={form.control}
           name="username"
@@ -106,7 +107,10 @@ const RegisterForm : React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-between pt-6">
+          <Link to="/login"><Button variant="link" className="text-white px-0 underline hover:text-blue-200">Connect to your account</Button></Link>
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );
