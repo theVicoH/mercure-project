@@ -17,8 +17,9 @@ import {
 import { registerSchema } from "@/types/zod/authForm";
 import { registerService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
+import { Link } from "react-router-dom";
 
 
 const RegisterForm : React.FC = () => {
@@ -44,16 +45,16 @@ const RegisterForm : React.FC = () => {
       formData.append('password', data.password);
       formData.append('photo', data.photo[0]);
       const response = await mutateAsync(formData)
-      dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
+      dispatch(setToasterNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col">
         <FormField
           control={form.control}
           name="username"
@@ -106,7 +107,10 @@ const RegisterForm : React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-between pt-6">
+          <Link to="/login"><Button variant="link" className="text-white px-0 underline hover:text-blue-200">Connect to your account</Button></Link>
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );

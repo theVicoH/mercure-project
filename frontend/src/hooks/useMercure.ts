@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useMercure(topic: string) {
+export function useMercure<T = null>(topic: string) {
   const [data, setData] = useState(null);
   useEffect(() => {
     const url = new URL('http://localhost:8080/.well-known/mercure');
@@ -21,5 +21,5 @@ export function useMercure(topic: string) {
     };
   }, [topic]);
 
-  return data;
+  return data as T;
 }

@@ -14,7 +14,7 @@ import { useMutation } from "react-query"
 import { sendMessageService } from "@/services/messagesServices"
 import { SendMessageRequestBody } from "@/types/types"
 import { RootState } from "@/stores/store"
-import { setNotification } from "@/stores/slice/toasterNotif"
+import { setToasterNotification } from "@/stores/slice/toasterNotif"
 
 const SendMessage = () => {
   const authToken = useSelector((state: RootState) => state.auth.jwt);
@@ -41,7 +41,7 @@ const SendMessage = () => {
       form.reset();
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
   return (
@@ -52,7 +52,7 @@ const SendMessage = () => {
           name="message"
           render={({ field }) => (
             <FormControl>
-              <Input className="rounded-full bg-zinc-700 border-zinc-600 placeholder:text-zinc-500" placeholder="Enter your message" {...field} autoComplete="off" />
+              <Input className="rounded-full" placeholder="Enter your message" {...field} autoComplete="off" />
             </FormControl>
           )}
         />

@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import authReducer from './slice/auth';
 import toasterNotifReducer from './slice/toasterNotif';
+import notifReducer from './slice/notif';
 import userIdReducer from './slice/userId';
 import currentConversationReducer from './slice/currentConversation';
 
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   showToaster: toasterNotifReducer,
+  showNotif: notifReducer,
   userId: userIdReducer,
   currentConversation: currentConversationReducer,
 });

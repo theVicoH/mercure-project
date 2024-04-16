@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { addFriendSchema } from "@/types/zod/addFriend";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 
 const AddFriend = () => {
@@ -38,11 +38,11 @@ const AddFriend = () => {
     try{
       const response = await mutateAsync({ token: authToken!, data: data })
       console.log(response)
-      dispatch(setNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
+      dispatch(setToasterNotification({ message: response.body.message, isError: response.code === HttpResponseCode.Created ? false : true }));
       form.reset();
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
   return (
@@ -60,7 +60,7 @@ const AddFriend = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Add</Button>
       </form>
     </Form>
   )

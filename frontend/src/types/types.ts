@@ -15,3 +15,14 @@ export interface SendMessageRequestBody {
 export interface AddFriendRequestBody {
   friendUsername: string;
 }
+
+export interface Notifcation {
+  id: number,
+  conversationId: number,
+  username: string,
+  photo: {
+    type: "Buffer"
+    data: number[]
+  },
+  message: string,
+}

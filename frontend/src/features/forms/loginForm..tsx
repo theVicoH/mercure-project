@@ -16,9 +16,10 @@ import {
 import { loginSchema } from "@/types/zod/authForm";
 import { loginService } from "@/services/authServices";
 import { useDispatch } from "react-redux";
-import { setNotification } from "@/stores/slice/toasterNotif";
+import { setToasterNotification } from "@/stores/slice/toasterNotif";
 import { HttpResponseCode } from "@/types/response";
 import { setJwtToken } from "@/stores/slice/auth";
+import { Link } from "react-router-dom";
 
 
 const LoginForm : React.FC = () => {
@@ -40,19 +41,19 @@ const LoginForm : React.FC = () => {
       if ('data' in response.body && response.code === HttpResponseCode.OK) {
         const { jwt, expiration } = response.body.data;
         dispatch(setJwtToken({jwt, expiration}));
-        dispatch(setNotification({ message: response.body.message, isError: false }));
+        dispatch(setToasterNotification({ message: response.body.message, isError: false }));
       } else {
-        dispatch(setNotification({ message: response.body.message, isError: true }));
+        dispatch(setToasterNotification({ message: response.body.message, isError: true }));
       }
     } catch(error) {
       const errorMessage = typeof error === 'string' ? error : error instanceof Error ? error.message : 'An unknown error occurred';
-      dispatch(setNotification({ message: errorMessage, isError: true }));
+      dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col">
         <FormField
           control={form.control}
           name="username"
@@ -79,7 +80,10 @@ const LoginForm : React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-between pt-6">
+          <Link to="/register"><Button variant="link" className="text-white px-0 underline hover:text-blue-200">Create an account</Button></Link>
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );

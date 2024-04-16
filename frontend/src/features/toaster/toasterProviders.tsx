@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/stores/store';
 import Toaster from '@/components/ui/toaster';
-import { clearNotification } from '@/stores/slice/toasterNotif';
+import { clearToasterNotification } from '@/stores/slice/toasterNotif';
 
 interface Props {
   children : React.ReactNode
@@ -17,10 +17,10 @@ const ToasterProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      <div className='fixe h-0'>
+      <div className='fixe h-0 z-20'>
         <AnimatePresence>
           {notification && (
-            <Toaster message={notification} onClose={() => dispatch(clearNotification())} isError={isErrorNotif}/>
+            <Toaster message={notification} onClose={() => dispatch(clearToasterNotification())} isError={isErrorNotif}/>
           )}
         </AnimatePresence>
       </div>

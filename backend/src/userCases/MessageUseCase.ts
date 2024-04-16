@@ -35,7 +35,7 @@ export class MessageUseCase implements IMessageUseCase {
         'Friend not found'
       );
     }
-
+    
     await this.services.sse.publish<IMessageWithUsername>(
       `/conversations/${conversationId}`,
       {
@@ -76,7 +76,10 @@ export class MessageUseCase implements IMessageUseCase {
     if (!conversation) {
       throw new Error('Conversation not found');
     }
-    await this.services.messageService.updateReadMessages(userId);
+    const isRead = await this.services.messageService.markMessagesAsRead(userId, conversationId)
+    if(!isRead){
+      throw new Error('Problem when setting messages as read');
+    }
     const messages =
       await this.services.messageService.findAllMessage(conversationId);
     return messages;

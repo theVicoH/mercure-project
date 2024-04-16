@@ -6,6 +6,7 @@ import UserInfo from '@/features/user/userInfo';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from '@/components/ui/separator';
 import MessageHeader from '@/features/messages/messageHeader';
+import { Link } from 'react-router-dom';
 
 const ChatPage = () => {
   return (
@@ -13,7 +14,7 @@ const ChatPage = () => {
       <div className="w-80 bg-zinc-800/30 border-r border-zinc-800">
         <Tabs defaultValue="conversations">
           <div className='p-3 bg-zinc-700/20 border-b border-zinc-800'>
-            <UserInfo/>
+            <Link to="/user-profil"><UserInfo/></Link>
             <Separator className='mb-5'/>
             <TabsList className='w-full'>
               <TabsTrigger value="conversations" className='w-full'>Conversations</TabsTrigger>
