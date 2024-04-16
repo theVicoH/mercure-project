@@ -35,7 +35,7 @@ export class MessageUseCase implements IMessageUseCase {
         'Friend not found'
       );
     }
-
+    
     await this.services.sse.publish<IMessageWithUsername>(
       `/conversations/${conversationId}`,
       {

@@ -54,19 +54,22 @@ export default class ConversationService implements IConversationService {
     return new Conversation(modelConversation.id, modelConversation.createdAt);
   }
 
-  async findConversationsByUserId(
+  public async findConversationsByUserId(
     userId: number,
   ): Promise<ConversationCustomTypes[]> {
     const conversations : ConversationCustomTypes[] = await sequelize.query(`
       SELECT 
         c.id, 
+        u.id AS "friendId",
         u.username AS "friendUsername", 
         u.photo AS "friendPhoto",
         m.message, 
         m.created_at AS "messageSentAt", 
-        (SELECT COUNT(*) 
-        FROM messages 
-        WHERE read = false AND sender_id != :userId AND conversation_id = c.id AND sender_id = u.id
+        CAST(
+          (SELECT COUNT(*) 
+          FROM messages 
+          WHERE read = false AND sender_id != :userId AND conversation_id = c.id AND sender_id = u.id
+          ) AS INTEGER
         ) AS "numberOfUnreadMessages"
       FROM conversations AS c
       JOIN conversation_users AS cu ON c.id = cu.conversation_id

@@ -2,6 +2,7 @@ import {
   FindOptions,
   Model,
   Op,
+  QueryTypes,
   Transaction,
   UniqueConstraintError,
 } from 'sequelize';
@@ -11,6 +12,7 @@ import { IUserService } from '../../../types/IServices';
 import ConversationUserModel from '../models/ConversationUserModel';
 import ConversationModel from '../models/ConversationModel';
 import ConversationUser from '../../../entities/ConversationUserEntities';
+import sequelize from '../Sequalize';
 
 interface UserModelInstance extends Model {
   id: number;
@@ -24,6 +26,8 @@ interface ConversationUserModelInstance extends Model {
   userId: number;
   conversationId: number;
 }
+
+
 
 export default class UserService implements IUserService {
   public async createUser(
@@ -110,33 +114,24 @@ export default class UserService implements IUserService {
     );
   }
 
-  async findFriendInConversation(myUserId: number, conversationId: number, transaction?: Transaction) : Promise<User | null> {
-    const options: FindOptions = {
-      where: { id: conversationId },
+  async findFriendInConversation(userId: number, conversationId: number, transaction?: Transaction) : Promise<User | null> {
+    const friends = await UserModel.findAll({
       include: [{
         model: ConversationUserModel,
-        required: true,
-        include: [{
-          model: UserModel,
-          where: {
-            id: { [Op.ne]: myUserId }
-          },
-        }]
+        where: {
+          conversationId,
+          userId: {
+            [Op.ne]: userId
+          }
+        }
       }]
-    }
-
-    if (transaction) {
-      options.transaction = transaction;
-    }
-
-    const modelUser = (await ConversationModel.findOne(options)) as UserModelInstance;
-
+    }) as UserModelInstance[];
     return new User(
-      modelUser.id,
-      modelUser.username,
-      modelUser.password,
-      modelUser.photo,
-      modelUser.createdAt
+      friends[0].id,
+      friends[0].username,
+      friends[0].password,
+      friends[0].photo,
+      friends[0].createdAt
     );
   }
 
