@@ -50,6 +50,7 @@ export interface LoginResponse {
 
 export interface ConversationListResponse {
   id: number;
+  friendId: number;
   friendUsername: string;
   friendPhoto: {
     type: 'Buffer';
@@ -57,7 +58,7 @@ export interface ConversationListResponse {
   };
   message: string;
   messageSentAt: string;
-  numberOfUnreadMessages: string;
+  numberOfUnreadMessages: number;
 }
 
 export interface MessageResponse {
