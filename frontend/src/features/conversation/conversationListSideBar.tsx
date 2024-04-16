@@ -146,7 +146,7 @@ const ConversationListSideBar = () => {
               <div className="flex flex-col w-full">
                 <div className="flex justify-between items-center w-full">
                   <h6 className="text-md font-semibold max-w-fit">{conversation.friendUsername}</h6>
-                  <div className="text-xs font-medium leading-none text-zinc-400">{formattedDate}</div>
+                  <div className={`text-xs font-medium leading-none ${currentConversation === conversation.id ? "text-blue-100" : "text-zinc-400"}`}>{formattedDate}</div>
                 </div>
                 <p className={`text-sm max-w-[175px] truncate ... ${currentConversation === conversation.id ? "text-blue-100" : "text-zinc-400"}`}>{conversation.message ? conversation.message : 'No messages'}</p>
               </div>
