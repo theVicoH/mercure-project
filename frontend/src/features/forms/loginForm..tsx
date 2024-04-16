@@ -52,7 +52,7 @@ const LoginForm : React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col">
         <FormField
           control={form.control}
           name="username"
@@ -79,7 +79,11 @@ const LoginForm : React.FC = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-between">
+          <Button variant="link" className="text-white px-0 underline hover:text-blue-200">Create an account</Button>
+          <Button type="submit">Submit</Button>
+        </div>
+
       </form>
     </Form>
   );
