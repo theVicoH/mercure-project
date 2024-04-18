@@ -50,6 +50,7 @@ const LoginForm : React.FC = () => {
       dispatch(setToasterNotification({ message: errorMessage, isError: true }));
     }
   };
+  console.log("oups")
 
   return (
     <Form {...form}>
